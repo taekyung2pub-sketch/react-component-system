@@ -1,0 +1,17 @@
+<style>
+    [class*="css-"] :where(
+    span:not(.sb-anchor, .sb-unstyled, .sb-unstyled *),
+    div:not(.sb-anchor, .sb-unstyled, .sb-unstyled *),
+    p:not(.sb-anchor, .sb-unstyled, .sb-unstyled *),
+    li:not(.sb-anchor, .sb-unstyled, .sb-unstyled *),
+    h1:not(.sb-anchor, .sb-unstyled, .sb-unstyled *),
+    h2:not(.sb-anchor, .sb-unstyled, .sb-unstyled *),
+    h3:not(.sb-anchor, .sb-unstyled, .sb-unstyled *),
+    ul:not(.sb-anchor, .sb-unstyled, .sb-unstyled *),
+    ol:not(.sb-anchor, .sb-unstyled, .sb-unstyled *)
+  ) {
+        all: unset;
+        display: revert;
+        box-sizing: border-box;
+    }
+</style>
