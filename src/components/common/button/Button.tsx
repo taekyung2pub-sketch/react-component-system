@@ -11,7 +11,7 @@ import { IconName } from '../icon/iconMap';
 // Types
 // =========================
 
-export type ButtonSize    = 'sm' | 'md' | 'lg';
+export type ButtonSize    = 'xs' | 'sm' | 'md' | 'lg';
 export type ButtonVariant = 'filled' | 'soft' | 'outline';
 export type ButtonColor   = 'gray-dark' | 'gray-light' | 'primary' | 'secondary' | 'error';
 export type ButtonRounded = keyof typeof radius;
@@ -52,8 +52,9 @@ const sizeMap: Record<ButtonSize, {
   height: string;
   padding: string;
   fontSize: string;
-  iconSize: 'sm' | 'md';
+  iconSize: 'xs' | 'sm' | 'md';
 }> = {
+  xs: { height: '24px', padding: '0 8px',  fontSize: '11px', iconSize: 'xs' },
   sm: { height: '32px', padding: '0 12px', fontSize: '13px', iconSize: 'sm' },
   md: { height: '40px', padding: '0 16px', fontSize: '14px', iconSize: 'sm' },
   lg: { height: '48px', padding: '0 20px', fontSize: '16px', iconSize: 'md' },
@@ -117,7 +118,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   height: ${({ $size }) => sizeMap[$size].height};
   padding: ${({ $size, $iconOnly }) => $iconOnly ? '0' : sizeMap[$size].padding};
   width: ${({ $fullWidth, $size, $iconOnly }) =>
-    $fullWidth ? '100%' : $iconOnly ? sizeMap[$size].height : 'auto'};
+      $fullWidth ? '100%' : $iconOnly ? sizeMap[$size].height : 'auto'};
   font-size: ${({ $size }) => sizeMap[$size].fontSize};
   font-weight: ${fontWeight.semibold};
   border-radius: ${({ $rounded }) => radius[$rounded]};

@@ -1,8 +1,14 @@
+import * as React from 'react';
 import { useState } from 'react';
-import { Meta, StoryObj } from '@storybook/react';
-import { Toast, ToastProps } from './Toast';
+import type { Meta, StoryObj } from '@storybook/react';
+import { Toast } from './Toast';
+import { Button } from '../../common/button/Button';
 
-const meta: Meta<typeof Toast> = {
+// =========================
+// Meta
+// =========================
+
+const meta = {
     title: 'Component/Overlay/Toast',
     component: Toast,
     parameters: {
@@ -11,116 +17,111 @@ const meta: Meta<typeof Toast> = {
     tags: ['autodocs'],
     argTypes: {
         type: {
-            control: 'select',
+            control: 'inline-radio',
             options: ['success', 'warning', 'error', 'info'],
+            description: '토스트 타입 (아이콘 · 색상 자동 결정)',
+            table: { defaultValue: { summary: 'success' } },
         },
         position: {
-            control: 'radio',
+            control: 'inline-radio',
             options: ['top', 'bottom'],
+            description: '노출 위치',
+            table: { defaultValue: { summary: 'bottom' } },
+        },
+        message: {
+            control: 'text',
+            description: '메시지 텍스트',
         },
     },
-};
+} satisfies Meta<typeof Toast>;
 
 export default meta;
-type Story = StoryObj<typeof Toast>;
+type Story = StoryObj<typeof meta>;
 
-// 기본형 스토리들
-export const Success: Story = {
+// =========================
+// Default
+// =========================
+
+export const Default: Story = {
     args: {
         type: 'success',
         message: '요청이 성공적으로 처리되었습니다.',
         position: 'bottom',
-        onClose: () => console.log('Toast closed'),
+        onClose: () => {},
     },
 };
 
-export const Error: Story = {
-    args: {
-        type: 'error',
-        message: '오류가 발생했습니다. 다시 시도해주세요.',
-        position: 'bottom',
-        onClose: () => console.log('Toast closed'),
-    },
-};
+// =========================
+// Type
+// =========================
 
-export const Warning: Story = {
-    args: {
-        type: 'warning',
-        message: '이 작업은 취소할 수 없습니다.',
-        position: 'bottom',
-        onClose: () => console.log('Toast closed'),
-    },
-};
-
-export const Info: Story = {
-    args: {
-        type: 'info',
-        message: '새로운 업데이트가 있습니다.',
-        position: 'bottom',
-        onClose: () => console.log('Toast closed'),
-    },
-};
-
-// 상단 작동 테스트용 스토리
-export const SlideFromTop: Story = {
-    args: {
-        type: 'success',
-        message: '화면 상단에서 내려오는 토스트입니다.',
-        position: 'top',
-        onClose: () => console.log('Toast closed'),
-    },
-};
-
-// 실제 인터랙션(5초 뒤 사라짐 및 트리거)을 확인하기 위한 라이브 플레이 스토리
-export const InteractiveInteractiveDemo = () => {
-    const [toasts, setToasts] = useState<{ id: number; type: any; message: string; position: any }[]>([]);
-    let count = 0;
-
-    const triggerToast = (type: any, position: any) => {
-        const id = Date.now();
-        const newToast = {
-            id,
-            type,
-            message: `${type.toUpperCase()} - 5초 뒤에 자동으로 사라집니다.`,
-            position,
-        };
-        setToasts((prev) => [...prev, newToast]);
-    };
-
-    const removeToast = (id: number) => {
-        setToasts((prev) => prev.filter((t) => t.id !== id));
-    };
-
-    return (
-        <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '40px' }}>
-                <button onClick={() => triggerToast('success', 'bottom')} style={btnStyle}>Success (Bottom)</button>
-                <button onClick={() => triggerToast('error', 'bottom')} style={btnStyle}>Error (Bottom)</button>
-                <button onClick={() => triggerToast('warning', 'top')} style={btnStyle}>Warning (Top)</button>
-                <button onClick={() => triggerToast('info', 'top')} style={btnStyle}>Info (Top)</button>
-            </div>
-
-            {/* 고정 위치 레이아웃 시뮬레이션 */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '343px' }}>
-                {toasts.map((toast) => (
-                    <Toast
-                        key={toast.id}
-                        type={toast.type}
-                        message={toast.message}
-                        position={toast.position}
-                        onClose={() => removeToast(toast.id)}
-                    />
-                ))}
-            </div>
+export const Type: Story = {
+    name: 'type',
+    render: () => (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <Toast type="success" message="요청이 성공적으로 처리되었습니다." onClose={() => {}} />
+            <Toast type="warning" message="이 작업은 취소할 수 없습니다." onClose={() => {}} />
+            <Toast type="error" message="오류가 발생했습니다. 다시 시도해 주세요." onClose={() => {}} />
+            <Toast type="info" message="새로운 업데이트가 있습니다." onClose={() => {}} />
         </div>
-    );
+    ),
 };
 
-const btnStyle = {
-    padding: '8px 16px',
-    borderRadius: '6px',
-    border: '1px solid #d4d4d8',
-    backgroundColor: '#ffffff',
-    cursor: 'pointer',
-    fontWeight: 500,
+// =========================
+// Position
+// =========================
+
+export const Position: Story = {
+    name: 'position',
+    render: () => (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <Toast type="success" position="top" message="상단에서 슬라이드 인 됩니다." onClose={() => {}} />
+            <Toast type="success" position="bottom" message="하단에서 슬라이드 인 됩니다." onClose={() => {}} />
+        </div>
+    ),
+};
+
+// =========================
+// Interactive — 5초 자동 닫힘 데모
+// =========================
+
+export const Interactive: Story = {
+    name: 'interactive — 5초 자동 닫힘',
+    render: () => {
+        const [toasts, setToasts] = useState<{ id: number; type: any; message: string }[]>([]);
+
+        const trigger = (type: any) => {
+            const id = Date.now();
+            setToasts((prev) => [...prev, {
+                id,
+                type,
+                message: `${type.toUpperCase()} — 5초 뒤 자동으로 사라집니다.`,
+            }]);
+        };
+
+        const remove = (id: number) => {
+            setToasts((prev) => prev.filter((t) => t.id !== id));
+        };
+
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    <Button size="sm" color="primary"   variant="outline" onClick={() => trigger('success')}>Success</Button>
+                    <Button size="sm" color="secondary" variant="outline" onClick={() => trigger('warning')}>Warning</Button>
+                    <Button size="sm" color="error"     variant="outline" onClick={() => trigger('error')}>Error</Button>
+                    <Button size="sm" color="gray-dark" variant="outline" onClick={() => trigger('info')}>Info</Button>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '343px' }}>
+                    {toasts.map((t) => (
+                        <Toast
+                            key={t.id}
+                            type={t.type}
+                            message={t.message}
+                            onClose={() => remove(t.id)}
+                        />
+                    ))}
+                </div>
+            </div>
+        );
+    },
 };

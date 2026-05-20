@@ -2,6 +2,10 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Skeleton } from './Skeleton';
 
+// =========================
+// Meta
+// =========================
+
 const meta = {
     title: 'Component/Overlay/Skeleton',
     component: Skeleton,
@@ -12,16 +16,19 @@ const meta = {
     argTypes: {
         $width: {
             control: 'text',
-            description: '스켈레톤의 가로 너비를 지정합니다. (px, % 등)',
+            description: '가로 너비 (px, % 등)',
+            table: { defaultValue: { summary: '100%' } },
         },
         $height: {
             control: 'text',
-            description: '스켈레톤의 세로 높이를 지정합니다. (px, % 등)',
+            description: '세로 높이 (px, % 등)',
+            table: { defaultValue: { summary: '16px' } },
         },
         $variant: {
             control: 'inline-radio',
             options: ['rect', 'circle'],
-            description: '스켈레톤의 형태를 결정합니다. (사각형 / 원형)',
+            description: '형태 (rect — 사각형 / circle — 원형)',
+            table: { defaultValue: { summary: 'rect' } },
         },
     },
 } satisfies Meta<typeof Skeleton>;
@@ -29,7 +36,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// 1. 기본형 스토리 (가장 자주 쓰이는 텍스트 라인 형태)
+// =========================
+// Default
+// =========================
+
 export const Default: Story = {
     args: {
         $width: '300px',
@@ -38,46 +48,74 @@ export const Default: Story = {
     },
 };
 
-// 2. 원형 스토리 (아바타, 원형 버튼, 아이콘 자리를 대체할 때 사용)
-export const Circle: Story = {
-    args: {
-        $width: '64px',
-        $height: '64px',
-        $variant: 'circle',
-    },
+// =========================
+// Variant
+// =========================
+
+export const Variant: Story = {
+    name: 'variant',
+    render: () => (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <Skeleton $width="120px" $height="16px" $variant="rect" />
+            <Skeleton $width="48px" $height="48px" $variant="circle" />
+        </div>
+    ),
 };
 
-// 3. 큰 사각형 스토리 (상품 썸네일이나 배너 자리를 대체할 때 사용)
-export const BoxRectangle: Story = {
-    args: {
-        $width: '343px',
-        $height: '180px',
-        $variant: 'rect',
-    },
+// =========================
+// Size
+// =========================
+
+export const Size: Story = {
+    name: 'size',
+    render: () => (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '300px' }}>
+            <Skeleton $height="12px" />
+            <Skeleton $height="16px" />
+            <Skeleton $height="20px" />
+            <Skeleton $width="200px" $height="120px" />
+        </div>
+    ),
 };
 
-// 4. 단독 조합 예시 스토리 (실제 목록 컴포넌트를 만들기 전에, 타이포그래피 형태로 쌓아서 애니메이션 흐름을 테스트하는 용도)
-export const TypographyCombinationList = () => {
-    return (
+// =========================
+// Combination — 상품 카드
+// =========================
+
+export const ProductCard: Story = {
+    name: 'combination — 상품 카드',
+    render: () => (
         <div style={{
-            width: '343px',
-            padding: '16px',
-            border: '1px solid #e4e4e7',
-            borderRadius: '12px',
+            width: '160px',
             display: 'flex',
             flexDirection: 'column',
-            gap: '12px',
-            backgroundColor: '#ffffff'
+            gap: '8px',
         }}>
-            {/* 타이틀 영역 느낌 */}
-            <Skeleton $width="40%" $height="20px" />
-
-            {/* 본문 영역 느낌 (줄마다 길이를 다르게 해야 자연스러움) */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <Skeleton $width="100%" $height="14px" />
-                <Skeleton $width="95%" $height="14px" />
-                <Skeleton $width="60%" $height="14px" />
-            </div>
+            <Skeleton $width="160px" $height="160px" />
+            <Skeleton $width="80%" $height="14px" />
+            <Skeleton $width="50%" $height="14px" />
+            <Skeleton $width="60%" $height="16px" />
         </div>
-    );
+    ),
+};
+
+// =========================
+// Combination — 목록 아이템
+// =========================
+
+export const ListItem: Story = {
+    name: 'combination — 목록 아이템',
+    render: () => (
+        <div style={{ width: '343px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {[1, 2, 3].map((i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <Skeleton $width="48px" $height="48px" $variant="circle" />
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        <Skeleton $width="60%" $height="14px" />
+                        <Skeleton $width="90%" $height="12px" />
+                    </div>
+                </div>
+            ))}
+        </div>
+    ),
 };
