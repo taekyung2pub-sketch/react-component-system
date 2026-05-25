@@ -1,10 +1,66 @@
 import * as React from 'react';
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ProductList, ProductItem } from './ProductList';
-import { Button } from '../../common/button/Button';
-import { Tab } from '../../display/tab/Tab';
-import { ProdItem } from '../../product/prodItem/ProdItem';
+import { ProductList, ProductItem } from './ProductList.tsx';
+import { Button } from '../../common/button/Button.tsx';
+import { Tab } from '../../display/tab/Tab.tsx';
+import { ProdItem } from '../../product/prodItem/ProdItem.tsx';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+
+// =========================
+// 가이드 문서
+// =========================
+
+const docs: ComponentDocs = {
+    header: {
+        chip: 'Component Guide',
+        title: 'ProductList',
+        desc: 'ProdItem을 그리드로 나열하는 상품 목록 패턴 컴포넌트. 로딩 상태에서는 Skeleton으로 대체됩니다.',
+    },
+    sections: [
+        {
+            type: 'role',
+            description: '상품 목록 페이지, 검색 결과, 카테고리 페이지 등에서 ProdItem을 일정한 레이아웃으로 나열합니다.',
+            bulletList: [
+                '상품 목록 페이지의 2열 그리드 (vertical)',
+                '주문 내역, 장바구니 등의 가로형 리스트 (horizontal)',
+                '데이터 로딩 중 스켈레톤 UI 표시',
+            ],
+        },
+        {
+            type: 'composition',
+            orderedList: [
+                'products 배열을 받아 ProdItem 컴포넌트로 렌더링',
+                'isLoading이 true이면 ProdItem 대신 Skeleton 카드 표시',
+                'skeletonCount로 로딩 중 표시할 placeholder 개수 지정',
+                'layout은 외부에서 ProdItem에 직접 전달',
+            ],
+            diagram: [
+                { label: 'Page' },
+                { label: 'ProductList', active: true },
+                {
+                    nodes: [
+                        { label: 'ProdItem ×n', active: true },
+                        { label: 'Skeleton ×n (loading)' },
+                    ],
+                },
+            ],
+        },
+        {
+            type: 'notes',
+            items: [
+                {
+                    title: 'isLoading 처리',
+                    desc: 'isLoading이 true이면 products 데이터 유무와 관계없이 Skeleton 카드를 skeletonCount만큼 표시합니다. API 응답 전 빈 화면 없이 자연스러운 로딩 UX를 제공합니다.',
+                },
+                {
+                    title: 'layout 전환',
+                    desc: 'ProductList 자체는 layout prop을 갖지 않습니다. 가로형/세로형 전환은 ProdItem에 직접 layout prop을 전달하고 부모에서 그리드/플렉스 레이아웃을 조정해 구현합니다.',
+                },
+            ],
+        },
+    ],
+};
 
 // =========================
 // Mock data
@@ -50,7 +106,12 @@ const mockProducts: ProductItem[] = [
 const meta = {
     title: 'Component/Patterns/ProductList',
     component: ProductList,
-    parameters: { layout: 'centered' },
+    parameters: {
+        layout: 'centered',
+        docs: {
+            page: createDocsPage(docs),
+        },
+    },
     tags: ['autodocs'],
     argTypes: {
         isLoading: {

@@ -3,6 +3,63 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Ratio } from './Ratio';
 import { size } from '../../../styles/tokens/spacing';
 import { gray } from '../../../styles/tokens/color';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+
+// =========================
+// 가이드 문서
+// =========================
+
+const docs: ComponentDocs = {
+    header: {
+        chip: 'Component Guide',
+        title: 'Ratio',
+        desc: 'aspect-ratio 기반으로 비율을 고정하는 이미지/콘텐츠 컨테이너 컴포넌트.',
+    },
+    sections: [
+        {
+            type: 'role',
+            description: '이미지, 배너, 카드 썸네일 등 고정 비율이 필요한 모든 콘텐츠 영역에 사용합니다.',
+            bulletList: [
+                '상품 이미지 썸네일 (1/1, 3/4)',
+                '띠배너, 이벤트 배너 (16/9, 2/1, 21/9)',
+                'ProdItem의 이미지 영역 래퍼',
+            ],
+        },
+        {
+            type: 'notes',
+            items: [
+                {
+                    title: 'width prop',
+                    desc: 'size 토큰 키만 허용합니다. 미지정 시 부모 너비 100%를 채웁니다.',
+                    bulletList: [
+                        '2xs: 40px — 주문 목록 아이템 썸네일',
+                        'xs: 56px — 소형 상품 이미지',
+                        'sm: 80px — 가로형 ProdItem',
+                        'md: 120px — 세로형 ProdItem',
+                        'lg: 160px — 상품 상세',
+                        'full: 100% — 배너, 전체 너비',
+                    ],
+                },
+                {
+                    title: 'children 구조',
+                    desc: 'Inner가 position: absolute; inset: 0으로 콘텐츠를 꽉 채웁니다. img 태그는 자동으로 object-fit: cover가 적용됩니다.',
+                },
+                {
+                    title: 'ratio 선택 기준',
+                    desc: '용도에 따라 적합한 ratio를 선택합니다.',
+                    bulletList: [
+                        '1/1 — 상품 이미지, 아바타',
+                        '3/4 — 세로형 상품 카드',
+                        '4/3 — 가로형 카드',
+                        '16/9 — 영상 썸네일, 띠배너',
+                        '2/1 — 이벤트 배너',
+                        '21/9 — 와이드 배너',
+                    ],
+                },
+            ],
+        },
+    ],
+};
 
 // =========================
 // Mock content
@@ -31,7 +88,12 @@ const MockImage = ({ label }: { label: string }) => (
 const meta = {
     title: 'Component/Display/Ratio',
     component: Ratio,
-    parameters: { layout: 'centered' },
+    parameters: {
+        layout: 'centered',
+        docs: {
+            page: createDocsPage(docs),
+        },
+    },
     tags: ['autodocs'],
     argTypes: {
         ratio: {

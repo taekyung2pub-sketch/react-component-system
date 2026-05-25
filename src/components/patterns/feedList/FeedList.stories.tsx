@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { FeedList, FeedItem } from './FeedList';
+import { FeedList, FeedItem } from './FeedList.tsx';
 
 const mockFeeds: FeedItem[] = [
     {

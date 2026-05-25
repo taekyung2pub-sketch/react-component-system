@@ -1,56 +1,156 @@
 import * as React from 'react';
+import styled from 'styled-components';
+import { spacing, size } from '../../../styles/tokens/spacing';
+import { black, white } from '../../../styles/tokens/color';
+import { title03 } from '../../../styles/mixins/typography';
+import { Icon } from '../../common/icon/Icon';
+import { IconName } from '../../common/icon/iconMap';
 
-import { Button } from '../../common/button/Button.tsx';
-import './header.css';
+// =========================
+// Types
+// =========================
 
-type User = {
-  name: string;
-};
+export type HeaderVariant = 'main' | 'default' | 'back';
 
-export interface HeaderProps {
-  user?: User;
-  onLogin?: () => void;
-  onLogout?: () => void;
-  onCreateAccount?: () => void;
+export interface HeaderAction {
+    icon: IconName;
+    onClick?: () => void;
 }
 
-export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => (
-  <header>
-    <div className="storybook-header">
-      <div>
-        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <g fill="none" fillRule="evenodd">
-            <path
-              d="M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z"
-              fill="#FFF"
-            />
-            <path
-              d="M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z"
-              fill="#555AB9"
-            />
-            <path
-              d="M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z"
-              fill="#91BAF8"
-            />
-          </g>
-        </svg>
-        <h1>Acme</h1>
-      </div>
-      <div>
-        {user ? (
-          <>
-            <span className="welcome">
-              Welcome, <b>{user.name}</b>!
-            </span>
-            <Button size="small" onClick={onLogout} label="Log out" />
-          </>
-        ) : (
-          <>
-            <Button size="small" onClick={onLogin} label="Log in" />
-            <Button primary size="small" onClick={onCreateAccount} label="Sign up" />
-          </>
-        )}
-      </div>
-    </div>
-  </header>
-);
+export interface HeaderProps {
+    /** main — 로고+우측 아이콘 / default — 뒤로가기+타이틀+우측 아이콘 / back — 뒤로가기만 */
+    variant?: HeaderVariant;
+    /** 페이지 타이틀 (default variant) */
+    title?: string;
+    /** 로고 (main variant) */
+    logo?: React.ReactNode;
+    /** 우측 아이콘 버튼 목록 (유동적) */
+    actions?: HeaderAction[];
+    /** 뒤로가기 클릭 핸들러 */
+    onBack?: () => void;
+    /** 추가 className */
+    className?: string;
+}
+
+// =========================
+// Styled components
+// =========================
+
+const Wrapper = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: ${size.xs};
+  padding: 0 ${spacing.md};
+  background-color: ${white};
+  position: relative;
+`;
+
+const Side = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${spacing.sm};
+  min-width: ${size['2xs']};
+`;
+
+const Center = styled.div`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+`;
+
+const TitleText = styled.span`
+  ${title03('semibold')}
+  color: ${black};
+  white-space: nowrap;
+`;
+
+const IconBtn = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: ${size['2xs']};
+  height: ${size['2xs']};
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 50%;
+`;
+
+const LogoWrapper = styled.div`
+  display: inline-flex;
+  align-items: center;
+`;
+
+// =========================
+// Component
+// =========================
+
+export const Header = ({
+                           variant = 'default',
+                           title,
+                           logo,
+                           actions = [],
+                           onBack,
+                           className,
+                       }: HeaderProps) => {
+
+    const backButton = (
+        <IconBtn type="button" onClick={onBack}>
+            <Icon name="arrow" size="lg" color={black} />
+        </IconBtn>
+    );
+
+    const actionButtons = actions.map((action, i) => (
+        <IconBtn key={i} type="button" onClick={action.onClick}>
+            <Icon name={action.icon} size="lg" color={black} />
+        </IconBtn>
+    ));
+
+    // =========================
+    // main — 로고 + 우측 아이콘
+    // =========================
+    if (variant === 'main') {
+        return (
+            <Wrapper className={className}>
+                <Side>
+                    <LogoWrapper>{logo}</LogoWrapper>
+                </Side>
+                <Side style={{ justifyContent: 'flex-end' }}>
+                    {actionButtons}
+                </Side>
+            </Wrapper>
+        );
+    }
+
+    // =========================
+    // back — 뒤로가기만
+    // =========================
+    if (variant === 'back') {
+        return (
+            <Wrapper className={className}>
+                <Side>{backButton}</Side>
+                <Side />
+            </Wrapper>
+        );
+    }
+
+    // =========================
+    // default — 뒤로가기 + 타이틀 + 우측 아이콘
+    // =========================
+    return (
+        <Wrapper className={className}>
+            <Side>{backButton}</Side>
+            <Center>
+                {title && <TitleText>{title}</TitleText>}
+            </Center>
+            <Side style={{ justifyContent: 'flex-end' }}>
+                {actionButtons}
+            </Side>
+        </Wrapper>
+    );
+};
+
+export default Header;

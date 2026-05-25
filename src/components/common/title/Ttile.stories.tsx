@@ -2,6 +2,47 @@ import type { Meta, StoryObj } from '@storybook/react';
 import * as React from 'react';
 import { Title } from './Title';
 import { gray, primary, secondary, semantic } from '../../../styles/tokens/color';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+
+// =========================
+// 가이드 문서
+// =========================
+
+const docs: ComponentDocs = {
+    header: {
+        chip: 'Component Guide',
+        title: 'Title',
+        desc: '페이지 제목, 섹션 제목 등 타이포그래피 계층을 표현하는 텍스트 컴포넌트.',
+    },
+    sections: [
+        {
+            type: 'role',
+            description: '화면 내 텍스트의 시각적 계층과 의미를 동시에 표현합니다.',
+            bulletList: [
+                '페이지 최상단 대제목 (title01)',
+                '섹션 구분 제목 (title02)',
+                '카드, 리스트 아이템 등 서브 타이틀 (title03)',
+            ],
+        },
+        {
+            type: 'notes',
+            items: [
+                {
+                    title: 'variant와 as의 분리',
+                    desc: 'variant는 시각적 스타일, as는 HTML 시맨틱 태그를 독립적으로 제어합니다. 디자인과 마크업 구조를 분리해 접근성을 유지합니다.',
+                },
+                {
+                    title: 'ellipsis 사용',
+                    desc: 'ellipsis 단독 사용 시 1줄 말줄임, maxLines와 함께 사용 시 지정한 줄 수에서 말줄임 처리됩니다.',
+                },
+                {
+                    title: '색상 제한',
+                    desc: 'color prop은 ColorToken 타입만 허용합니다. 디자인 시스템 외 임의 색상값은 사용하지 않습니다.',
+                },
+            ],
+        },
+    ],
+};
 
 // =========================
 // Meta
@@ -12,6 +53,9 @@ const meta = {
     component: Title,
     parameters: {
         layout: 'centered',
+        docs: {
+            page: createDocsPage(docs),
+        },
     },
     tags: ['autodocs'],
     argTypes: {
@@ -65,7 +109,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // =========================
-// Default — 모든 props 기본값, Controls 테스트용
+// Default
 // =========================
 
 export const Default: Story = {

@@ -3,6 +3,65 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ProdItem } from './ProdItem';
 import { Tab } from '../../display/tab/Tab';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+
+// =========================
+// 가이드 문서
+// =========================
+
+const docs: ComponentDocs = {
+    header: {
+        chip: 'Component Guide',
+        title: 'ProdItem',
+        desc: '상품 썸네일 이미지, 상품명, 가격으로 구성된 상품 아이템 컴포넌트. 세로형과 가로형 레이아웃을 지원합니다.',
+    },
+    sections: [
+        {
+            type: 'role',
+            description: '상품 목록, 검색 결과, 추천 상품 등 상품을 나열하는 모든 영역에서 사용합니다.',
+            bulletList: [
+                '상품 목록 2열 그리드 (vertical)',
+                '장바구니, 주문 현황 등 가로형 리스트 (horizontal)',
+                'ProductList 패턴 컴포넌트의 내부 단위',
+            ],
+        },
+        {
+            type: 'composition',
+            orderedList: [
+                'Ratio — 이미지 컨테이너 (비율 고정)',
+                'WishButton — Ratio 우측 상단 absolute 위치',
+                'ProductName — 최대 2줄 말줄임',
+                'Price — size / currency / variant 자동 연동',
+            ],
+            diagram: [
+                { label: 'ProdItem', active: true },
+                {
+                    nodes: [
+                        { label: 'Ratio + WishButton', active: true },
+                        { label: 'ProductName + Price', active: true },
+                    ],
+                },
+            ],
+        },
+        {
+            type: 'notes',
+            items: [
+                {
+                    title: 'layout별 Ratio 설정',
+                    desc: 'layout에 따라 Ratio 비율과 너비가 자동으로 달라집니다.',
+                    bulletList: [
+                        'vertical — ratio 3/4, width full',
+                        'horizontal — ratio 1/1, width md(120px)',
+                    ],
+                },
+                {
+                    title: '찜 버튼',
+                    desc: '내부 useState로 토글 관리합니다. wishDisabled={true}이면 opacity 0.4 + not-allowed 커서로 비활성화됩니다.',
+                },
+            ],
+        },
+    ],
+};
 
 // =========================
 // Mock images
@@ -16,10 +75,10 @@ const mockImages = [
 ];
 
 const mockProducts = [
-    { name: 'Regular Fit Slogan',  price: 1190, originalPrice: 1700, imageUrl: mockImages[0] },
-    { name: 'Regular Fit Polo',    price: 1100, imageUrl: mockImages[1] },
-    { name: 'Regular Fit Black',   price: 1690, originalPrice: 2000, imageUrl: mockImages[2] },
-    { name: 'Regular Fit V-Neck',  price: 1290, imageUrl: mockImages[3] },
+    { name: 'Regular Fit Slogan', price: 1190, originalPrice: 1700, imageUrl: mockImages[0] },
+    { name: 'Regular Fit Polo',   price: 1100, imageUrl: mockImages[1] },
+    { name: 'Regular Fit Black',  price: 1690, originalPrice: 2000, imageUrl: mockImages[2] },
+    { name: 'Regular Fit V-Neck', price: 1290, imageUrl: mockImages[3] },
 ];
 
 // =========================
@@ -29,7 +88,12 @@ const mockProducts = [
 const meta = {
     title: 'Component/Product/ProdItem',
     component: ProdItem,
-    parameters: { layout: 'centered' },
+    parameters: {
+        layout: 'centered',
+        docs: {
+            page: createDocsPage(docs),
+        },
+    },
     tags: ['autodocs'],
     argTypes: {
         layout: {
@@ -88,33 +152,16 @@ const LayoutStory = () => {
                 defaultValue="vertical"
                 onChange={(v) => setLayout(v as 'vertical' | 'horizontal')}
             />
-
             {layout === 'vertical' ? (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
                     {mockProducts.map((p, i) => (
-                        <ProdItem
-                            key={i}
-                            layout="vertical"
-                            name={p.name}
-                            price={p.price}
-                            originalPrice={p.originalPrice}
-                            currency="KRW"
-                            imageSrc={p.imageUrl}
-                        />
+                        <ProdItem key={i} layout="vertical" name={p.name} price={p.price} originalPrice={p.originalPrice} currency="KRW" imageSrc={p.imageUrl} />
                     ))}
                 </div>
             ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {mockProducts.map((p, i) => (
-                        <ProdItem
-                            key={i}
-                            layout="horizontal"
-                            name={p.name}
-                            price={p.price}
-                            originalPrice={p.originalPrice}
-                            currency="KRW"
-                            imageSrc={p.imageUrl}
-                        />
+                        <ProdItem key={i} layout="horizontal" name={p.name} price={p.price} originalPrice={p.originalPrice} currency="KRW" imageSrc={p.imageUrl} />
                     ))}
                 </div>
             )}

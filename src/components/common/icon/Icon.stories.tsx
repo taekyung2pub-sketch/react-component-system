@@ -3,48 +3,121 @@ import * as React from 'react';
 import { Icon } from './Icon';
 import { IconName } from './iconMap';
 import { gray, primary, secondary, semantic } from '../../../styles/tokens/color';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+
+// =========================
+// 가이드 문서
+// =========================
+
+const docs: ComponentDocs = {
+    header: {
+        chip: 'Component Guide',
+        title: 'Icon',
+        desc: 'SVG 아이콘을 color / size token 기반으로 렌더링하는 컴포넌트.',
+    },
+    sections: [
+        {
+            type: 'role',
+            description: '버튼, 헤더, 입력 필드, 네비게이션 등 UI 전반에서 시각적 의미를 보조합니다.',
+            bulletList: [
+                'Button / TextButton의 leftIcon / rightIcon 슬롯',
+                'TextField의 search / mic / eye / 상태 아이콘',
+                'Dock 네비게이션 탭 아이콘',
+                '단독 아이콘 버튼 (Header actions 등)',
+            ],
+        },
+        {
+            type: 'composition',
+            orderedList: [
+                '아이콘 SVG 파일을 /src/assets/icons/ 에 저장',
+                'iconMap.ts 에 등록',
+                'Icon 컴포넌트에 name prop으로 사용',
+            ],
+            diagram: [
+                { label: '/src/assets/icons/icon_{name}.svg' },
+                { label: 'iconMap.ts 등록', active: true },
+                { label: 'Icon name="{name}"', active: true },
+            ],
+        },
+        {
+            type: 'notes',
+            items: [
+                {
+                    title: '아이콘 파일 저장 규칙',
+                    desc: '아이콘은 반드시 아래 규칙을 따릅니다.',
+                    bulletList: [
+                        '저장 경로: /src/assets/icons/',
+                        '파일 확장자: .svg 만 허용',
+                        '파일명 형식: icon_{아이콘명}.svg (예: icon_heart.svg, icon_arrow.svg)',
+                        'SVG 내부 fill / stroke 값은 반드시 currentColor 로 교체',
+                    ],
+                },
+                {
+                    title: 'iconMap 등록 방법',
+                    desc: 'iconMap.ts 에서 카테고리 주석 아래 순서대로 등록합니다.',
+                    bulletList: [
+                        "import HearIcon from '../../../assets/icons/icon_heart.svg?react';",
+                        "iconMap에 'heart': HeartIcon 형태로 추가",
+                        '카테고리는 Navigation / Action / User / Commerce / Delivery / Content / Status / Social / Payment 순서 유지',
+                    ],
+                },
+                {
+                    title: 'color 적용 조건',
+                    desc: 'color prop이 적용되려면 SVG 파일 내 fill 또는 stroke 속성이 currentColor 여야 합니다. 하드코딩된 색상값이 있으면 color prop이 무시됩니다.',
+                },
+                {
+                    title: 'size 기준',
+                    desc: '아이콘 사이즈는 토큰 기반으로 고정되어 있습니다.',
+                    bulletList: [
+                        'xs: 12px',
+                        'sm: 16px',
+                        'md: 20px',
+                        'lg: 24px',
+                        'xl: 32px',
+                    ],
+                },
+            ],
+        },
+    ],
+};
 
 // =========================
 // Meta
 // =========================
 
 const allIconNames: IconName[] = [
-    // Navigation
     'home', 'arrow', 'chevron',
-    // Action
     'search', 'filter', 'edit', 'trash', 'plus', 'minus',
     'cancel', 'cancel_circle', 'check', 'check_circle', 'settings', 'mic',
-    // User
     'user', 'logout', 'address', 'phone', 'chat', 'headphone',
-    // Commerce
     'cart', 'bag', 'discount', 'cash', 'card', 'return',
-    // Delivery
     'box', 'warehouse_filled', 'truck_filled', 'location', 'location_filled',
-    // Content
     'heart', 'heart_filled', 'star', 'bell', 'eye', 'eye_off', 'image', 'calendar',
-    // Status
     'circle', 'warning_circle', 'question',
-    // Social
     'facebook', 'twitter', 'instagram',
-    // Payment
     'apple_pay', 'visa', 'mastercard',
 ];
 
 const meta = {
     title: 'Component/Common/Icon',
     component: Icon,
-    parameters: { layout: 'centered' },
+    parameters: {
+        layout: 'centered',
+        docs: {
+            page: createDocsPage(docs),
+        },
+    },
     tags: ['autodocs'],
     argTypes: {
         name: {
             control: 'select',
             options: allIconNames,
-            description: '아이콘 이름',
+            description: '아이콘 이름 (iconMap에 등록된 key)',
         },
         size: {
             control: 'inline-radio',
             options: ['xs', 'sm', 'md', 'lg', 'xl'],
-            description: '아이콘 사이즈',
+            description: 'xs:12 / sm:16 / md:20 / lg:24 / xl:32',
             table: { defaultValue: { summary: 'md' } },
         },
         color: {
@@ -55,7 +128,7 @@ const meta = {
                 secondary[1], secondary[2], secondary[3],
                 semantic.success, semantic.warning, semantic.error, semantic.info,
             ],
-            description: '아이콘 색상 — 컬러 토큰만 허용 (SVG fill이 currentColor여야 적용됨)',
+            description: '아이콘 색상 — SVG의 fill/stroke가 currentColor 여야 적용됨',
         },
     },
 } satisfies Meta<typeof Icon>;
@@ -128,8 +201,8 @@ export const AllIcons: Story = {
                 >
                     <Icon name={name} size="md" color={gray[700]} />
                     <span style={{ fontSize: '9px', color: gray[500], textAlign: 'center', wordBreak: 'break-all' }}>
-            {name}
-          </span>
+                        {name}
+                    </span>
                 </div>
             ))}
         </div>

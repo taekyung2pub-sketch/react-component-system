@@ -1,6 +1,43 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import * as React from 'react';
 import { Badge } from './Badge';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+
+// =========================
+// 가이드 문서
+// =========================
+
+const docs: ComponentDocs = {
+    header: {
+        chip: 'Component Guide',
+        title: 'Badge',
+        desc: '상태, 카테고리, 라벨 등 짧은 정보를 강조해서 표시하는 인라인 컴포넌트.',
+    },
+    sections: [
+        {
+            type: 'role',
+            description: '텍스트나 아이템에 부가적인 정보를 시각적으로 덧붙일 때 사용합니다.',
+            bulletList: [
+                '상품 상태 표시 (Completed, In Transit, Picked 등)',
+                '카테고리 태그, 필터 라벨',
+                '알림 카운트, 상태 표시',
+            ],
+        },
+        {
+            type: 'notes',
+            items: [
+                {
+                    title: 'variant와 color 조합',
+                    desc: 'variant(filled/soft/outline)와 color(gray-dark/gray-light/primary/secondary)를 조합해 다양한 강조 수준을 표현합니다. 중요도가 높을수록 filled, 보조 정보는 soft나 outline을 권장합니다.',
+                },
+                {
+                    title: 'rounded 선택 기준',
+                    desc: '일반 태그는 sm, 상태 표시용은 full을 주로 사용합니다.',
+                },
+            ],
+        },
+    ],
+};
 
 // =========================
 // Meta
@@ -11,6 +48,9 @@ const meta = {
     component: Badge,
     parameters: {
         layout: 'centered',
+        docs: {
+            page: createDocsPage(docs),
+        },
     },
     tags: ['autodocs'],
     argTypes: {

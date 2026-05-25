@@ -127,7 +127,11 @@ export const CompositionBox = styled.div<{ $active?: boolean }>`
   background: ${({ theme }) => theme.color.surface[2]};
   text-align: center;
 
-  ${body04('medium')}
+
+  font-size: 13px !important;       /* body04 font-size */
+  line-height: 20px !important;     /* body04 line-height */
+  font-weight: 400 !important;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
 
   ${({ theme, $active }) =>
     $active &&
@@ -152,6 +156,7 @@ export const GuideNotes = styled.ul`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.md};
+  padding-right: ${({ theme }) => theme.spacing.xl};
 
   > li {
     padding-bottom: ${({ theme }) => theme.spacing.md};
@@ -172,9 +177,11 @@ export const GuideNotes = styled.ul`
   }
 
   p {
-    color: ${({ theme }) => theme.color.gray[600]};
-
-    ${body04()}
+    color: ${({ theme }) => theme.color.gray[600]} !important;
+    font-size: 13px !important;       /* body04 font-size */
+    line-height: 20px !important;     /* body04 line-height */
+    font-weight: 400 !important;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
   }
 `;
 
@@ -210,7 +217,10 @@ export const GuideTextList = styled.ul`
     position: relative;
     padding-left: 14px;
 
-    ${body04()}
+    font-size: 13px !important;       /* body04 font-size */
+    line-height: 20px !important;     /* body04 line-height */
+    font-weight: 400 !important;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
 
     &::before {
       content: '-';
@@ -234,7 +244,10 @@ export const GuideNumberList = styled.ol`
     &::marker {
       color: ${({ theme }) => theme.color.gray[800]};
 
-      ${body04('medium')}
+      font-size: 13px !important;       /* body04 font-size */
+      line-height: 20px !important;     /* body04 line-height */
+      font-weight: 500 !important;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
   }
 `;

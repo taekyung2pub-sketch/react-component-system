@@ -1,6 +1,77 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TextField } from './TextField';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+
+// =========================
+// 가이드 문서
+// =========================
+
+const docs: ComponentDocs = {
+    header: {
+        chip: 'Component Guide',
+        title: 'TextField',
+        desc: '텍스트 입력을 받는 기본 폼 컴포넌트. 상태, 타입, 삭제 버튼을 지원합니다.',
+    },
+    sections: [
+        {
+            type: 'role',
+            description: '사용자로부터 텍스트 입력을 받는 모든 폼 상황에서 사용됩니다.',
+            bulletList: [
+                '로그인 / 회원가입 폼의 이메일, 비밀번호 입력',
+                '검색 페이지의 검색어 입력',
+                '주문서, 주소 등록 등 각종 정보 입력 폼',
+            ],
+        },
+        {
+            type: 'composition',
+            orderedList: [
+                'type prop으로 입력 유형 결정 (text / email / password / search / number)',
+                'status prop으로 유효성 상태 표현 (default / focus / success / error)',
+                '값과 상태는 내부 useState로 관리 (uncontrolled)',
+                'error 상태일 때 message prop으로 에러 문구 표시',
+            ],
+            diagram: [
+                { label: 'Form / Page' },
+                { label: 'TextField', active: true },
+                {
+                    nodes: [
+                        { label: 'Left Icon (search)' },
+                        { label: 'Input', active: true },
+                        { label: 'Right Slot' },
+                    ],
+                },
+                { label: 'ErrorMessage' },
+            ],
+        },
+        {
+            type: 'notes',
+            items: [
+                {
+                    title: '상태 관리',
+                    desc: '입력값은 내부 useState로 관리합니다. 외부에서 value / onChange를 주입하는 controlled 방식은 지원하지 않습니다.',
+                },
+                {
+                    title: 'deleteBtn 노출 조건',
+                    desc: 'deleteBtn prop이 true(기본값)이더라도 아래 조건을 모두 만족할 때만 노출됩니다.',
+                    bulletList: [
+                        '값이 입력되어 있을 것 (!!value)',
+                        'disabled 상태가 아닐 것',
+                        'password 타입이 아닐 것',
+                    ],
+                },
+                {
+                    title: 'password 타입',
+                    desc: 'eye / eye_off 아이콘으로 비밀번호 표시 토글을 지원합니다. success / error 상태 아이콘과 함께 우측에 나란히 표시됩니다.',
+                },
+                {
+                    title: 'search 타입',
+                    desc: 'status prop이 무시되며, 좌측 search 아이콘 + 우측 mic 아이콘이 고정으로 표시됩니다.',
+                },
+            ],
+        },
+    ],
+};
 
 // =========================
 // Meta
@@ -11,6 +82,9 @@ const meta = {
     component: TextField,
     parameters: {
         layout: 'centered',
+        docs: {
+            page: createDocsPage(docs),
+        },
     },
     tags: ['autodocs'],
     argTypes: {
