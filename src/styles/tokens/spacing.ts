@@ -1,6 +1,16 @@
 // =========================
 // Spacing Tokens
 // =========================
+export const size = {
+  '2xs': '40px',
+  xs:    '56px',
+  sm:    '80px',
+  md:    '120px',
+  lg:    '160px',
+  xl:    '200px',
+  '2xl': '240px',
+  full:  '100%',
+} as const;
 
 export const spacing = {
   xs:  '4px',

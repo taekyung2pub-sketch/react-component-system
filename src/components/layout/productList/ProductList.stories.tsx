@@ -1,45 +1,67 @@
+import * as React from 'react';
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ProductList, ProductItem } from './ProductList';
+import { Button } from '../../common/button/Button';
+import { Tab } from '../../display/tab/Tab';
+import { ProdItem } from '../../product/prodItem/ProdItem';
 
-// 가상 데이터 세팅
+// =========================
+// Mock data
+// =========================
+
 const mockProducts: ProductItem[] = [
     {
         id: 1,
         imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80',
-        title: '[인기] 모던 스마트 워치 스페셜 에디션 (스트랩 포함)',
-        price: '129,000원',
+        name: 'Regular Fit Slogan',
+        price: 1190,
+        originalPrice: 1700,
+        currency: 'KRW',
     },
     {
         id: 2,
-        imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80',
-        title: '프리미엄 노이즈 캔슬링 무선 헤드폰 무광 블랙',
-        price: '298,000원',
+        imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
+        name: 'Regular Fit Polo',
+        price: 1100,
+        currency: 'KRW',
     },
     {
         id: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
-        title: '러닝 에어 매쉬 스포츠 운동화 스카이 블루',
-        price: '89,000원',
+        imageUrl: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?w=500&q=80',
+        name: 'Regular Fit Black',
+        price: 1690,
+        originalPrice: 2000,
+        currency: 'KRW',
     },
     {
         id: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&q=80',
-        title: '레트로 스타일 미러 선글라스 UV100 차단 패키지',
-        price: '45,000원',
+        imageUrl: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=500&q=80',
+        name: 'Regular Fit V-Neck',
+        price: 1290,
+        currency: 'KRW',
     },
 ];
+
+// =========================
+// Meta
+// =========================
 
 const meta = {
     title: 'Component/Patterns/ProductList',
     component: ProductList,
-    parameters: {
-        layout: 'centered',
-    },
+    parameters: { layout: 'centered' },
     tags: ['autodocs'],
     argTypes: {
         isLoading: {
             control: 'boolean',
+            description: '로딩 상태',
+            table: { defaultValue: { summary: 'false' } },
+        },
+        skeletonCount: {
+            control: { type: 'number', min: 1, max: 12 },
+            description: '로딩 시 스켈레톤 개수',
+            table: { defaultValue: { summary: '4' } },
         },
     },
 } satisfies Meta<typeof ProductList>;
@@ -47,54 +69,110 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// 1. 기본형 스토리 (오른쪽 제어판에서 isLoading 토글 테스트 가능)
+// =========================
+// Default
+// =========================
+
 export const Default: Story = {
     args: {
         isLoading: false,
         products: mockProducts,
     },
+    decorators: [(Story) => <div style={{ width: 320 }}><Story /></div>],
 };
 
-// 2. 스켈레톤 전용 상태 확인 스토리
-export const LoadingState: Story = {
+// =========================
+// Layout 토글
+// =========================
+
+const LayoutStory = () => {
+    const [layout, setLayout] = useState<'vertical' | 'horizontal'>('vertical');
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: 320 }}>
+            <Tab
+                variant="equal"
+                items={[
+                    { label: '세로형', value: 'vertical' },
+                    { label: '가로형', value: 'horizontal' },
+                ]}
+                defaultValue="vertical"
+                onChange={(v) => setLayout(v as 'vertical' | 'horizontal')}
+            />
+            {layout === 'vertical' ? (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
+                    {mockProducts.map((p) => (
+                        <ProdItem
+                            key={p.id}
+                            layout="vertical"
+                            name={p.name}
+                            price={p.price}
+                            originalPrice={p.originalPrice}
+                            currency={p.currency}
+                            imageSrc={p.imageUrl}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {mockProducts.map((p) => (
+                        <ProdItem
+                            key={p.id}
+                            layout="horizontal"
+                            name={p.name}
+                            price={p.price}
+                            originalPrice={p.originalPrice}
+                            currency={p.currency}
+                            imageSrc={p.imageUrl}
+                        />
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export const LayoutToggle: Story = {
+    name: 'layout — 탭 토글',
+    render: () => <LayoutStory />,
+};
+
+// =========================
+// Loading
+// =========================
+
+export const Loading: Story = {
+    name: 'loading — 스켈레톤',
     args: {
         isLoading: true,
-        products: mockProducts,
+        skeletonCount: 4,
     },
+    decorators: [(Story) => <div style={{ width: 320 }}><Story /></div>],
 };
 
-// 3. 버튼을 눌러 비동기 로딩을 전환해보는 리얼 라이브 테스트 데모 스토리
-export const LiveTransitionDemo = () => {
+// =========================
+// Live demo
+// =========================
+
+const LiveDemoStory = () => {
     const [isLoading, setIsLoading] = useState(false);
 
-    const toggleLoading = () => {
+    const handleLoad = () => {
         setIsLoading(true);
-        // 1.5초 뒤에 자동으로 로딩 해제되어 진짜 데이터로 덮어씌워짐 시뮬레이션
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 3000);
+        setTimeout(() => setIsLoading(false), 3000);
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-            <button
-                onClick={toggleLoading}
-                style={{
-                    padding: '10px 20px',
-                    borderRadius: '8px',
-                    backgroundColor: '#18181b',
-                    color: '#ffffff',
-                    border: 'none',
-                    cursor: 'pointer',
-                    fontWeight: '500',
-                }}
-            >
-                🔄 3초 비동기 API 로딩 전환 테스트하기
-            </button>
-
-            <div style={{ border: '1px solid #e4e4e7', borderRadius: '12px', overflow: 'hidden' }}>
-                <ProductList isLoading={isLoading} products={mockProducts} />
-            </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: 320 }}>
+            <Button size="md" color="gray-dark" fullWidth onClick={handleLoad} disabled={isLoading}>
+                {isLoading ? '로딩 중...' : '3초 로딩 테스트'}
+            </Button>
+            <ProductList isLoading={isLoading} products={mockProducts} />
         </div>
     );
+};
+
+export const LiveDemo: Story = {
+    name: 'live demo — 로딩 전환',
+    render: () => <LiveDemoStory />,
 };

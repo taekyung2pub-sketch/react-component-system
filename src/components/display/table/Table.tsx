@@ -58,8 +58,9 @@ const Body = styled.div`
 
 const Row = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: ${spacing.sm};
 `;
 
 const LabelCell = styled.span<{ $color?: ColorToken }>`
@@ -70,6 +71,8 @@ const LabelCell = styled.span<{ $color?: ColorToken }>`
 const ValueCell = styled.span<{ $color?: ColorToken }>`
   ${body03('medium')}
   color: ${({ $color }) => $color ?? gray[900]};
+  text-align: right;
+  flex-shrink: 0;
 `;
 
 const Divider = styled.div`
@@ -80,8 +83,9 @@ const Divider = styled.div`
 
 const FooterRow = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: ${spacing.sm};
 `;
 
 const FooterLabel = styled.span<{ $color?: ColorToken }>`
@@ -92,6 +96,8 @@ const FooterLabel = styled.span<{ $color?: ColorToken }>`
 const FooterValue = styled.span<{ $color?: ColorToken }>`
   ${body02('bold')}
   color: ${({ $color }) => $color ?? black};
+  text-align: right;
+  flex-shrink: 0;
 `;
 
 // =========================
