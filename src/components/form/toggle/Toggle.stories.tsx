@@ -1,6 +1,55 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Toggle } from './Toggle';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+
+// =========================
+// 가이드 문서
+// =========================
+
+const docs: ComponentDocs = {
+    header: {
+        chip: 'Component Guide',
+        title: 'Toggle',
+        desc: 'on/off 상태를 전환하는 스위치 컴포넌트.',
+    },
+    sections: [
+        {
+            type: 'role',
+            description: '즉각적인 설정 변경이 필요한 단일 on/off 상황에서 사용합니다.',
+            bulletList: [
+                '알림, 테마, 설정 등 즉시 반영되는 스위치',
+                '필터, 옵션의 활성/비활성 전환',
+            ],
+        },
+        {
+            type: 'notes',
+            items: [
+                {
+                    title: '상태 관리',
+                    desc: '내부 useState로 on/off를 관리합니다. defaultChecked로 초기 상태를 지정하고 onChange로 변경 이벤트를 외부에서 수신합니다.',
+                },
+                {
+                    title: 'color — on 상태에만 적용',
+                    desc: 'color prop은 on 상태일 때 track 배경색에 적용됩니다. off 상태는 항상 gray[300]으로 고정됩니다.',
+                    bulletList: [
+                        'gray — gray[700]',
+                        'primary — primary[2]',
+                        'secondary — secondary[2]',
+                    ],
+                },
+                {
+                    title: 'size 기준',
+                    desc: '버튼 사이즈 토큰 기준으로 높이가 결정됩니다.',
+                    bulletList: [
+                        'xs — 24px (버튼 xs와 동일)',
+                        'sm — 32px (버튼 sm과 동일)',
+                    ],
+                },
+            ],
+        },
+    ],
+};
 
 // =========================
 // Meta
@@ -9,7 +58,12 @@ import { Toggle } from './Toggle';
 const meta = {
     title: 'Component/Form/Toggle',
     component: Toggle,
-    parameters: { layout: 'centered' },
+    parameters: {
+        layout: 'centered',
+        docs: {
+            page: createDocsPage(docs),
+        },
+    },
     tags: ['autodocs'],
     argTypes: {
         size: {

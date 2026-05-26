@@ -1,8 +1,9 @@
 import * as React from 'react';
+import { Skeleton } from '../../overlay/skeleton/Skeleton';
 import styled, { css } from 'styled-components';
-import { spacing, radius, transition } from '../../../styles/tokens/spacing.ts';
-import { gray, white, primary, black } from '../../../styles/tokens/color.ts';
-import { body03, body04, caption01 } from '../../../styles/mixins/typography.ts';
+import { spacing, radius, transition } from '../../../styles/tokens/spacing';
+import { gray, white, primary, black } from '../../../styles/tokens/color';
+import { body03, body04, caption01 } from '../../../styles/mixins/typography';
 
 // =========================
 // Types
@@ -19,6 +20,10 @@ export interface StepListProps {
     variant?: StepListVariant;
     items: StepItem[];
     current?: number;
+    /** 로딩 상태 */
+    isLoading?: boolean;
+    /** 로딩 시 표시할 skeleton 개수 */
+    skeletonCount?: number;
     className?: string;
 }
 
@@ -191,6 +196,7 @@ const VContent = styled.div<{ $status: StepStatus; $last: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 2px;
+  flex: 1;
   padding-bottom: ${({ $last }) => $last ? '0' : spacing.md};
   opacity: ${({ $status }) => $status === 'pending' ? 0.4 : 1};
   transition: opacity ${transition.normal};
@@ -215,8 +221,29 @@ export const StepList = ({
                              variant = 'horizontal',
                              items,
                              current = 0,
+                             isLoading = false,
+                             skeletonCount = 4,
                              className,
                          }: StepListProps) => {
+
+    if (isLoading) {
+        return (
+            <VWrapper className={className}>
+                {Array.from({ length: skeletonCount }).map((_, i) => (
+                    <VStep key={i}>
+                        <VIndicator>
+                            <Skeleton $width="16px" $height="16px" $variant="circle" />
+                            {i < skeletonCount - 1 && <Skeleton $width="2px" $height="32px" />}
+                        </VIndicator>
+                        <VContent $status="done" $last={i === skeletonCount - 1}>
+                            <Skeleton $width="40%" $height="14px" />
+                            <Skeleton $width="75%" $height="12px" />
+                        </VContent>
+                    </VStep>
+                ))}
+            </VWrapper>
+        );
+    }
 
     if (variant === 'horizontal') {
         return (

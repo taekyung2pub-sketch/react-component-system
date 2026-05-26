@@ -1,6 +1,10 @@
 import * as React from 'react';
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Skeleton } from './Skeleton';
+import { Button } from '../../common/button/Button';
+import { ProductList } from '../../patterns/productList/ProductList';
+import { StepList } from '../../patterns/stepList/StepList';
 import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
 
 // =========================
@@ -18,25 +22,51 @@ const docs: ComponentDocs = {
             type: 'role',
             description: 'API 응답을 기다리는 동안 빈 화면 대신 콘텐츠 형태를 미리 보여줍니다.',
             bulletList: [
-                'ProductList의 isLoading 상태에서 상품 카드 플레이스홀더',
+                'ProductList isLoading 상태의 상품 카드 플레이스홀더',
+                'StepList 로딩 대기 상태',
                 '프로필 이미지, 이름 등 사용자 정보 로딩 대기',
                 '텍스트 라인 단위 로딩 표시',
+            ],
+        },
+        {
+            type: 'composition',
+            orderedList: [
+                '실제 콘텐츠 레이아웃 구조를 Skeleton으로 동일하게 구성',
+                'isLoading 조건에 따라 실제 컴포넌트와 Skeleton을 교체',
+                'width / height는 실제 콘텐츠 크기와 최대한 맞춤',
+                '$variant로 rect(기본) / circle 형태 선택',
+            ],
+            diagram: [
+                { label: 'isLoading === true' },
+                {
+                    nodes: [
+                        { label: 'Skeleton (placeholder)', active: true },
+                        { label: 'ActualComponent' },
+                    ],
+                },
+                { label: 'isLoading === false' },
+                {
+                    nodes: [
+                        { label: 'Skeleton' },
+                        { label: 'ActualComponent', active: true },
+                    ],
+                },
             ],
         },
         {
             type: 'notes',
             items: [
                 {
-                    title: '조합해서 사용',
-                    desc: 'Skeleton 단독보다 여러 개를 조합해 실제 UI 구조를 모방하면 효과적입니다. 실제 콘텐츠와 너비/높이를 최대한 맞춰 레이아웃 점프를 줄입니다.',
-                },
-                {
-                    title: '$variant',
-                    desc: 'rect는 사각형, circle은 원형입니다. 아바타, 프로필 이미지에는 circle을 사용합니다.',
+                    title: '구조 모방이 핵심',
+                    desc: '실제 콘텐츠의 레이아웃 구조를 그대로 모방해야 로딩 전후 레이아웃 점프가 없습니다. 각 요소의 너비/높이를 실제 컴포넌트와 맞춰 사용합니다.',
                 },
                 {
                     title: 'shimmer 애니메이션',
                     desc: '좌에서 우로 흐르는 shimmer 애니메이션이 기본 적용되어 있습니다.',
+                },
+                {
+                    title: '$variant',
+                    desc: 'rect는 사각형(기본), circle은 원형입니다. 아바타, 프로필 이미지에는 circle을 사용합니다.',
                 },
             ],
         },
@@ -107,54 +137,59 @@ export const Variant: Story = {
 };
 
 // =========================
-// Size
+// ProductList 적용 예시
 // =========================
 
-export const Size: Story = {
-    name: 'size',
-    render: () => (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '300px' }}>
-            <Skeleton $height="12px" />
-            <Skeleton $height="16px" />
-            <Skeleton $height="20px" />
-            <Skeleton $width="200px" $height="120px" />
+const mockProducts = [
+    { id: 1, imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80', name: 'Regular Fit Slogan', price: 1190, originalPrice: 1700, currency: 'KRW' as const },
+    { id: 2, imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80', name: 'Regular Fit Polo',   price: 1100, currency: 'KRW' as const },
+    { id: 3, imageUrl: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?w=500&q=80', name: 'Regular Fit Black',  price: 1690, originalPrice: 2000, currency: 'KRW' as const },
+    { id: 4, imageUrl: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=500&q=80', name: 'Regular Fit V-Neck', price: 1290, currency: 'KRW' as const },
+];
+
+const ProductListSkeletonStory = () => {
+    const [isLoading, setIsLoading] = useState(true);
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: 320 }}>
+            <Button size="sm" color="gray-dark" variant="outline" fullWidth onClick={() => setIsLoading((v) => !v)}>
+                {isLoading ? '콘텐츠 보기' : '로딩 상태 보기'}
+            </Button>
+            <ProductList isLoading={isLoading} products={mockProducts} />
         </div>
-    ),
+    );
+};
+
+export const ProductListSkeleton: Story = {
+    name: 'ProductList 적용 예시',
+    render: () => <ProductListSkeletonStory />,
 };
 
 // =========================
-// Combination — 상품 카드
+// StepList 적용 예시
 // =========================
 
-export const ProductCard: Story = {
-    name: 'combination — 상품 카드',
-    render: () => (
-        <div style={{ width: '160px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <Skeleton $width="160px" $height="160px" />
-            <Skeleton $width="80%" $height="14px" />
-            <Skeleton $width="50%" $height="14px" />
-            <Skeleton $width="60%" $height="16px" />
+const trackingItems = [
+    { title: 'Packing',    desc: '2336 Jack Warren Rd, Delta Junction' },
+    { title: 'Picked',     desc: '2417 Tongass Ave #111, Ketchikan' },
+    { title: 'In Transit', desc: '16 Rr 2, Ketchikan, Alaska 99901' },
+    { title: 'Delivered',  desc: '925 S Chugach St #APT 10, Alaska' },
+];
+
+const StepListSkeletonStory = () => {
+    const [isLoading, setIsLoading] = useState(true);
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: 320 }}>
+            <Button size="sm" color="gray-dark" variant="outline" fullWidth onClick={() => setIsLoading((v) => !v)}>
+                {isLoading ? '콘텐츠 보기' : '로딩 상태 보기'}
+            </Button>
+            <StepList variant="vertical" items={trackingItems} current={2} isLoading={isLoading} />
         </div>
-    ),
+    );
 };
 
-// =========================
-// Combination — 목록 아이템
-// =========================
-
-export const ListItem: Story = {
-    name: 'combination — 목록 아이템',
-    render: () => (
-        <div style={{ width: '343px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {[1, 2, 3].map((i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <Skeleton $width="48px" $height="48px" $variant="circle" />
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                        <Skeleton $width="60%" $height="14px" />
-                        <Skeleton $width="90%" $height="12px" />
-                    </div>
-                </div>
-            ))}
-        </div>
-    ),
+export const StepListSkeleton: Story = {
+    name: 'StepList 적용 예시',
+    render: () => <StepListSkeletonStory />,
 };

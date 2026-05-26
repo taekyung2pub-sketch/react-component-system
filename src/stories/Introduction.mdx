@@ -1,0 +1,321 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Design System/Introduction" />
+
+<style>
+{`
+  .ds-page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 32px;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #18181b;
+  }
+  .ds-chip {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 9999px;
+    background: #7c8ea3;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+  }
+  .ds-hero { margin-bottom: 64px; }
+  .ds-hero-title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 12px;
+    letter-spacing: -0.5px;
+  }
+  .ds-hero-title span {
+    font-size: 36px;
+    font-weight: 700;
+    color: #7c8ea3;
+  }
+
+  .ds-hero-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #52525b;
+    max-width: 560px;
+    margin: 0;
+  }
+  .ds-stats { display: flex; gap: 32px; margin-top: 32px; flex-wrap: wrap; }
+  .ds-stat { display: flex; flex-direction: column; gap: 2px; }
+  .ds-stat-num { font-size: 28px; font-weight: 700; color: #18181b; letter-spacing: -0.5px; }
+  .ds-stat-label { font-size: 12px; color: #71717a; }
+
+  .ds-section { margin-bottom: 56px; }
+  .ds-section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    color: #a1a1aa; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .ds-section-title { font-size: 22px; font-weight: 700; margin: 0 0 20px; letter-spacing: -0.3px; }
+  .ds-divider { border: none; border-top: 1px solid #e4e4e7; margin: 0 0 28px; }
+
+  .ds-spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .ds-spec-card { padding: 20px 24px; border: 1px solid #e4e4e7; border-radius: 12px; background: #fafafa; }
+  .ds-spec-card-label { font-size: 11px; font-weight: 600; color: #a1a1aa; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+  .ds-spec-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ds-tag {
+    display: inline-flex; align-items: center; height: 26px; padding: 0 10px;
+    border-radius: 6px; background: #f4f4f5; color: #3f3f46;
+    font-size: 12px; font-weight: 500; border: 1px solid #e4e4e7;
+  }
+  .ds-tag.primary { background: #eef1f4; color: #4a5b70; border-color: #d0dae3; }
+
+  .ds-component-categories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 32px; }
+  .ds-component-category-title {
+    font-size: 12px; font-weight: 600; color: #71717a;
+    margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #f4f4f5;
+  }
+  .ds-component-item {
+    font-size: 13px; color: #3f3f46; padding: 3px 0;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .ds-component-item::before {
+    content: ''; width: 4px; height: 4px;
+    border-radius: 50%; background: #a1a1aa; flex-shrink: 0;
+  }
+
+  .ds-token-section { margin-bottom: 36px; }
+  .ds-token-title { font-size: 14px; font-weight: 600; color: #3f3f46; margin-bottom: 12px; }
+
+  .ds-color-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .ds-swatch { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .ds-swatch-block { width: 40px; height: 40px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); }
+  .ds-swatch-label { font-size: 9px; color: #a1a1aa; font-weight: 500; text-align: center; }
+
+  .ds-typo-row { display: flex; flex-direction: column; gap: 8px; }
+  .ds-typo-item {
+    display: flex; align-items: baseline; gap: 16px;
+    padding: 10px 16px; background: #fafafa;
+    border-radius: 8px; border: 1px solid #f4f4f5;
+  }
+  .ds-typo-meta { font-size: 11px; color: #a1a1aa; white-space: nowrap; min-width: 100px; }
+
+  .ds-spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .ds-spacing-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .ds-spacing-block { background: #7c8ea3; border-radius: 3px; opacity: 0.7; }
+  .ds-spacing-label { font-size: 10px; color: #a1a1aa; text-align: center; }
+
+  .ds-size-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+  .ds-size-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .ds-size-block { background: #b08b6b; border-radius: 4px; opacity: 0.6; }
+  .ds-size-label { font-size: 10px; color: #a1a1aa; text-align: center; }
+
+  .ds-radius-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .ds-radius-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .ds-radius-block { width: 48px; height: 48px; background: #e4e4e7; border: 2px solid #a1a1aa; }
+  .ds-radius-label { font-size: 10px; color: #a1a1aa; text-align: center; }
+`}
+</style>
+
+<div className="ds-page">
+
+  <div className="ds-hero">
+    <div className="ds-chip">Portfolio · Design System</div>
+    <h1 className="ds-hero-title">React <span>Component</span> System</h1>
+    <p className="ds-hero-desc">
+      모바일 앱 UI를 위한 React 기반 컴포넌트 디자인 시스템입니다.
+      일관된 토큰 체계와 컴포넌트 가이드를 통해 효율적인 UI 개발을 지원합니다.
+    </p>
+    <div className="ds-stats">
+      <div className="ds-stat">
+        <span className="ds-stat-num">40+</span>
+        <span className="ds-stat-label">Components</span>
+      </div>
+      <div className="ds-stat">
+        <span className="ds-stat-num">5</span>
+        <span className="ds-stat-label">Token Categories</span>
+      </div>
+      <div className="ds-stat">
+        <span className="ds-stat-num">100%</span>
+        <span className="ds-stat-label">TypeScript</span>
+      </div>
+    </div>
+  </div>
+
+  <div className="ds-section">
+    <p className="ds-section-label">Project Spec</p>
+    <h2 className="ds-section-title">기술 스택 & 환경</h2>
+    <hr className="ds-divider" />
+    <div className="ds-spec-grid">
+      <div className="ds-spec-card">
+        <p className="ds-spec-card-label">Core</p>
+        <div className="ds-spec-tags">
+          <span className="ds-tag primary">React 19</span>
+          <span className="ds-tag primary">TypeScript 6</span>
+          <span className="ds-tag primary">Vite 8</span>
+        </div>
+      </div>
+      <div className="ds-spec-card">
+        <p className="ds-spec-card-label">Styling</p>
+        <div className="ds-spec-tags">
+          <span className="ds-tag">styled-components 6</span>
+          <span className="ds-tag">Design Tokens</span>
+          <span className="ds-tag">Typography Mixins</span>
+        </div>
+      </div>
+      <div className="ds-spec-card">
+        <p className="ds-spec-card-label">Documentation</p>
+        <div className="ds-spec-tags">
+          <span className="ds-tag">Storybook 10</span>
+          <span className="ds-tag">Component Guide</span>
+          <span className="ds-tag">Autodocs</span>
+        </div>
+      </div>
+      <div className="ds-spec-card">
+        <p className="ds-spec-card-label">Testing & DX</p>
+        <div className="ds-spec-tags">
+          <span className="ds-tag">Vitest</span>
+          <span className="ds-tag">Playwright</span>
+          <span className="ds-tag">ESLint</span>
+          <span className="ds-tag">vite-plugin-svgr</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div className="ds-section">
+    <p className="ds-section-label">Component Library</p>
+    <h2 className="ds-section-title">컴포넌트 구성</h2>
+    <hr className="ds-divider" />
+    <div className="ds-component-categories">
+      <div>
+        <p className="ds-component-category-title">Common</p>
+        <div className="ds-component-item">Title</div>
+        <div className="ds-component-item">Badge</div>
+        <div className="ds-component-item">Icon</div>
+        <div className="ds-component-item">Button</div>
+        <div className="ds-component-item">TextButton</div>
+        <div className="ds-component-item">Stepper</div>
+        <div className="ds-component-item">Tab</div>
+        <div className="ds-component-item">Toggle</div>
+        <div className="ds-component-item">Accordion</div>
+        <div className="ds-component-item">Header</div>
+        <div className="ds-component-item">EmptyState</div>
+      </div>
+      <div>
+        <p className="ds-component-category-title">Form</p>
+        <div className="ds-component-item">TextField</div>
+        <div className="ds-component-item">TextArea</div>
+        <div className="ds-component-item">Select</div>
+        <div className="ds-component-item">Radio</div>
+        <div className="ds-component-item">Checkbox</div>
+        <div className="ds-component-item">Toggle</div>
+        <p className="ds-component-category-title" style={{marginTop: '16px'}}>Overlay</p>
+        <div className="ds-component-item">Skeleton</div>
+        <div className="ds-component-item">Toast</div>
+      </div>
+      <div>
+        <p className="ds-component-category-title">Display</p>
+        <div className="ds-component-item">Ratio</div>
+        <div className="ds-component-item">Swiper</div>
+        <div className="ds-component-item">Table</div>
+        <div className="ds-component-item">StepList</div>
+        <p className="ds-component-category-title" style={{marginTop: '16px'}}>Product</p>
+        <div className="ds-component-item">Price</div>
+        <div className="ds-component-item">Rating</div>
+        <div className="ds-component-item">ProdItem</div>
+        <p className="ds-component-category-title" style={{marginTop: '16px'}}>Layout</p>
+        <div className="ds-component-item">Section</div>
+        <div className="ds-component-item">Docker</div>
+        <p className="ds-component-category-title" style={{marginTop: '16px'}}>Patterns</p>
+        <div className="ds-component-item">ProductList</div>
+      </div>
+    </div>
+  </div>
+
+  <div className="ds-section">
+    <p className="ds-section-label">Design System</p>
+    <h2 className="ds-section-title">디자인 토큰</h2>
+    <hr className="ds-divider" />
+
+    <div className="ds-token-section">
+      <p className="ds-token-title">Color — Gray</p>
+      <div className="ds-color-row">
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#18181b'}} /><span className="ds-swatch-label">900</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#27272a'}} /><span className="ds-swatch-label">800</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#3f3f46'}} /><span className="ds-swatch-label">700</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#52525b'}} /><span className="ds-swatch-label">600</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#71717a'}} /><span className="ds-swatch-label">500</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#a1a1aa'}} /><span className="ds-swatch-label">400</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#d4d4d8'}} /><span className="ds-swatch-label">300</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#e4e4e7'}} /><span className="ds-swatch-label">200</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#f4f4f5'}} /><span className="ds-swatch-label">100</span></div>
+      </div>
+      <p className="ds-token-title">Color — Brand & Semantic</p>
+      <div className="ds-color-row">
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#7c8ea3'}} /><span className="ds-swatch-label">primary 1</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#62748a'}} /><span className="ds-swatch-label">primary 2</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#4a5b70'}} /><span className="ds-swatch-label">primary 3</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#b08b6b'}} /><span className="ds-swatch-label">secondary 1</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#9a7658'}} /><span className="ds-swatch-label">secondary 2</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#7e6047'}} /><span className="ds-swatch-label">secondary 3</span></div>
+        <div style={{width:'8px'}} />
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#6f8a7a'}} /><span className="ds-swatch-label">success</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#d6a45d'}} /><span className="ds-swatch-label">warning</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#c46b6b'}} /><span className="ds-swatch-label">error</span></div>
+        <div className="ds-swatch"><div className="ds-swatch-block" style={{background:'#7c8ea3'}} /><span className="ds-swatch-label">info</span></div>
+      </div>
+    </div>
+
+    <div className="ds-token-section">
+      <p className="ds-token-title">Typography</p>
+      <div className="ds-typo-row">
+        <div className="ds-typo-item"><span className="ds-typo-meta">title01 · 32px</span><span style={{fontSize:'32px',lineHeight:'44px',fontWeight:700}}>The quick brown fox</span></div>
+        <div className="ds-typo-item"><span className="ds-typo-meta">title02 · 24px</span><span style={{fontSize:'24px',lineHeight:'34px',fontWeight:700}}>The quick brown fox</span></div>
+        <div className="ds-typo-item"><span className="ds-typo-meta">title03 · 20px</span><span style={{fontSize:'20px',lineHeight:'30px',fontWeight:600}}>The quick brown fox</span></div>
+        <div className="ds-typo-item"><span className="ds-typo-meta">body01 · 18px</span><span style={{fontSize:'18px',lineHeight:'30px',fontWeight:500}}>The quick brown fox</span></div>
+        <div className="ds-typo-item"><span className="ds-typo-meta">body02 · 16px</span><span style={{fontSize:'16px',lineHeight:'26px',fontWeight:500}}>The quick brown fox</span></div>
+        <div className="ds-typo-item"><span className="ds-typo-meta">body03 · 14px</span><span style={{fontSize:'14px',lineHeight:'22px',fontWeight:400}}>The quick brown fox</span></div>
+        <div className="ds-typo-item"><span className="ds-typo-meta">body04 · 13px</span><span style={{fontSize:'13px',lineHeight:'20px',fontWeight:400}}>The quick brown fox</span></div>
+        <div className="ds-typo-item"><span className="ds-typo-meta">caption01 · 12px</span><span style={{fontSize:'12px',lineHeight:'18px',fontWeight:500}}>The quick brown fox</span></div>
+        <div className="ds-typo-item"><span className="ds-typo-meta">caption02 · 11px</span><span style={{fontSize:'11px',lineHeight:'16px',fontWeight:400}}>The quick brown fox</span></div>
+      </div>
+    </div>
+
+    <div className="ds-token-section">
+      <p className="ds-token-title">Spacing</p>
+      <div className="ds-spacing-row">
+        <div className="ds-spacing-item"><div className="ds-spacing-block" style={{width:'8px',height:'4px'}} /><span className="ds-spacing-label">xs<br/>4px</span></div>
+        <div className="ds-spacing-item"><div className="ds-spacing-block" style={{width:'16px',height:'8px'}} /><span className="ds-spacing-label">sm<br/>8px</span></div>
+        <div className="ds-spacing-item"><div className="ds-spacing-block" style={{width:'32px',height:'16px'}} /><span className="ds-spacing-label">md<br/>16px</span></div>
+        <div className="ds-spacing-item"><div className="ds-spacing-block" style={{width:'48px',height:'24px'}} /><span className="ds-spacing-label">lg<br/>24px</span></div>
+        <div className="ds-spacing-item"><div className="ds-spacing-block" style={{width:'64px',height:'32px'}} /><span className="ds-spacing-label">xl<br/>32px</span></div>
+        <div className="ds-spacing-item"><div className="ds-spacing-block" style={{width:'96px',height:'48px'}} /><span className="ds-spacing-label">2xl<br/>48px</span></div>
+      </div>
+    </div>
+
+    <div className="ds-token-section">
+      <p className="ds-token-title">Size</p>
+      <div className="ds-size-row">
+        <div className="ds-size-item"><div className="ds-size-block" style={{width:'20px',height:'20px'}} /><span className="ds-size-label">2xs<br/>40px</span></div>
+        <div className="ds-size-item"><div className="ds-size-block" style={{width:'28px',height:'28px'}} /><span className="ds-size-label">xs<br/>56px</span></div>
+        <div className="ds-size-item"><div className="ds-size-block" style={{width:'40px',height:'40px'}} /><span className="ds-size-label">sm<br/>80px</span></div>
+        <div className="ds-size-item"><div className="ds-size-block" style={{width:'60px',height:'60px'}} /><span className="ds-size-label">md<br/>120px</span></div>
+        <div className="ds-size-item"><div className="ds-size-block" style={{width:'80px',height:'80px'}} /><span className="ds-size-label">lg<br/>160px</span></div>
+        <div className="ds-size-item"><div className="ds-size-block" style={{width:'100px',height:'100px'}} /><span className="ds-size-label">xl<br/>200px</span></div>
+        <div className="ds-size-item"><div className="ds-size-block" style={{width:'120px',height:'120px'}} /><span className="ds-size-label">2xl<br/>240px</span></div>
+      </div>
+    </div>
+
+    <div className="ds-token-section">
+      <p className="ds-token-title">Border Radius</p>
+      <div className="ds-radius-row">
+        <div className="ds-radius-item"><div className="ds-radius-block" style={{borderRadius:'4px'}} /><span className="ds-radius-label">sm<br/>4px</span></div>
+        <div className="ds-radius-item"><div className="ds-radius-block" style={{borderRadius:'8px'}} /><span className="ds-radius-label">md<br/>8px</span></div>
+        <div className="ds-radius-item"><div className="ds-radius-block" style={{borderRadius:'16px'}} /><span className="ds-radius-label">lg<br/>16px</span></div>
+        <div className="ds-radius-item"><div className="ds-radius-block" style={{borderRadius:'9999px'}} /><span className="ds-radius-label">full<br/>9999px</span></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

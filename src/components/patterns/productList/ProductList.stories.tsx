@@ -15,7 +15,7 @@ const docs: ComponentDocs = {
     header: {
         chip: 'Component Guide',
         title: 'ProductList',
-        desc: 'ProdItem을 그리드로 나열하는 상품 목록 패턴 컴포넌트. 로딩 상태에서는 Skeleton으로 대체됩니다.',
+        desc: 'ProdItem을 그리드로 나열하는 상품 목록 패턴 컴포넌트.',
     },
     sections: [
         {
@@ -24,7 +24,6 @@ const docs: ComponentDocs = {
             bulletList: [
                 '상품 목록 페이지의 2열 그리드 (vertical)',
                 '주문 내역, 장바구니 등의 가로형 리스트 (horizontal)',
-                '데이터 로딩 중 스켈레톤 UI 표시',
             ],
         },
         {
@@ -51,7 +50,7 @@ const docs: ComponentDocs = {
             items: [
                 {
                     title: 'isLoading 처리',
-                    desc: 'isLoading이 true이면 products 데이터 유무와 관계없이 Skeleton 카드를 skeletonCount만큼 표시합니다. API 응답 전 빈 화면 없이 자연스러운 로딩 UX를 제공합니다.',
+                    desc: 'isLoading이 true이면 products 데이터 유무와 관계없이 Skeleton 카드를 skeletonCount만큼 표시합니다. Skeleton 적용 방법은 Skeleton 컴포넌트 가이드를 참고하세요.',
                 },
                 {
                     title: 'layout 전환',
@@ -196,19 +195,6 @@ const LayoutStory = () => {
 export const LayoutToggle: Story = {
     name: 'layout — 탭 토글',
     render: () => <LayoutStory />,
-};
-
-// =========================
-// Loading
-// =========================
-
-export const Loading: Story = {
-    name: 'loading — 스켈레톤',
-    args: {
-        isLoading: true,
-        skeletonCount: 4,
-    },
-    decorators: [(Story) => <div style={{ width: 320 }}><Story /></div>],
 };
 
 // =========================
