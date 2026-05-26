@@ -3,7 +3,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Toast } from './Toast';
 import { Button } from '../../common/button/Button';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서

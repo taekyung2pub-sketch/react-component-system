@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import * as React from 'react';
 import { Title } from './Title';
 import { gray, primary, secondary, semantic } from '../../../styles/tokens/color';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서

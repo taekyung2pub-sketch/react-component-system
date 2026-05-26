@@ -5,7 +5,7 @@ import { ProductList, ProductItem } from './ProductList.tsx';
 import { Button } from '../../common/button/Button.tsx';
 import { Tab } from '../../display/tab/Tab.tsx';
 import { ProdItem } from '../../product/prodItem/ProdItem.tsx';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서

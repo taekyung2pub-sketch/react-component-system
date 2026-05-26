@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TextArea } from './TextArea';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서

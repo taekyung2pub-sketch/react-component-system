@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Docker } from './Docker';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서

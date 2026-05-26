@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Icon } from './Icon';
 import { IconName } from './iconMap';
 import { gray, primary, secondary, semantic } from '../../../styles/tokens/color';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서

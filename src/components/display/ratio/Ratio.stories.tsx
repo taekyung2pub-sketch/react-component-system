@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Ratio } from './Ratio';
 import { size } from '../../../styles/tokens/spacing';
 import { gray } from '../../../styles/tokens/color';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서
