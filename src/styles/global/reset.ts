@@ -27,5 +27,5 @@ export const resetStyles = css`
   button { cursor: pointer; border: none; background: none; font: inherit; }
   img, video { max-width: 100%; display: block; }
   ul, ol { list-style: none; }
-  input, textarea { font: inherit; border: none; outline: none; }
+  input, Textarea { font: inherit; border: none; outline: none; }
 `;

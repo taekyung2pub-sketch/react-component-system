@@ -9,7 +9,7 @@ import { fontWeight, fontSize, lineHeight } from '../../../styles/tokens/typogra
 // Types
 // =========================
 
-export interface TextAreaProps {
+export interface TextareaProps {
     /** placeholder */
     placeholder?: string;
     /** 고정 높이 (px) */
@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const StyledTextArea = styled.textarea<{ $isFocused: boolean; $height: number }>`
+const StyledTextarea = styled.Textarea<{ $isFocused: boolean; $height: number }>`
   width: 100%;
   height: ${({ $height }) => $height}px;
   padding: ${spacing.md};
@@ -77,19 +77,19 @@ const Counter = styled.span`
 // Component
 // =========================
 
-export const TextArea = ({
+export const Textarea = ({
                              placeholder,
                              height = 120,
                              maxLength,
                              disabled = false,
                              className,
-                         }: TextAreaProps) => {
+                         }: TextareaProps) => {
     const [isFocused, setIsFocused] = useState(false);
     const [value, setValue] = useState('');
 
     return (
         <Wrapper className={className}>
-            <StyledTextArea
+            <StyledTextarea
                 $isFocused={isFocused}
                 $height={height}
                 placeholder={placeholder}
@@ -107,4 +107,4 @@ export const TextArea = ({
     );
 };
 
-export default TextArea;
+export default Textarea;

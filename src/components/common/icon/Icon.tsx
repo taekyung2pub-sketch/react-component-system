@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { iconMap, IconName } from './iconMap';
+import { iconMap, IconName } from './IconMap';
 import { ColorToken } from '../../../styles/tokens/color';
 
 // =========================

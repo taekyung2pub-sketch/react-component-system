@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { TextArea } from './TextArea';
+import { Textarea } from './Textarea';
 import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
 
 // =========================
@@ -10,7 +10,7 @@ import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayou
 const docs: ComponentDocs = {
     header: {
         chip: 'Component Guide',
-        title: 'TextArea',
+        title: 'Textarea',
         desc: '여러 줄 텍스트를 입력받는 컴포넌트. 고정 높이와 글자 수 카운터를 지원합니다.',
     },
     sections: [
@@ -47,8 +47,8 @@ const docs: ComponentDocs = {
 // =========================
 
 const meta = {
-    title: 'Component/Form/TextArea',
-    component: TextArea,
+    title: 'Component/Form/Textarea',
+    component: Textarea,
     parameters: {
         layout: 'centered',
         docs: {
@@ -76,7 +76,7 @@ const meta = {
             table: { defaultValue: { summary: 'false' } },
         },
     },
-} satisfies Meta<typeof TextArea>;
+} satisfies Meta<typeof Textarea>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -101,9 +101,9 @@ export const Height: Story = {
     name: 'height',
     render: () => (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: 320 }}>
-            <TextArea placeholder="height 80" height={80} />
-            <TextArea placeholder="height 120 (default)" height={120} />
-            <TextArea placeholder="height 200" height={200} />
+            <Textarea placeholder="height 80" height={80} />
+            <Textarea placeholder="height 120 (default)" height={120} />
+            <Textarea placeholder="height 200" height={200} />
         </div>
     ),
 };
@@ -116,7 +116,7 @@ export const Counter: Story = {
     name: 'counter',
     render: () => (
         <div style={{ width: 320 }}>
-            <TextArea placeholder="최대 200자까지 입력 가능합니다." maxLength={200} />
+            <Textarea placeholder="최대 200자까지 입력 가능합니다." maxLength={200} />
         </div>
     ),
 };
@@ -129,7 +129,7 @@ export const Disabled: Story = {
     name: 'disabled',
     render: () => (
         <div style={{ width: 320 }}>
-            <TextArea disabled placeholder="disabled" />
+            <Textarea disabled placeholder="disabled" />
         </div>
     ),
 };

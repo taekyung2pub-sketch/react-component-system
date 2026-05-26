@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { buttonBase } from './buttonBase';
+import { buttonBase } from './ButtonBase';
 import { radius } from '../../../styles/tokens/spacing';
 import { fontWeight } from '../../../styles/tokens/typography';
 import { gray, white, primary, secondary, semantic, ColorToken } from '../../../styles/tokens/color';

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import * as React from 'react';
 import { Icon } from './Icon';
-import { IconName } from './iconMap';
+import { IconName } from './IconMap';
 import { gray, primary, secondary, semantic } from '../../../styles/tokens/color';
 import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
 
