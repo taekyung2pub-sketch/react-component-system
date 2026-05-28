@@ -1,10 +1,10 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Table } from './Table';
-import { primary, semantic } from '../../../styles/tokens/color';
-import { Button } from '../../common/button/Button';
-import { Price } from '../../product/price/Price';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
+import { primary, semantic } from '@/styles/tokens/color';
+import { Button } from '@/components/common/button/Button';
+import { Price } from '@/components/product/price/Price';
+import { createDocsPage, type ComponentDocs } from '@/components/guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서

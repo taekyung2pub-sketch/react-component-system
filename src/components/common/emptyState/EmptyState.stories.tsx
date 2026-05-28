@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import * as React from 'react';
 import { EmptyState } from './EmptyState';
-import { iconMap } from '../icon/IconMap';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
+import { iconMap } from '@/components/common/icon/IconMap';
+import { createDocsPage, type ComponentDocs } from '@/components/guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서

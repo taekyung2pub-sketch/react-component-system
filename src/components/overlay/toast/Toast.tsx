@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { spacing, radius, shadow, transition } from '../../../styles/tokens/spacing';
-import { gray, semantic } from '../../../styles/tokens/color';
-import { Icon } from '../../common/icon/Icon';
-import { IconName } from '../../common/icon/iconMap';
+import { spacing, radius, shadow, transition } from '@/styles/tokens/spacing';
+import { gray, semantic } from '@/styles/tokens/color';
+import { Icon } from '@/components/common/icon/Icon';
+import { IconName } from '@/components/common/icon/iconMap';
 
 // =========================
 // Types

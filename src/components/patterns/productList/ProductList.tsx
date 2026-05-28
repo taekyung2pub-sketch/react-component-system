@@ -1,9 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { spacing } from '../../../styles/tokens/spacing.ts';
-import { ProdItem } from '../../product/prodItem/ProdItem.tsx';
-import { PriceCurrency } from '../../product/price/Price.tsx';
-import { Skeleton } from '../../overlay/skeleton/Skeleton.tsx';
+import { spacing } from '@/styles/tokens/spacing.ts';
+import { ProdItem } from '@/components/product/prodItem/ProdItem.tsx';
+import { PriceCurrency } from '@/components/product/price/Price.tsx';
+import { Skeleton } from '@/components/overlay/skeleton/Skeleton.tsx';
 
 // =========================
 // Types

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { spacing, radius, shadow } from '../../../styles/tokens/spacing';
-import { white } from '../../../styles/tokens/color';
-import { Button } from '../../common/button/Button';
+import { spacing, radius, shadow } from '@/styles/tokens/spacing';
+import { white } from '@/styles/tokens/color';
+import { Button } from '@/components/common/button/Button';
 
 // =========================
 // Types

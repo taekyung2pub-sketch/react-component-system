@@ -2,11 +2,11 @@ import * as React from 'react';
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { BottomSheet } from './BottomSheet';
-import { Button } from '../../common/button/Button';
-import { TextField } from '../../form/textField/TextField';
-import { Select } from '../../form/select/Select';
-import { Checkbox } from '../../form/checkbox/Checkbox';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+import { Button } from '@/components/common/button/Button';
+import { TextField } from '@/components/form/textField/TextField';
+import { Select } from '@/components/form/select/Select';
+import { Checkbox } from '@/components/form/checkbox/Checkbox';
+import { createDocsPage, type ComponentDocs } from '@/components/guide/layout/DocsLayout';
 
 // =========================
 // 가이드 문서

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { spacing, radius, shadow, size } from '../../../styles/tokens/spacing';
-import { gray, white, black } from '../../../styles/tokens/color';
-import { Icon } from '../../common/icon/Icon';
+import { spacing, radius, shadow, size } from '@/styles/tokens/spacing';
+import { gray, white, black } from '@/styles/tokens/color';
+import { Icon } from '@/components/common/icon/Icon';
 
 // =========================
 // Types

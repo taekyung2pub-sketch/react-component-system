@@ -1,6 +1,6 @@
 // reset.ts
 import { css } from 'styled-components';
-import { black, white } from '../tokens/color';
+import { black, white } from '@/styles/tokens/color';
 
 export const resetStyles = css`
   *, *::before, *::after {

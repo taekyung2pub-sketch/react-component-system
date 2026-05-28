@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { radius } from '../../../styles/tokens/spacing';
+import { radius } from '@/styles/tokens/spacing';
 
 // =========================
 // Animation

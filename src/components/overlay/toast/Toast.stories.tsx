@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Toast } from './Toast';
-import { Button } from '../../common/button/Button';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
+import { Button } from '@/components/common/button/Button';
+import { createDocsPage, type ComponentDocs } from '@/components/guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서

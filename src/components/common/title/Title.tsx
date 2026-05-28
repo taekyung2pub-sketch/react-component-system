@@ -1,12 +1,12 @@
 import *as React from 'react';
 import styled, { css } from 'styled-components';
-import { FontWeightKey } from '../../../styles/tokens/typography';
+import { FontWeightKey } from '@/styles/tokens/typography';
 import {
     title01,
     title02,
     title03,
-} from '../../../styles/mixins/typography';
-import { ColorToken } from '../../../styles/tokens/color';
+} from '@/styles/mixins/typography';
+import { ColorToken } from '@/styles/tokens/color';
 
 // =========================
 // Types

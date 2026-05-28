@@ -1,12 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { spacing } from '../../../styles/tokens/spacing';
-import { gray, white, black } from '../../../styles/tokens/color';
-import { caption02, body03, body02 } from '../../../styles/mixins/typography';
-import { Icon } from '../../common/icon/Icon';
-import { Button } from '../../common/button/Button';
-import { IconName } from '../../common/icon/iconMap';
-import { Price, PriceCurrency } from '../../product/price/Price';
+import { spacing } from '@/styles/tokens/spacing';
+import { gray, white, black } from '@/styles/tokens/color';
+import { caption02, body03, body02 } from '@/styles/mixins/typography';
+import { Icon } from '@/components/common/icon/Icon';
+import { Button } from '@/components/common/button/Button';
+import { IconName } from '@/components/common/icon/iconMap';
+import { Price, PriceCurrency } from '@/components/product/price/Price';
 
 // =========================
 // Types

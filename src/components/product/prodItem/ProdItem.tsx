@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { spacing } from '../../../styles/tokens/spacing';
-import { gray, black } from '../../../styles/tokens/color';
-import { body02, body03 } from '../../../styles/mixins/typography';
-import { Ratio, RatioValue, RatioRadius, RatioWidth } from '../../display/ratio/Ratio';
-import { Price, PriceCurrency, PriceVariant, PriceSize } from '../price/Price';
-import { Icon } from '../../common/icon/Icon';
+import { spacing } from '@/styles/tokens/spacing';
+import { gray, black } from '@/styles/tokens/color';
+import { body02, body03 } from '@/styles/mixins/typography';
+import { Ratio, RatioValue, RatioRadius, RatioWidth } from '@/components/display/ratio/Ratio';
+import { Price, PriceCurrency, PriceVariant, PriceSize } from '@/components/product/price/Price';
+import { Icon } from '@/components/common/icon/Icon';
 
 // =========================
 // Types

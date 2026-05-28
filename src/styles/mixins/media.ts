@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
-import { breakpoints, BreakpointKey } from '../tokens/breakpoints';
-import { primary, transition } from '../tokens';
+import { breakpoints, BreakpointKey } from '@/styles/tokens/breakpoints';
+import { primary, transition } from '@/styles/tokens';
 
 export const responsive = (bp: BreakpointKey) =>
   (styles: TemplateStringsArray, ...args: unknown[]) =>

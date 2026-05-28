@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ProdItem } from './ProdItem';
-import { Tab } from '../../display/tab/Tab';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
+import { Tab } from '@/components/display/tab/Tab';
+import { createDocsPage, type ComponentDocs } from '@/components/guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서

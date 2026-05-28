@@ -7,7 +7,7 @@ import {
     body03,
     body04,
     caption02,
-} from '../mixins/typography.ts';
+} from '@/styles/mixins/typography.ts';
 
 // =========================
 // GuideWrap

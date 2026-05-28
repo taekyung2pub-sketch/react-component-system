@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { transition } from '../../../styles/tokens/spacing';
-import { gray, white, primary, secondary } from '../../../styles/tokens/color';
+import { transition } from '@/styles/tokens/spacing';
+import { gray, white, primary, secondary } from '@/styles/tokens/color';
 
 // =========================
 // Types

@@ -2,10 +2,10 @@ import * as React from 'react';
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ProductList, ProductItem } from './ProductList.tsx';
-import { Button } from '../../common/button/Button.tsx';
-import { Tab } from '../../display/tab/Tab.tsx';
-import { ProdItem } from '../../product/prodItem/ProdItem.tsx';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
+import { Button } from '@/components/common/button/Button.tsx';
+import { Tab } from '@/components/display/tab/Tab.tsx';
+import { ProdItem } from '@/components/product/prodItem/ProdItem.tsx';
+import { createDocsPage, type ComponentDocs } from '@/components/guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서

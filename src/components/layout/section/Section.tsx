@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { spacing } from '../../../styles/tokens/spacing';
-import { gray } from '../../../styles/tokens/color';
+import { spacing } from '@/styles/tokens/spacing';
+import { gray } from '@/styles/tokens/color';
 
 // =========================
 // Types

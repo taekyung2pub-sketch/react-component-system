@@ -1,10 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { buttonBase } from './ButtonBase';
-import { fontWeight } from '../../../styles/tokens/typography';
-import { gray, primary, secondary, semantic, ColorToken } from '../../../styles/tokens/color';
-import { Icon } from '../icon/Icon';
-import { IconName } from '../icon/iconMap';
+import { fontWeight } from '@/styles/tokens/typography';
+import { gray, primary, secondary, semantic, ColorToken } from '@/styles/tokens/color';
+import { Icon } from '@/components/common/icon/Icon';
+import { IconName } from '@/components/common/icon/iconMap';
 
 // =========================
 // Types

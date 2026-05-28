@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { spacing } from '../../../styles/tokens/spacing';
-import { gray } from '../../../styles/tokens/color';
-import { body02 } from '../../../styles/mixins/typography';
-import { Button } from '../../common/button/Button';
+import { spacing } from '@/styles/tokens/spacing';
+import { gray } from '@/styles/tokens/color';
+import { body02 } from '@/styles/mixins/typography';
+import { Button } from '@/components/common/button/Button';
 
 // =========================
 // Types

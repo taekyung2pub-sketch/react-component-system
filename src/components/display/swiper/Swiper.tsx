@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import { spacing, transition, radius } from '../../../styles/tokens/spacing';
-import { gray, black } from '../../../styles/tokens/color';
-import { caption01 } from '../../../styles/mixins/typography';
-import { Icon } from '../../common/icon/Icon';
+import { spacing, transition, radius } from '@/styles/tokens/spacing';
+import { gray, black } from '@/styles/tokens/color';
+import { caption01 } from '@/styles/mixins/typography';
+import { Icon } from '@/components/common/icon/Icon';
 
 // =========================
 // Types

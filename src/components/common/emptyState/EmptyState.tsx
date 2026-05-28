@@ -1,11 +1,11 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { spacing } from '../../../styles/tokens/spacing';
-import { gray, semantic } from '../../../styles/tokens/color';
-import { body02 } from '../../../styles/mixins/typography.ts'
-import { Icon } from '../icon/Icon';
-import { IconName } from '../icon/iconMap';
-import { Title } from '../title/Title';
+import { spacing } from '@/styles/tokens/spacing';
+import { gray, semantic } from '@/styles/tokens/color';
+import { body02 } from '@/styles/mixins/typography.ts'
+import { Icon } from '@/components/common/icon/Icon';
+import { IconName } from '@/components/common/icon/iconMap';
+import { Title } from '@/components/common/title/Title';
 
 // =========================
 // Types

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { spacing } from '../../../styles/tokens/spacing';
-import { gray, black, semantic } from '../../../styles/tokens/color';
+import { spacing } from '@/styles/tokens/spacing';
+import { gray, black, semantic } from '@/styles/tokens/color';
 import {
     title03,
     body02,
     body03,
     body04,
     caption01,
-} from '../../../styles/mixins/typography';
+} from '@/styles/mixins/typography';
 
 // =========================
 // Types

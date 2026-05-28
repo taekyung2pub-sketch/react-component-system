@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Header } from '../header/Header.tsx';
+import { Header } from '@/components/layout/header/Header.tsx';
 import './page.css';
 
 type User = {

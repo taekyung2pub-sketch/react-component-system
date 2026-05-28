@@ -2,13 +2,13 @@ import * as React from 'react';
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Stack } from './Stack';
-import { Button } from '../../common/button/Button';
-import { Badge } from '../../common/badge/Badge';
-import { Checkbox } from '../../form/checkbox/Checkbox';
-import { Radio } from '../../form/radio/Radio';
-import { Ratio } from '../../display/ratio/Ratio';
-import { Toggle } from '../../form/toggle/Toggle';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout';
+import { Button } from '@/components/common/button/Button';
+import { Badge } from '@/components/common/badge/Badge';
+import { Checkbox } from '@/components/form/checkbox/Checkbox';
+import { Radio } from '@/components/form/radio/Radio';
+import { Ratio } from '@/components/display/ratio/Ratio';
+import { Toggle } from '@/components/form/toggle/Toggle';
+import { createDocsPage, type ComponentDocs } from '@/components/guide/layout/DocsLayout';
 
 // =========================
 // 가이드 문서

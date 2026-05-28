@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Title, Description, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
-import theme from '../../../styles/theme';
-import GlobalStyle from '../../../styles/global/GlobalStyle';
+import theme from '@/styles/theme';
+import GlobalStyle from '@/styles/global/GlobalStyle';
 
 import {
     GuideWrap,
@@ -20,7 +20,7 @@ import {
     GuideNotes,
     GuideTextList,
     GuideNumberList,
-} from '../../../styles/guide/Guide.styled';
+} from '@/styles/guide/Guide.styled';
 
 // =========================
 // Types

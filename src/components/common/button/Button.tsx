@@ -1,11 +1,11 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { buttonBase } from './ButtonBase';
-import { radius } from '../../../styles/tokens/spacing';
-import { fontWeight } from '../../../styles/tokens/typography';
-import { gray, white, primary, secondary, semantic, ColorToken } from '../../../styles/tokens/color';
-import { Icon } from '../icon/Icon';
-import { IconName } from '../icon/iconMap';
+import { radius } from '@/styles/tokens/spacing';
+import { fontWeight } from '@/styles/tokens/typography';
+import { gray, white, primary, secondary, semantic, ColorToken } from '@/styles/tokens/color';
+import { Icon } from '@/components/common/icon/Icon';
+import { IconName } from '@/components/common/icon/iconMap';
 
 // =========================
 // Types

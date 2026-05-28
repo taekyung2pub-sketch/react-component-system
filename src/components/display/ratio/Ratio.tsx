@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { radius, size } from '../../../styles/tokens/spacing';
+import { radius, size } from '@/styles/tokens/spacing';
 
 // =========================
 // Types

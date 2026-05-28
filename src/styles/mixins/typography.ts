@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { fontSize, lineHeight, fontWeight, FontWeightKey } from '../tokens/typography';
+import { fontSize, lineHeight, fontWeight, FontWeightKey } from '@/styles/tokens/typography';
 
 const getWeight = (type: FontWeightKey = 'regular') => fontWeight[type];
 

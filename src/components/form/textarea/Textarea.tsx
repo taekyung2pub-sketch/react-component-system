@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { spacing, radius, transition } from '../../../styles/tokens/spacing';
-import { gray, white } from '../../../styles/tokens/color';
-import { fontWeight, fontSize, lineHeight } from '../../../styles/tokens/typography';
+import { spacing, radius, transition } from '@/styles/tokens/spacing';
+import { gray, white } from '@/styles/tokens/color';
+import { fontWeight, fontSize, lineHeight } from '@/styles/tokens/typography';
 
 // =========================
 // Types

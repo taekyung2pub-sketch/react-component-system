@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { spacing, radius } from '../../../styles/tokens/spacing.ts';
-import { Skeleton } from '../../overlay/skeleton/Skeleton.tsx';
+import { spacing, radius } from '@/styles/tokens/spacing.ts';
+import { Skeleton } from '@/components/overlay/skeleton/Skeleton.tsx';
 
 // =========================
 // Types

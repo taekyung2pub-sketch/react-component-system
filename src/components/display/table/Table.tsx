@@ -1,9 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { spacing } from '../../../styles/tokens/spacing';
-import { gray, black } from '../../../styles/tokens/color';
-import { ColorToken } from '../../../styles/tokens/color';
-import { body03, body02 } from '../../../styles/mixins/typography';
+import { spacing } from '@/styles/tokens/spacing';
+import { gray, black } from '@/styles/tokens/color';
+import { ColorToken } from '@/styles/tokens/color';
+import { body03, body02 } from '@/styles/mixins/typography';
 
 // =========================
 // Types

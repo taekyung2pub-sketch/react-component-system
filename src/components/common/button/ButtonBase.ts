@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { transition } from '../../../styles/tokens/spacing';
+import { transition } from '@/styles/tokens/spacing';
 
 export const buttonBase = css`
   display: inline-flex;

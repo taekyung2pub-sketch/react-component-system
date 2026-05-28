@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import * as React from 'react';
 import { Icon } from './Icon';
 import { IconName } from './IconMap';
-import { gray, primary, secondary, semantic } from '../../../styles/tokens/color';
-import { createDocsPage, type ComponentDocs } from '../../guide/layout/DocsLayout.tsx';
+import { gray, primary, secondary, semantic } from '@/styles/tokens/color';
+import { createDocsPage, type ComponentDocs } from '@/components/guide/layout/DocsLayout.tsx';
 
 // =========================
 // 가이드 문서
@@ -56,7 +56,7 @@ const docs: ComponentDocs = {
                     title: 'iconMap 등록 방법',
                     desc: 'iconMap.ts 에서 카테고리 주석 아래 순서대로 등록합니다.',
                     bulletList: [
-                        "import HearIcon from '../../../assets/icons/icon_heart.svg?react';",
+                        "import HearIcon from '@/assets/icons/icon_heart.svg?react';",
                         "iconMap에 'heart': HeartIcon 형태로 추가",
                         '카테고리는 Navigation / Action / User / Commerce / Delivery / Content / Status / Social / Payment 순서 유지',
                     ],

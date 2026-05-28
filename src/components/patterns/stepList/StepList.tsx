@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Skeleton } from '../../overlay/skeleton/Skeleton';
+import { Skeleton } from '@/components/overlay/skeleton/Skeleton';
 import styled, { css } from 'styled-components';
-import { spacing, radius, transition } from '../../../styles/tokens/spacing';
-import { gray, white, primary, black } from '../../../styles/tokens/color';
-import { body03, body04, caption01 } from '../../../styles/mixins/typography';
+import { spacing, radius, transition } from '@/styles/tokens/spacing';
+import { gray, white, primary, black } from '@/styles/tokens/color';
+import { body03, body04, caption01 } from '@/styles/mixins/typography';
 
 // =========================
 // Types

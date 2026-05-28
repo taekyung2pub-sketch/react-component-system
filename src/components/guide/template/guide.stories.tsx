@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { createDocsPage, type ComponentDocs } from '../layout/DocsLayout.tsx';
+import { createDocsPage, type ComponentDocs } from '@/components/guide/layout/DocsLayout.tsx';
 
 // =========================
 // TODO: 아래 주석 해제 후 실제 컴포넌트로 교체
