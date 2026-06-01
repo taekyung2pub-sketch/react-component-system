@@ -39,6 +39,10 @@ const docs: ComponentDocs = {
                     title: '색상 제한',
                     desc: 'color prop은 ColorToken 타입만 허용합니다. 디자인 시스템 외 임의 색상값은 사용하지 않습니다.',
                 },
+                {
+                    title: 'mb (margin-bottom)',
+                    desc: 'spacing 토큰 키를 그대로 사용합니다. xs(4px) / sm(8px) / md(16px) / lg(24px) / xl(32px) / 2xl(48px)',
+                },
             ],
         },
     ],
@@ -87,6 +91,11 @@ const meta = {
                 semantic.success, semantic.warning, semantic.error, semantic.info,
             ],
             description: '텍스트 색상 — 컬러 토큰만 허용',
+        },
+        mb: {
+            control: 'select',
+            options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
+            description: '하단 여백 — spacing 토큰 키',
         },
         ellipsis: {
             control: 'boolean',
@@ -183,6 +192,27 @@ export const Align: Story = {
             <Title variant="title02" align="left">left — 섹션 제목</Title>
             <Title variant="title02" align="center">center — 섹션 제목</Title>
             <Title variant="title02" align="right">right — 섹션 제목</Title>
+        </div>
+    ),
+};
+
+// =========================
+// Margin Bottom
+// =========================
+
+export const MarginBottom: Story = {
+    name: 'mb — 하단 여백',
+    render: () => (
+        <div style={{ width: 320, background: '#f4f4f5', padding: '16px', borderRadius: '8px' }}>
+            <Title variant="title02" mb="xs">mb xs — 4px</Title>
+            <div style={{ background: '#e4e4e7', height: '1px' }} />
+            <Title variant="title02" mb="sm">mb sm — 8px</Title>
+            <div style={{ background: '#e4e4e7', height: '1px' }} />
+            <Title variant="title02" mb="md">mb md — 16px</Title>
+            <div style={{ background: '#e4e4e7', height: '1px' }} />
+            <Title variant="title02" mb="lg">mb lg — 24px</Title>
+            <div style={{ background: '#e4e4e7', height: '1px' }} />
+            <Title variant="title03">다음 요소</Title>
         </div>
     ),
 };

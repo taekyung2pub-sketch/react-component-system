@@ -55,9 +55,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
     color: #a1a1aa; text-transform: uppercase; margin-bottom: 8px;
   }
-  .ds-section-title { font-size: 22px; font-weight: 700; margin: 0 0 20px; letter-spacing: -0.3px; }
-  .ds-divider { border: none; border-top: 1px solid #e4e4e7; margin: 0 0 28px; }
-
+  .ds-section-title { font-size: 22px; font-weight: 700; padding-bottom: 10px; margin: 0 0 20px; letter-spacing: -0.3px; }
   .ds-spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .ds-spec-card { padding: 20px 24px; border: 1px solid #e4e4e7; border-radius: 12px; background: #fafafa; }
   .ds-spec-card-label { font-size: 11px; font-weight: 600; color: #a1a1aa; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
@@ -144,7 +142,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="ds-section">
     <p className="ds-section-label">Project Spec</p>
     <h2 className="ds-section-title">기술 스택 & 환경</h2>
-    <hr className="ds-divider" />
     <div className="ds-spec-grid">
       <div className="ds-spec-card">
         <p className="ds-spec-card-label">Core</p>
@@ -185,49 +182,52 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="ds-section">
     <p className="ds-section-label">Component Library</p>
     <h2 className="ds-section-title">컴포넌트 구성</h2>
-    <hr className="ds-divider" />
     <div className="ds-component-categories">
       <div>
         <p className="ds-component-category-title">Common</p>
         <div className="ds-component-item">Title</div>
-        <div className="ds-component-item">Badge</div>
         <div className="ds-component-item">Icon</div>
+        <div className="ds-component-item">Badge</div>
         <div className="ds-component-item">Button</div>
         <div className="ds-component-item">TextButton</div>
-        <div className="ds-component-item">Stepper</div>
-        <div className="ds-component-item">Tab</div>
-        <div className="ds-component-item">Toggle</div>
-        <div className="ds-component-item">Accordion</div>
-        <div className="ds-component-item">Header</div>
         <div className="ds-component-item">EmptyState</div>
-      </div>
-      <div>
-        <p className="ds-component-category-title">Form</p>
+        <p className="ds-component-category-title" style={{marginTop: '16px'}}>Form</p>
+        <div className="ds-component-item">Checkbox</div>
+        <div className="ds-component-item">Radio</div>
+        <div className="ds-component-item">Toggle</div>
         <div className="ds-component-item">TextField</div>
         <div className="ds-component-item">Textarea</div>
         <div className="ds-component-item">Select</div>
-        <div className="ds-component-item">Radio</div>
-        <div className="ds-component-item">Checkbox</div>
-        <div className="ds-component-item">Toggle</div>
-        <p className="ds-component-category-title" style={{marginTop: '16px'}}>Overlay</p>
-        <div className="ds-component-item">Skeleton</div>
-        <div className="ds-component-item">Toast</div>
+        <div className="ds-component-item">Stepper</div>
       </div>
       <div>
         <p className="ds-component-category-title">Display</p>
         <div className="ds-component-item">Ratio</div>
-        <div className="ds-component-item">Swiper</div>
+        <div className="ds-component-item">Tab</div>
+        <div className="ds-component-item">Accordion</div>
         <div className="ds-component-item">Table</div>
-        <div className="ds-component-item">StepList</div>
+        <div className="ds-component-item">Swiper</div>
         <p className="ds-component-category-title" style={{marginTop: '16px'}}>Product</p>
         <div className="ds-component-item">Price</div>
         <div className="ds-component-item">Rating</div>
         <div className="ds-component-item">ProdItem</div>
-        <p className="ds-component-category-title" style={{marginTop: '16px'}}>Layout</p>
-        <div className="ds-component-item">Section</div>
-        <div className="ds-component-item">Docker</div>
         <p className="ds-component-category-title" style={{marginTop: '16px'}}>Patterns</p>
         <div className="ds-component-item">ProductList</div>
+        <div className="ds-component-item">FeedList</div>
+        <div className="ds-component-item">StepList</div>
+      </div>
+      <div>
+        <p className="ds-component-category-title">Overlay</p>
+        <div className="ds-component-item">Skeleton</div>
+        <div className="ds-component-item">Toast</div>
+        <div className="ds-component-item">Alert</div>
+        <div className="ds-component-item">BottomSheet</div>
+        <p className="ds-component-category-title" style={{marginTop: '16px'}}>Layout</p>
+        <div className="ds-component-item">Header</div>
+        <div className="ds-component-item">Docker</div>
+        <div className="ds-component-item">Floating</div>
+        <div className="ds-component-item">Section</div>
+        <div className="ds-component-item">Stack</div>
       </div>
     </div>
   </div>
@@ -235,7 +235,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
   <div className="ds-section">
     <p className="ds-section-label">Design System</p>
     <h2 className="ds-section-title">디자인 토큰</h2>
-    <hr className="ds-divider" />
 
     <div className="ds-token-section">
       <p className="ds-token-title">Color — Gray</p>

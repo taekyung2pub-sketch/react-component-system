@@ -1,20 +1,17 @@
-import *as React from 'react';
+import * as React from 'react';
 import styled, { css } from 'styled-components';
 import { FontWeightKey } from '@/styles/tokens/typography';
-import {
-    title01,
-    title02,
-    title03,
-} from '@/styles/mixins/typography';
+import { title01, title02, title03 } from '@/styles/mixins/typography';
 import { ColorToken } from '@/styles/tokens/color';
+import { spacing } from '@/styles/tokens/spacing';
 
 // =========================
 // Types
 // =========================
 
 export type TitleVariant = 'title01' | 'title02' | 'title03';
-
-export type TitleAs = 'h1' | 'h2' | 'h3' | 'p' | 'span';
+export type TitleAs = 'h1' | 'h2' | 'h3' | 'p' | 'span' | 'label';
+export type TitleSpacing = keyof typeof spacing;
 
 export interface TitleProps {
     variant?: TitleVariant;
@@ -24,6 +21,8 @@ export interface TitleProps {
     ellipsis?: boolean;
     maxLines?: number;
     align?: 'left' | 'center' | 'right';
+    /** 하단 여백 — spacing 토큰 키 */
+    mb?: TitleSpacing;
     className?: string;
     children?: React.ReactNode;
 }
@@ -61,6 +60,7 @@ interface StyledTitleProps {
     $ellipsis?: boolean;
     $maxLines?: number;
     $align?: TitleProps['align'];
+    $mb?: TitleSpacing;
 }
 
 const StyledTitle = styled.span<StyledTitleProps>`
@@ -68,29 +68,25 @@ const StyledTitle = styled.span<StyledTitleProps>`
   margin: 0;
   padding: 0;
 
-  /* variant + weight */
   ${({ $variant, $weight }) => {
     const resolvedWeight = $weight ?? defaultWeightMap[$variant];
     return variantStyleMap[$variant](resolvedWeight);
   }}
 
-    /* 색상 */
   ${({ $color }) => $color && `color: ${$color};`}
 
-    /* 정렬 */
   ${({ $align }) => $align && `text-align: ${$align};`}
 
-    /* 말줄임표 */
+  ${({ $mb }) => $mb && `margin-bottom: ${spacing[$mb]};`}
+
   ${({ $ellipsis, $maxLines }) => {
     if (!$ellipsis) return '';
     const lines = $maxLines ?? 1;
-    if (lines === 1) {
-      return `
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      `;
-    }
+    if (lines === 1) return `
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    `;
     return `
       overflow: hidden;
       display: -webkit-box;
@@ -112,6 +108,7 @@ export const Title = ({
                           ellipsis = false,
                           maxLines,
                           align,
+                          mb,
                           className,
                           children,
                       }: TitleProps) => {
@@ -126,6 +123,7 @@ export const Title = ({
             $ellipsis={ellipsis}
             $maxLines={maxLines}
             $align={align}
+            $mb={mb}
             className={className}
         >
             {children}

@@ -81,7 +81,7 @@ const docs: ComponentDocs = {
 // =========================
 
 const meta = {
-    title: 'Component/Guide/GuideTemplate', // TODO: 카테고리 및 컴포넌트명
+    title: 'Guide/GuideTemplate', // TODO: 카테고리 및 컴포넌트명
     component: ComponentName,                  // TODO: 실제 컴포넌트로 교체 후 더미 삭제
     parameters: {
         layout: 'centered',

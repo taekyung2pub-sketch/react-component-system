@@ -40,6 +40,10 @@ const docs: ComponentDocs = {
                     title: 'divider 사용 시 주의',
                     desc: 'divider는 margin: 0 -16px으로 부모 padding을 상쇄해 전체 너비를 채웁니다. 페이지 레이아웃에 padding: 0 16px이 있는 환경에서 정상 동작합니다.',
                 },
+                {
+                    title: 'noPadX',
+                    desc: '좌우 padding이 필요 없는 경우 noPadX를 사용합니다. Swiper, 전체 너비 이미지 등 edge-to-edge 콘텐츠에 적용합니다.',
+                },
             ],
         },
     ],
@@ -51,6 +55,12 @@ const docs: ComponentDocs = {
 
 const MockContent = ({ label }: { label: string }) => (
     <div style={{ fontSize: '13px', color: gray[600] }}>{label}</div>
+);
+
+const MockFullWidth = () => (
+    <div style={{ height: 80, background: gray[100], display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', color: gray[500] }}>
+        full width content
+    </div>
 );
 
 // =========================
@@ -80,6 +90,11 @@ const meta = {
             description: '상하 여백 (md — 16px / lg — 24px)',
             table: { defaultValue: { summary: 'md' } },
         },
+        noPadX: {
+            control: 'boolean',
+            description: '좌우 padding 제거',
+            table: { defaultValue: { summary: 'false' } },
+        },
     },
 } satisfies Meta<typeof Section>;
 
@@ -96,7 +111,7 @@ export const Default: Story = {
         spacing: 'md',
         children: <MockContent label="기본 섹션 콘텐츠" />,
     },
-    decorators: [(Story) => <div style={{ width: 375, background: '#fff' }}><Story /></div>],
+    decorators: [(Story) => <div style={{ width: 375, background: '#f3f3f3' }}><Story /></div>],
 };
 
 // =========================
@@ -106,7 +121,7 @@ export const Default: Story = {
 export const Variant: Story = {
     name: 'variant',
     render: () => (
-        <div style={{ width: 375, background: '#fff', padding: '0 16px' }}>
+        <div style={{ width: 375, background: '#f3f3f3', padding: '0 16px' }}>
             <Section variant="default">
                 <MockContent label="default — 여백만" />
             </Section>
@@ -130,12 +145,33 @@ export const Variant: Story = {
 export const Spacing: Story = {
     name: 'spacing',
     render: () => (
-        <div style={{ width: 375, background: '#fff' }}>
+        <div style={{ width: 375, background: '#f3f3f3' }}>
             <Section variant="line" spacing="md">
                 <MockContent label="md — 상하 16px" />
             </Section>
             <Section variant="line" spacing="lg">
                 <MockContent label="lg — 상하 24px" />
+            </Section>
+        </div>
+    ),
+};
+
+// =========================
+// noPadX
+// =========================
+
+export const NoPadX: Story = {
+    name: 'noPadX — 좌우 padding 제거',
+    render: () => (
+        <div style={{ width: 375, background: '#f3f3f3' }}>
+            <Section spacing="md">
+                <MockContent label="일반 섹션 (좌우 16px)" />
+            </Section>
+            <Section variant="line" noPadX>
+                <MockFullWidth />
+            </Section>
+            <Section spacing="md">
+                <MockContent label="다음 섹션 (좌우 16px)" />
             </Section>
         </div>
     ),

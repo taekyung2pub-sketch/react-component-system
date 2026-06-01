@@ -4,7 +4,7 @@ import { spacing, size } from '@/styles/tokens/spacing';
 import { black, white } from '@/styles/tokens/color';
 import { title03 } from '@/styles/mixins/typography';
 import { Icon } from '@/components/common/icon/Icon';
-import { IconName } from '@/components/common/icon/iconMap';
+import { IconName } from '@/components/common/icon/IconMap';
 
 // =========================
 // Types
@@ -99,13 +99,13 @@ export const Header = ({
 
     const backButton = (
         <IconBtn type="button" onClick={onBack}>
-            <Icon name="arrow" size="lg" color={black} />
+            <Icon name="arrow" size="sm" color={black} />
         </IconBtn>
     );
 
     const actionButtons = actions.map((action, i) => (
         <IconBtn key={i} type="button" onClick={action.onClick}>
-            <Icon name={action.icon} size="lg" color={black} />
+            <Icon name={action.icon} size="sm" color={black} />
         </IconBtn>
     ));
 
@@ -126,13 +126,18 @@ export const Header = ({
     }
 
     // =========================
-    // back — 뒤로가기만
+    // back — 뒤로가기 + 타이틀 + 우측 아이콘 (default와 동일 구조)
     // =========================
     if (variant === 'back') {
         return (
             <Wrapper className={className}>
                 <Side>{backButton}</Side>
-                <Side />
+                <Center>
+                    {title && <TitleText>{title}</TitleText>}
+                </Center>
+                <Side style={{ justifyContent: 'flex-end' }}>
+                    {actionButtons}
+                </Side>
             </Wrapper>
         );
     }

@@ -8,7 +8,7 @@ export const size = {
   md:    '120px',
   lg:    '160px',
   xl:    '200px',
-  '2xl': '240px',
+  xxl: '240px',
   full:  '100%',
 } as const;
 
@@ -18,7 +18,7 @@ export const spacing = {
   md:  '16px',
   lg:  '24px',
   xl:  '32px',
-  '2xl': '48px',
+  xxl: '48px',
 } as const;
 
 // Border Radius

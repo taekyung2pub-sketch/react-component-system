@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { spacing } from '@/styles/tokens/spacing';
 import { gray } from '@/styles/tokens/color';
 
@@ -15,6 +15,8 @@ export interface SectionProps {
     variant?: SectionVariant;
     /** 상하 여백 (md — 16px / lg — 24px) */
     spacing?: SectionSpacing;
+    /** 좌우 padding 제거 */
+    noPadX?: boolean;
     /** 콘텐츠 */
     children?: React.ReactNode;
     /** 추가 className */
@@ -30,17 +32,15 @@ const spacingMap: Record<SectionSpacing, string> = {
     lg: spacing.lg,
 };
 
-const Base = styled.div<{ $spacing: SectionSpacing }>`
-  padding: ${({ $spacing }) => spacingMap[$spacing]} ${spacing.md};
+const Base = styled.div<{ $spacing: SectionSpacing; $noPadX: boolean }>`
+  padding: ${({ $spacing }) => spacingMap[$spacing]} ${({ $noPadX }) => $noPadX ? '0' : spacing.md};
 `;
 
 const LineSection = styled(Base)`
   border-top: 1px solid ${gray[200]};
 `;
 
-const DividerSection = styled(Base)<{ $spacing: SectionSpacing }>`
-  margin: 0 -${spacing.md};
-  padding: ${({ $spacing }) => spacingMap[$spacing]} ${spacing.md};
+const DividerSection = styled(Base)`
   border-top: ${spacing.sm} solid ${gray[100]};
 `;
 
@@ -51,30 +51,13 @@ const DividerSection = styled(Base)<{ $spacing: SectionSpacing }>`
 export const Section = ({
                             variant = 'default',
                             spacing: spacingProp = 'md',
+                            noPadX = false,
                             children,
                             className,
                         }: SectionProps) => {
-    if (variant === 'line') {
-        return (
-            <LineSection $spacing={spacingProp} className={className}>
-                {children}
-            </LineSection>
-        );
-    }
-
-    if (variant === 'divider') {
-        return (
-            <DividerSection $spacing={spacingProp} className={className}>
-                {children}
-            </DividerSection>
-        );
-    }
-
-    return (
-        <Base $spacing={spacingProp} className={className}>
-            {children}
-        </Base>
-    );
+    if (variant === 'line') return <LineSection $spacing={spacingProp} $noPadX={noPadX} className={className}>{children}</LineSection>;
+    if (variant === 'divider') return <DividerSection $spacing={spacingProp} $noPadX={noPadX} className={className}>{children}</DividerSection>;
+    return <Base $spacing={spacingProp} $noPadX={noPadX} className={className}>{children}</Base>;
 };
 
 export default Section;
