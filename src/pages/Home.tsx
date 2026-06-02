@@ -16,6 +16,7 @@ import { Skeleton } from '@/components/overlay/skeleton/Skeleton';
 import { spacing } from '@/styles/tokens/spacing';
 import { gray, white } from '@/styles/tokens/color';
 import { body04 } from '@/styles/mixins/typography';
+import { allProducts } from '@/data/mockProducts';
 
 // =========================
 // Mock Data
@@ -42,25 +43,10 @@ const productTabItems = [
     { label: 'Sale', value: 'sale' },
 ];
 
-const products: Record<string, { id: number; name: string; price: number; originalPrice?: number; image: string }[]> = {
-    best: [
-        { id: 1, name: 'Classic Linen Shirt', price: 89000,  originalPrice: 120000, image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&q=80' },
-        { id: 2, name: 'Slim Chino Pants',    price: 72000,                         image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&q=80' },
-        { id: 3, name: 'Cotton Crew Tee',     price: 35000,                         image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80' },
-        { id: 4, name: 'Wool Blend Coat',     price: 245000, originalPrice: 320000, image: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=400&q=80' },
-    ],
-    new: [
-        { id: 5, name: 'Stripe Oxford Shirt', price: 95000,  image: 'https://images.unsplash.com/photo-1604644401890-0bd678c83788?w=400&q=80' },
-        { id: 6, name: 'Cargo Wide Pants',    price: 88000,  image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&q=80' },
-        { id: 7, name: 'Ribbed Knit Vest',    price: 62000,  image: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400&q=80' },
-        { id: 8, name: 'Denim Jacket',        price: 135000, image: 'https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=400&q=80' },
-    ],
-    sale: [
-        { id: 9,  name: 'Summer Linen Set',  price: 55000, originalPrice: 110000, image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80' },
-        { id: 10, name: 'Basic Polo Shirt',  price: 28000, originalPrice: 49000,  image: 'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=400&q=80' },
-        { id: 11, name: 'Relaxed Jogger',    price: 42000, originalPrice: 68000,  image: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=400&q=80' },
-        { id: 12, name: 'Canvas Tote Bag',   price: 18000, originalPrice: 35000,  image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&q=80' },
-    ],
+const tabProducts: Record<string, typeof allProducts> = {
+    best: allProducts.slice(0, 4),
+    new:  allProducts.slice(4, 8),
+    sale: allProducts.filter(p => p.originalPrice),
 };
 
 const feedList = [
@@ -70,7 +56,6 @@ const feedList = [
     { id: 4, image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&q=80', title: '아우터 레이어링 팁',  desc: '겹겹이 입는 스타일의 핵심 포인트' },
 ];
 
-// 7. Docker 메뉴 구성
 const NAV_ROUTES: Record<string, string> = {
     home:      '/',
     search:    '/search',
@@ -104,7 +89,7 @@ const HeroOverlay = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding:  ${spacing.xxl} ${spacing.md};
+  padding: ${spacing.lg};
   gap: ${spacing.xs};
 `;
 
@@ -221,13 +206,12 @@ function Home() {
         navigate('/products', { state: { category: value } });
     };
 
-    const currentProducts = products[activeTab] ?? [];
+    const currentProducts = tabProducts[activeTab] ?? [];
 
     return (
         <AppLayout
             headerProps={{
                 variant: 'main',
-                // 1. 로고 클릭 시 메인 이동
                 logo: (
                     <LogoLink onClick={() => navigate('/')}>
                         <Title variant="title03" weight="bold" as="span">SHOP</Title>
@@ -240,7 +224,6 @@ function Home() {
             }}
             dockerProps={{
                 variant: 'nav',
-                // 7. docker 메뉴 구성
                 navItems: [
                     { icon: 'home',      label: '홈',      value: 'home' },
                     { icon: 'search',    label: '검색',    value: 'search' },
@@ -256,11 +239,10 @@ function Home() {
 
             {/* ① Hero Banner Swiper */}
             <Swiper
-                variant="paging-control"
+                variant="dot"
                 autoPlay
                 loop
                 slides={heroBanners.map((banner) => (
-                    // 2. 배너 각 아이템 링크
                     <HeroBanner key={banner.id} href={banner.href} onClick={(e) => { e.preventDefault(); navigate(banner.href); }}>
                         <Ratio ratio="3/4">
                             <img src={banner.image} alt={banner.label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -295,7 +277,6 @@ function Home() {
                     onChange={handleTabChange}
                 />
                 <div style={{ marginTop: spacing.md }}>
-                    {/* 4. Skeleton이 Swiper와 동일한 레이아웃 */}
                     {isProductLoading ? (
                         <ProductSwiperSkeleton />
                     ) : (
@@ -304,7 +285,6 @@ function Home() {
                             slideWidth={160}
                             gap="sm"
                             slides={currentProducts.map((product) => (
-                                // 8. 상품 클릭 시 ProductDetail로 이동
                                 <ProdItem
                                     key={product.id}
                                     layout="vertical"
@@ -338,7 +318,6 @@ function Home() {
 
             {/* ⑤ 커뮤니티 목록 (매거진) */}
             <Section variant="divider" spacing="lg">
-                {/* 6. 타이틀 영역 전체 클릭 범위 — 커뮤니티 이동 */}
                 <SectionHeader href="/community" onClick={(e) => { e.preventDefault(); navigate('/community'); }}>
                     <Title variant="title03" weight="bold" as="span">매거진</Title>
                     <Icon name="chevron" size="md" color={gray[400]} />
@@ -348,7 +327,6 @@ function Home() {
                 ) : (
                     <Stack direction="horizontal" columns={2} gap="md">
                         {feedList.map((feed) => (
-                            // 6. 각 아이템 개별 링크
                             <FeedCard key={feed.id} href={`/community/${feed.id}`} onClick={(e) => { e.preventDefault(); navigate(`/community/${feed.id}`); }}>
                                 <Ratio ratio="4/3" rounded="md">
                                     <img src={feed.image} alt={feed.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />

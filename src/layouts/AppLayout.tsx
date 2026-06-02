@@ -10,13 +10,15 @@ import { Docker } from '@/components/layout/docker/Docker';
 import type { DockProps } from '@/components/layout/docker/Docker';
 import { Floating } from '@/components/layout/floating/Floating';
 import type { FloatingProps } from '@/components/layout/floating/Floating';
+import { PortalProvider } from '@/contexts/PortalContext';
 
 // =========================
 // Layout constants
 // =========================
 
 const MAX_WIDTH = '500px';
-const DOCKER_HEIGHT = size.xs;   // 56px
+const DOCKER_HEIGHT = size.xs; // 56px
+
 // =========================
 // Types
 // =========================
@@ -85,6 +87,22 @@ const FloatingFixed = styled.div`
   }
 `;
 
+const PortalContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: ${MAX_WIDTH};
+  height: 100dvh;
+  pointer-events: none;
+  z-index: 200;
+
+  & > * {
+    pointer-events: auto;
+  }
+`;
+
 // =========================
 // Component
 // =========================
@@ -99,33 +117,39 @@ export const AppLayout = ({
         ? `calc(${DOCKER_HEIGHT} + ${spacing.lg})`
         : spacing.xl;
 
+    const portalRef = React.useRef<HTMLDivElement>(null);
+
     return (
         <ThemeProvider theme={theme}>
             <GlobalStyle />
-            <HeaderFixed>
-                <Header {...headerProps} />
-            </HeaderFixed>
-            <Frame>
-                <Main $hasDocker={!!dockerProps}>
-                    {children}
-                </Main>
-            </Frame>
+            <PortalProvider target={portalRef}>
+                <HeaderFixed>
+                    <Header {...headerProps} />
+                </HeaderFixed>
+                <Frame>
+                    <Main $hasDocker={!!dockerProps}>
+                        {children}
+                    </Main>
+                </Frame>
 
-            {dockerProps && (
-                <DockerFixed>
-                    <Docker {...dockerProps} />
-                </DockerFixed>
-            )}
+                {dockerProps && (
+                    <DockerFixed>
+                        <Docker {...dockerProps} />
+                    </DockerFixed>
+                )}
 
-            {floatingProps && (
-                <FloatingFixed>
-                    <Floating
-                        {...floatingProps}
-                        bottom={floatingBottom}
-                        right={spacing.md}
-                    />
-                </FloatingFixed>
-            )}
+                {floatingProps && (
+                    <FloatingFixed>
+                        <Floating
+                            {...floatingProps}
+                            bottom={floatingBottom}
+                            right={spacing.md}
+                        />
+                    </FloatingFixed>
+                )}
+
+                <PortalContainer ref={portalRef} />
+            </PortalProvider>
         </ThemeProvider>
     );
 };
