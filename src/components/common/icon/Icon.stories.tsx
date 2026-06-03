@@ -76,6 +76,14 @@ const docs: ComponentDocs = {
                         'xl: 32px',
                     ],
                 },
+                {
+                    title: 'rotate',
+                    desc: 'rotate prop으로 아이콘을 회전합니다. SVG를 별도로 추가하지 않고 방향 변형이 필요할 때 사용합니다.',
+                    bulletList: [
+                        'chevron (기본: ↓) — rotate={-90} → >, rotate={90} → <, rotate={180} → ↑',
+                        'arrow (기본: ←) — rotate={180} → →',
+                    ],
+                },
             ],
         },
     ],
@@ -130,6 +138,10 @@ const meta = {
             ],
             description: '아이콘 색상 — SVG의 fill/stroke가 currentColor 여야 적용됨',
         },
+        rotate: {
+            control: { type: 'number', min: -180, max: 360, step: 45 },
+            description: '아이콘 회전 각도 (deg)',
+        },
     },
 } satisfies Meta<typeof Icon>;
 
@@ -182,6 +194,36 @@ export const Color: Story = {
             <Icon name="heart" size="lg" color={semantic.warning} />
             <Icon name="heart" size="lg" color={semantic.error} />
             <Icon name="heart" size="lg" color={semantic.info} />
+        </div>
+    ),
+};
+
+// =========================
+// Rotate
+// =========================
+
+export const Rotate: Story = {
+    name: 'rotate — 방향 변형',
+    render: () => (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div>
+                <p style={{ fontSize: '12px', color: gray[500], marginBottom: '8px' }}>chevron — 기본(↓) / -90(→) / 90(←) / 180(↑)</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <Icon name="chevron" size="lg" color={gray[700]} />
+                    <Icon name="chevron" size="lg" color={gray[700]} rotate={-90} />
+                    <Icon name="chevron" size="lg" color={gray[700]} rotate={90} />
+                    <Icon name="chevron" size="lg" color={gray[700]} rotate={180} />
+                </div>
+            </div>
+            <div>
+                <p style={{ fontSize: '12px', color: gray[500], marginBottom: '8px' }}>arrow — 기본(←) / 180(→) / -90(↑) / 90(↓)</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <Icon name="arrow" size="lg" color={gray[700]} />
+                    <Icon name="arrow" size="lg" color={gray[700]} rotate={180} />
+                    <Icon name="arrow" size="lg" color={gray[700]} rotate={-90} />
+                    <Icon name="arrow" size="lg" color={gray[700]} rotate={90} />
+                </div>
+            </div>
         </div>
     ),
 };

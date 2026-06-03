@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const StyledTextarea = styled.Textarea<{ $isFocused: boolean; $height: number }>`
+const StyledTextarea = styled.textarea<{ $isFocused: boolean; $height: number }>`
   width: 100%;
   height: ${({ $height }) => $height}px;
   padding: ${spacing.md};

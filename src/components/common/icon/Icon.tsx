@@ -16,6 +16,8 @@ export interface IconProps {
     size?: IconSize;
     /** 아이콘 색상 — currentColor 방식 (SVG fill/stroke가 currentColor여야 적용됨) */
     color?: ColorToken;
+    /** 아이콘 회전 각도 (deg) — 예: 90, -90, 180 */
+    rotate?: number;
     /** 추가 className */
     className?: string;
 }
@@ -36,7 +38,7 @@ const sizeMap: Record<IconSize, string> = {
 // Styled component
 // =========================
 
-const StyledIcon = styled.span<{ $size: IconSize; $color?: ColorToken }>`
+const StyledIcon = styled.span<{ $size: IconSize; $color?: ColorToken; $rotate?: number }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -44,6 +46,7 @@ const StyledIcon = styled.span<{ $size: IconSize; $color?: ColorToken }>`
   width: ${({ $size }) => sizeMap[$size]};
   height: ${({ $size }) => sizeMap[$size]};
   color: ${({ $color }) => $color ?? 'inherit'};
+  ${({ $rotate }) => $rotate !== undefined && `transform: rotate(${$rotate}deg);`}
 
   svg {
     width: 100%;
@@ -56,13 +59,13 @@ const StyledIcon = styled.span<{ $size: IconSize; $color?: ColorToken }>`
 // Component
 // =========================
 
-export const Icon = ({ name, size = 'md', color, className }: IconProps) => {
+export const Icon = ({ name, size = 'md', color, rotate, className }: IconProps) => {
     const SvgIcon = iconMap[name];
 
     if (!SvgIcon) return null;
 
     return (
-        <StyledIcon $size={size} $color={color} className={className}>
+        <StyledIcon $size={size} $color={color} $rotate={rotate} className={className}>
             <SvgIcon />
         </StyledIcon>
     );

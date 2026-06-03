@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { spacing, radius, transition } from '@/styles/tokens/spacing';
-import { gray, white } from '@/styles/tokens/color';
-import { fontWeight, fontSize, lineHeight } from '@/styles/tokens/typography';
-import { Icon } from '@/components/common/icon/Icon';
+import { spacing, radius, transition } from '../../../styles/tokens/spacing';
+import { gray, white } from '../../../styles/tokens/color';
+import { fontWeight, fontSize, lineHeight } from '../../../styles/tokens/typography';
+import { Icon } from '../../common/icon/Icon';
 
 // =========================
 // Types
@@ -26,6 +26,11 @@ export interface SelectProps {
     options?: SelectOption[];
     /** 비활성화 */
     disabled?: boolean;
+    /**
+     * 선택값 변경 알림 콜백
+     * 값은 내부에서 관리하고 선택 시 value, label을 외부에 전달
+     */
+    onValueChange?: (value: string, label?: string) => void;
     /** 추가 className */
     className?: string;
 }
@@ -76,8 +81,6 @@ const BoxSelect = styled.select<{ $hasValue: boolean }>`
 
 const BoxIconWrapper = styled.div`
   position: absolute;
-  width: ${spacing.md};
-  height: ${spacing.md};
   right: ${spacing.md};
   top: 50%;
   transform: translateY(-50%);
@@ -108,9 +111,8 @@ const TextSelect = styled.select<{ $hasValue: boolean }>`
   outline: none;
   cursor: pointer;
 
-  flex: 1;
-  max-width: 100%;
-  padding-right: ${spacing.md};
+  width: 100%;
+  padding-right: ${spacing.lg};
 
   font-size: ${fontSize.body02};
   line-height: ${lineHeight.body02};
@@ -139,10 +141,18 @@ export const Select = ({
                            placeholder = '선택하세요',
                            options = [],
                            disabled = false,
+                           onValueChange,
                            className,
                        }: SelectProps) => {
     const [value, setValue] = useState('');
     const hasValue = !!value;
+
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const val = e.target.value;
+        const label = options.find(o => o.value === val)?.label;
+        setValue(val);
+        onValueChange?.(val, label);
+    };
 
     if (variant === 'text') {
         return (
@@ -151,7 +161,7 @@ export const Select = ({
                     $hasValue={hasValue}
                     value={value}
                     disabled={disabled}
-                    onChange={(e) => setValue(e.target.value)}
+                    onChange={handleChange}
                 >
                     <option value="" disabled hidden>{placeholder}</option>
                     {options.map((opt) => (
@@ -171,7 +181,7 @@ export const Select = ({
                 $hasValue={hasValue}
                 value={value}
                 disabled={disabled}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={handleChange}
             >
                 <option value="" disabled hidden>{placeholder}</option>
                 {options.map((opt) => (

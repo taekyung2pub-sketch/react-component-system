@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TextField } from './TextField';
 import { createDocsPage, type ComponentDocs } from '@/components/guide/layout/DocsLayout.tsx';
@@ -28,7 +29,7 @@ const docs: ComponentDocs = {
             orderedList: [
                 'type prop으로 입력 유형 결정 (text / email / password / search / number)',
                 'status prop으로 유효성 상태 표현 (default / focus / success / error)',
-                '값과 상태는 내부 useState로 관리 (uncontrolled)',
+                '기본은 내부 useState로 관리 (uncontrolled), value + onChange 전달 시 외부 state와 연동 (controlled)',
                 'error 상태일 때 message prop으로 에러 문구 표시',
             ],
             diagram: [
@@ -48,8 +49,17 @@ const docs: ComponentDocs = {
             type: 'notes',
             items: [
                 {
-                    title: '상태 관리',
-                    desc: '입력값은 내부 useState로 관리합니다. 외부에서 value / onChange를 주입하는 controlled 방식은 지원하지 않습니다.',
+                    title: '상태 관리 — uncontrolled (기본)',
+                    desc: 'value / onChange를 전달하지 않으면 입력값을 내부 useState로 관리합니다. 대부분의 폼 필드에서 이 방식을 사용합니다.',
+                },
+                {
+                    title: '상태 관리 — controlled',
+                    desc: 'value + onChange를 함께 전달하면 외부 state와 연동됩니다. 검색 필터, 키워드 클릭으로 값을 채워야 하는 경우에 사용합니다.',
+                    bulletList: [
+                        'value — 외부에서 관리하는 string state',
+                        'onChange — e.target.value로 외부 state 업데이트',
+                        'onKeyDown — Enter 처리 등 추가 키 이벤트',
+                    ],
                 },
                 {
                     title: 'deleteBtn 노출 조건',
@@ -117,6 +127,10 @@ const meta = {
             control: 'boolean',
             description: '비활성화',
             table: { defaultValue: { summary: 'false' } },
+        },
+        value: {
+            control: 'text',
+            description: 'controlled value — 전달 시 외부 state와 연동',
         },
     },
 } satisfies Meta<typeof TextField>;
@@ -196,6 +210,49 @@ export const Search: Story = {
             <TextField type="search" placeholder="Search for clothes..." />
         </div>
     ),
+};
+
+// =========================
+// Controlled
+// =========================
+
+const ControlledStory = () => {
+    const [value, setValue] = useState('');
+    const keywords = ['Classic', 'Linen', 'Denim'];
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: 320 }}>
+            <TextField
+                type="search"
+                placeholder="controlled 검색 예시"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+            />
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {keywords.map(kw => (
+                    <button
+                        key={kw}
+                        onClick={() => setValue(kw)}
+                        style={{ padding: '4px 12px', borderRadius: '999px', border: '1px solid #e4e4e7', cursor: 'pointer', fontSize: '12px' }}
+                    >
+                        {kw}
+                    </button>
+                ))}
+                <button
+                    onClick={() => setValue('')}
+                    style={{ padding: '4px 12px', borderRadius: '999px', border: '1px solid #e4e4e7', cursor: 'pointer', fontSize: '12px' }}
+                >
+                    초기화
+                </button>
+            </div>
+            <p style={{ fontSize: '12px', color: '#71717a' }}>현재 값: "{value}"</p>
+        </div>
+    );
+};
+
+export const Controlled: Story = {
+    name: 'controlled — 외부 state 연동',
+    render: () => <ControlledStory />,
 };
 
 // =========================

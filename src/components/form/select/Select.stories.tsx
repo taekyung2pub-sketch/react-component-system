@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Select } from './Select';
 import { createDocsPage, type ComponentDocs } from '@/components/guide/layout/DocsLayout.tsx';
@@ -41,6 +42,14 @@ const docs: ComponentDocs = {
                     title: '시스템 드롭다운',
                     desc: '브라우저/OS 기본 select 드롭다운을 사용합니다. 커스텀 드롭다운 UI가 필요한 경우에는 별도 구현이 필요합니다.',
                 },
+                {
+                    title: 'onValueChange',
+                    desc: '선택값 변경 시 value와 label을 외부에 전달하는 콜백입니다. 선택값은 내부에서 관리되며 외부 주입은 지원하지 않습니다.',
+                    bulletList: [
+                        'onValueChange(value, label) — 선택된 옵션의 value와 label 전달',
+                        '팝업, 필터 등 선택값을 외부 state에서 활용해야 할 때 사용',
+                    ],
+                },
             ],
         },
     ],
@@ -57,10 +66,16 @@ const addressOptions = [
 ];
 
 const sortOptions = [
-    { label: '최신순',     value: 'latest' },
-    { label: '인기순',     value: 'popular' },
+    { label: '최신순',      value: 'latest' },
+    { label: '인기순',      value: 'popular' },
     { label: '낮은 가격순', value: 'price_asc' },
     { label: '높은 가격순', value: 'price_desc' },
+];
+
+const colorOptions = [
+    { label: '화이트', value: 'white' },
+    { label: '블랙',   value: 'black' },
+    { label: '네이비', value: 'navy' },
 ];
 
 // =========================
@@ -152,6 +167,35 @@ export const Text: Story = {
             <Select variant="text" placeholder="카테고리카테고리카테고리" options={addressOptions} />
         </div>
     ),
+};
+
+// =========================
+// onValueChange
+// =========================
+
+const OnValueChangeStory = () => {
+    const [selected, setSelected] = useState<{ value: string; label: string } | null>(null);
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: 320 }}>
+            <Select
+                variant="box"
+                placeholder="컬러를 선택해주세요"
+                options={colorOptions}
+                onValueChange={(value, label) => setSelected({ value, label: label ?? value })}
+            />
+            {selected && (
+                <p style={{ fontSize: '12px', color: '#71717a' }}>
+                    선택값: {selected.label} ({selected.value})
+                </p>
+            )}
+        </div>
+    );
+};
+
+export const OnValueChange: Story = {
+    name: 'onValueChange — 선택값 외부 전달',
+    render: () => <OnValueChangeStory />,
 };
 
 // =========================

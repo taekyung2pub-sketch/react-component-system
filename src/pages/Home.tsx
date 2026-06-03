@@ -4,12 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AppLayout } from '@/layouts/AppLayout';
 import { Swiper } from '@/components/display/swiper/Swiper';
-import { Tab } from '@/components/display/tab/Tab';
 import { Section } from '@/components/layout/section/Section';
 import { Stack } from '@/components/layout/stack/Stack';
+import { Tab } from '@/components/display/tab/Tab'
 import { Ratio } from '@/components/display/ratio/Ratio';
 import { ProdItem } from '@/components/product/prodItem/ProdItem';
-import { Button } from '@/components/common/button/Button';
 import { Title } from '@/components/common/title/Title';
 import { Icon } from '@/components/common/icon/Icon';
 import { Skeleton } from '@/components/overlay/skeleton/Skeleton';
@@ -23,8 +22,8 @@ import { allProducts } from '@/data/mockProducts';
 // =========================
 
 const heroBanners = [
-    { id: 1, image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80', label: 'New Collection', sub: '2026 S/S',     href: '/event/new-collection' },
-    { id: 2, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80', label: 'Summer Sale',    sub: 'Up to 50% off', href: '/event/summer-sale' },
+    { id: 1, image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80', label: 'New Collection', sub: '2026 S/S',        href: '/event/new-collection' },
+    { id: 2, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80', label: 'Summer Sale',    sub: 'Up to 50% off',   href: '/event/summer-sale' },
     { id: 3, image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80', label: 'Best Picks',    sub: "Editor's choice", href: '/event/best-picks' },
 ];
 
@@ -37,18 +36,14 @@ const categoryItems = [
     { label: 'Shoes',   value: 'shoes' },
 ];
 
-const productTabItems = [
-    { label: 'Best', value: 'best' },
-    { label: 'New',  value: 'new' },
-    { label: 'Sale', value: 'sale' },
+// 3. 탭 대신 섹션 3개로 분리
+const productSections = [
+    { label: 'Best',  value: 'best',  products: allProducts.slice(0, 4) },
+    { label: 'New',   value: 'new',   products: allProducts.slice(4, 8) },
+    { label: 'Sale',  value: 'sale',  products: allProducts.filter(p => p.originalPrice) },
 ];
 
-const tabProducts: Record<string, typeof allProducts> = {
-    best: allProducts.slice(0, 4),
-    new:  allProducts.slice(4, 8),
-    sale: allProducts.filter(p => p.originalPrice),
-};
-
+// 5. feedList → mockPosts id와 일치하도록
 const feedList = [
     { id: 1, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80', title: '봄 코디 추천 5선',   desc: '따뜻한 봄날을 위한 스타일링 가이드' },
     { id: 2, image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&q=80', title: '린넨 소재 완전 정복', desc: '여름을 시원하게 보내는 소재 이야기' },
@@ -118,19 +113,22 @@ const SectionHeader = styled.a`
   text-decoration: none;
 `;
 
-const FeedCard = styled.a`
-  display: block;
+const FeedCard = styled.div`
   cursor: pointer;
-  text-decoration: none;
 `;
+
+const FeedCardInfo = styled.div`
+  width: 100%;
+  margin-top: ${spacing.sm};
+`
 
 const FeedDesc = styled.p`
   ${body04('regular')}
   color: ${gray[500]};
-  margin: 0;
+  margin-top: ${spacing.xs};
 `;
 
-// 4. Skeleton을 Swiper 슬라이드와 동일한 형태로
+// Skeleton
 const SkeletonSlide = styled.div`
   flex-shrink: 0;
   width: 160px;
@@ -142,9 +140,6 @@ const SkeletonTrack = styled.div`
   overflow: hidden;
 `;
 
-// =========================
-// Skeleton — 상품 스와이퍼 (Swiper 레이아웃과 동일)
-// =========================
 const ProductSwiperSkeleton = () => (
     <SkeletonTrack>
         {Array.from({ length: 3 }).map((_, i) => (
@@ -160,9 +155,6 @@ const ProductSwiperSkeleton = () => (
     </SkeletonTrack>
 );
 
-// =========================
-// Skeleton — 매거진
-// =========================
 const FeedSkeleton = () => (
     <Stack direction="horizontal" columns={2} gap="md">
         {Array.from({ length: 4 }).map((_, i) => (
@@ -181,32 +173,16 @@ const FeedSkeleton = () => (
 
 function Home() {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState('best');
-    const [isProductLoading, setIsProductLoading] = useState(true);
     const [isFeedLoading, setIsFeedLoading] = useState(true);
-
-    useEffect(() => {
-        const t = setTimeout(() => setIsProductLoading(false), 1200);
-        return () => clearTimeout(t);
-    }, []);
 
     useEffect(() => {
         const t = setTimeout(() => setIsFeedLoading(false), 1800);
         return () => clearTimeout(t);
     }, []);
 
-    const handleTabChange = (value: string) => {
-        setActiveTab(value);
-        setIsProductLoading(true);
-        setTimeout(() => setIsProductLoading(false), 800);
-    };
-
-    // 3. 카테고리 선택 시 ProductList 페이지로 이동 + category state 전달
     const handleCategoryChange = (value: string) => {
         navigate('/products', { state: { category: value } });
     };
-
-    const currentProducts = tabProducts[activeTab] ?? [];
 
     return (
         <AppLayout
@@ -225,18 +201,17 @@ function Home() {
             dockerProps={{
                 variant: 'nav',
                 navItems: [
-                    { icon: 'home',      label: '홈',      value: 'home' },
-                    { icon: 'search',    label: '검색',    value: 'search' },
-                    { icon: 'bag',       label: '쇼핑',    value: 'shop' },
-                    { icon: 'chat',      label: '커뮤니티', value: 'community' },
-                    { icon: 'user',      label: '마이',    value: 'my' },
+                    { icon: 'home',   label: '홈',      value: 'home' },
+                    { icon: 'search', label: '검색',    value: 'search' },
+                    { icon: 'bag',    label: '쇼핑',    value: 'shop' },
+                    { icon: 'chat',   label: '커뮤니티', value: 'community' },
+                    { icon: 'user',   label: '마이',    value: 'my' },
                 ],
                 activeNav: 'home',
                 onNavChange: (value) => navigate(NAV_ROUTES[value] ?? '/'),
             }}
             floatingProps={{}}
         >
-
             {/* ① Hero Banner Swiper */}
             <Swiper
                 variant="dot"
@@ -257,8 +232,9 @@ function Home() {
                 ))}
             />
 
-            {/* ② 카테고리 내비게이션 — 3. 선택 시 ProductList로 이동 */}
+            {/* ② 카테고리 — 타이틀 + 칩 스크롤 */}
             <Section variant="default" spacing="md">
+                <Title variant="title03" weight="bold" as="p" mb="sm">카테고리</Title>
                 <Tab
                     variant="scroll"
                     items={categoryItems}
@@ -267,42 +243,32 @@ function Home() {
                 />
             </Section>
 
-            {/* ③ 상품 스와이퍼 */}
-            <Section variant="default" spacing="md">
-                <Title variant="title03" weight="bold" as="p" mb="sm">Pick for you</Title>
-                <Tab
-                    variant="line"
-                    items={productTabItems}
-                    defaultValue="best"
-                    onChange={handleTabChange}
-                />
-                <div style={{ marginTop: spacing.md }}>
-                    {isProductLoading ? (
-                        <ProductSwiperSkeleton />
-                    ) : (
-                        <Swiper
-                            variant="basic"
-                            slideWidth={160}
-                            gap="sm"
-                            slides={currentProducts.map((product) => (
-                                <ProdItem
-                                    key={product.id}
-                                    layout="vertical"
-                                    imageSrc={product.image}
-                                    name={product.name}
-                                    price={product.price}
-                                    originalPrice={product.originalPrice}
-                                    currency="KRW"
-                                    onClick={() => navigate(`/products/${product.id}`)}
-                                />
-                            ))}
-                        />
-                    )}
-                </div>
-            </Section>
+            {/* ③ 상품 섹션 3개 — 탭 없이 각 섹션으로 */}
+            {productSections.map(section => (
+                <Section key={section.value} variant="line" spacing="md">
+                    <Title variant="title03" weight="bold" as="p" mb="md">{section.label}</Title>
+                    <Swiper
+                        variant="basic"
+                        slideWidth={160}
+                        gap="sm"
+                        slides={section.products.map(product => (
+                            <ProdItem
+                                key={product.id}
+                                layout="vertical"
+                                imageSrc={product.image}
+                                name={product.name}
+                                price={product.price}
+                                originalPrice={product.originalPrice}
+                                currency="KRW"
+                                onClick={() => navigate(`/products/${product.id}`)}
+                            />
+                        ))}
+                    />
+                </Section>
+            ))}
 
-            {/* ④ 프로모션 띠배너 — 5. 링크 기능 */}
-            <PromoBanner href="/event/promo" onClick={(e) => { e.preventDefault(); navigate('/event/promo'); }}>
+            {/* ④ 프로모션 띠배너 */}
+            <PromoBanner href="javascript:">
                 <Stack direction="vertical" gap="xs">
                     <Title variant="title03" weight="semibold" as="p" color="rgba(255,255,255,0.6)">
                         Limited Offer
@@ -311,38 +277,35 @@ function Home() {
                         신규 가입 시 10% 할인
                     </Title>
                 </Stack>
-                <Button size="sm" variant="soft" color="gray-light" rounded="full">
-                    받기
-                </Button>
+                <Icon name="arrow" size="md" color={white} rotate={-180} />
             </PromoBanner>
 
-            {/* ⑤ 커뮤니티 목록 (매거진) */}
+            {/* ⑤ 매거진 */}
             <Section variant="divider" spacing="lg">
                 <SectionHeader href="/community" onClick={(e) => { e.preventDefault(); navigate('/community'); }}>
                     <Title variant="title03" weight="bold" as="span">매거진</Title>
-                    <Icon name="chevron" size="md" color={gray[400]} />
+                    <Icon name="chevron" size="md" color={gray[400]} rotate={-90} />
                 </SectionHeader>
                 {isFeedLoading ? (
                     <FeedSkeleton />
                 ) : (
-                    <Stack direction="horizontal" columns={2} gap="md">
+                    <Stack direction="horizontal" columns={2} gap="lg">
                         {feedList.map((feed) => (
-                            <FeedCard key={feed.id} href={`/community/${feed.id}`} onClick={(e) => { e.preventDefault(); navigate(`/community/${feed.id}`); }}>
+                            <FeedCard key={feed.id} onClick={() => navigate(`/community/${feed.id}`)}>
                                 <Ratio ratio="4/3" rounded="md">
                                     <img src={feed.image} alt={feed.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                 </Ratio>
-                                <Stack direction="vertical" gap="xs" style={{ marginTop: spacing.sm }}>
+                                <FeedCardInfo>
                                     <Title variant="title03" weight="semibold" as="p">
                                         {feed.title}
                                     </Title>
                                     <FeedDesc>{feed.desc}</FeedDesc>
-                                </Stack>
+                                </FeedCardInfo>
                             </FeedCard>
                         ))}
                     </Stack>
                 )}
             </Section>
-
         </AppLayout>
     );
 }

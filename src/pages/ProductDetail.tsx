@@ -13,6 +13,8 @@ import { Table } from '@/components/display/table/Table';
 import { Accordion } from '@/components/display/accordion/Accordion';
 import { EmptyState } from '@/components/common/emptyState/EmptyState';
 import { Icon } from '@/components/common/icon/Icon';
+import { PopAddCart } from '@/pages/popup/PopAddCart';
+import type { CartItem } from '@/pages/popup/PopAddCart';
 import { getProductById } from '@/data/mockProducts';
 import { spacing, transition, radius } from '@/styles/tokens/spacing';
 import { gray } from '@/styles/tokens/color';
@@ -87,6 +89,12 @@ function ProductDetail() {
     const { id } = useParams<{ id: string }>();
     const product = getProductById(Number(id));
     const [wished, setWished] = useState(false);
+    const [cartOpen, setCartOpen] = useState(false);
+
+    const handleConfirm = (items: CartItem[]) => {
+        setCartOpen(false);
+        alert(`장바구니에 ${items.reduce((sum, i) => sum + i.quantity, 0)}개 담겼어요.`);
+    };
 
     if (!product) {
         return (
@@ -131,7 +139,7 @@ function ProductDetail() {
                 price: product.price,
                 originalPrice: product.originalPrice,
                 currency: 'KRW',
-                onAddToCart: () => alert(`장바구니에 담겼어요.`),
+                onAddToCart: () => setCartOpen(true),
             }}
         >
             {/* 상품 이미지 스와이퍼 */}
@@ -179,6 +187,7 @@ function ProductDetail() {
                 <Table rows={product.tableRows.map(r => ({ label: r.label, value: r.value }))} />
             </Section>
 
+            {/* 아코디언 */}
             <Section variant="default" spacing="md">
                 <Accordion
                     single={false}
@@ -189,6 +198,15 @@ function ProductDetail() {
                     }))}
                 />
             </Section>
+
+            {/* 장바구니 팝업 */}
+            {cartOpen && (
+                <PopAddCart
+                    product={product}
+                    onClose={() => setCartOpen(false)}
+                    onConfirm={handleConfirm}
+                />
+            )}
 
         </AppLayout>
     );
