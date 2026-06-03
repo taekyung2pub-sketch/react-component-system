@@ -26,6 +26,15 @@ export interface TextFieldProps {
     deleteBtn?: boolean;
     /** 비활성화 */
     disabled?: boolean;
+    /**
+     * controlled value — 전달 시 외부 state와 연동됨
+     * 미전달 시 내부 useState로 관리 (기존 동작과 동일)
+     */
+    value?: string;
+    /** controlled onChange — value prop과 함께 사용 */
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    /** keyDown 콜백 */
+    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     /** 추가 className */
     className?: string;
 }
@@ -157,11 +166,28 @@ export const TextField = ({
                               message,
                               deleteBtn = true,
                               disabled = false,
+                              value: valueProp,
+                              onChange: onChangeProp,
+                              onKeyDown,
                               className,
                           }: TextFieldProps) => {
     const [isFocused, setIsFocused] = useState(false);
-    const [value, setValue] = useState('');
+    const [internalValue, setInternalValue] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+
+    // value prop 전달 여부로 controlled / uncontrolled 분기
+    const isControlled = valueProp !== undefined;
+    const value = isControlled ? valueProp : internalValue;
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!isControlled) setInternalValue(e.target.value);
+        onChangeProp?.(e);
+    };
+
+    const handleClear = () => {
+        if (!isControlled) setInternalValue('');
+        onChangeProp?.({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
+    };
 
     const isSearch   = type === 'search';
     const isPassword = type === 'password';
@@ -180,7 +206,6 @@ export const TextField = ({
                 $isFocused={isFocused}
                 $disabled={disabled}
             >
-                {/* search — 좌측 search 아이콘 */}
                 {isSearch && (
                     <Icon name="search" size="sm" color={gray[400]} />
                 )}
@@ -190,25 +215,23 @@ export const TextField = ({
                     placeholder={placeholder}
                     value={value}
                     disabled={disabled}
-                    onChange={(e) => setValue(e.target.value)}
+                    onChange={handleChange}
+                    onKeyDown={onKeyDown}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                 />
 
                 <RightSlot>
-                    {/* 삭제 버튼 */}
                     {showDeleteBtn && (
-                        <DeleteButton type="button" onClick={() => setValue('')} tabIndex={-1}>
+                        <DeleteButton type="button" onClick={handleClear} tabIndex={-1}>
                             <Icon name="cancel_circle" size="sm" color={gray[400]} />
                         </DeleteButton>
                     )}
 
-                    {/* search — 우측 mic 아이콘 */}
                     {isSearch && (
                         <Icon name="mic" size="sm" color={gray[400]} />
                     )}
 
-                    {/* password — eye 토글 + 상태 아이콘 */}
                     {isPassword && (
                         <>
                             <ToggleButton
@@ -231,19 +254,16 @@ export const TextField = ({
                         </>
                     )}
 
-                    {/* 일반 타입 — success 아이콘 */}
                     {!isSearch && !isPassword && status === 'success' && (
                         <Icon name="check_circle" size="sm" color={semantic.success} />
                     )}
 
-                    {/* 일반 타입 — error 아이콘 */}
                     {!isSearch && !isPassword && status === 'error' && (
                         <Icon name="warning_circle" size="sm" color={semantic.error} />
                     )}
                 </RightSlot>
             </InputWrapper>
 
-            {/* error 메시지 */}
             {!isSearch && status === 'error' && message && (
                 <ErrorMessage>{message}</ErrorMessage>
             )}

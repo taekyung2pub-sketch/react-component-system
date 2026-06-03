@@ -194,8 +194,8 @@ function ProductListPage() {
                                 originalPrice: p.originalPrice,
                                 imageUrl: p.image,
                                 currency: 'KRW',
-                                onClick: () => navigate(`/products/${p.id}`),
                             }))}
+                            onItemClick={(id) => navigate(`/products/${id}`)}
                         />
                         {isLoading && (
                             <ProductList
