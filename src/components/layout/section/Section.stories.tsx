@@ -44,6 +44,10 @@ const docs: ComponentDocs = {
                     title: 'noPadX',
                     desc: '좌우 padding이 필요 없는 경우 noPadX를 사용합니다. Swiper, 전체 너비 이미지 등 edge-to-edge 콘텐츠에 적용합니다.',
                 },
+                {
+                    title: 'noPadY',
+                    desc: '상하 padding이 필요 없는 경우 noPadY를 사용합니다. Accordion, 리스트 등 자체 간격을 가진 콘텐츠에 적용합니다.',
+                },
             ],
         },
     ],
@@ -93,6 +97,11 @@ const meta = {
         noPadX: {
             control: 'boolean',
             description: '좌우 padding 제거',
+            table: { defaultValue: { summary: 'false' } },
+        },
+        noPadY: {
+            control: 'boolean',
+            description: '상하 padding 제거',
             table: { defaultValue: { summary: 'false' } },
         },
     },
@@ -172,6 +181,27 @@ export const NoPadX: Story = {
             </Section>
             <Section spacing="md">
                 <MockContent label="다음 섹션 (좌우 16px)" />
+            </Section>
+        </div>
+    ),
+};
+
+// =========================
+// noPadY
+// =========================
+
+export const NoPadY: Story = {
+    name: 'noPadY — 상하 padding 제거',
+    render: () => (
+        <div style={{ width: 375, background: '#f3f3f3' }}>
+            <Section spacing="md">
+                <MockContent label="일반 섹션 (상하 16px)" />
+            </Section>
+            <Section variant="divider" noPadY>
+                <MockContent label="noPadY — 상하 padding 없음 (divider 구분선만)" />
+            </Section>
+            <Section spacing="md">
+                <MockContent label="다음 섹션 (상하 16px)" />
             </Section>
         </div>
     ),

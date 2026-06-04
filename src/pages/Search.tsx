@@ -244,6 +244,18 @@ function Search() {
                             </div>
                         </Section>
                     )}
+                    {!hasKeywords && (
+                        <Section variant="default" spacing="md">
+                            <HeaderRow>
+                                <Title variant="title03" weight="bold" as="p">Recent Searches</Title>
+                            </HeaderRow>
+                            <EmptyState
+                                type="empty"
+                                title="최근 검색어가 없어요"
+                                description="검색어를 입력해보세요."
+                            />
+                        </Section>
+                    )}
 
                     <Section variant={hasKeywords ? 'divider' : 'default'} spacing="md">
                         <Title variant="title03" weight="bold" as="p" mb="md">추천 상품</Title>

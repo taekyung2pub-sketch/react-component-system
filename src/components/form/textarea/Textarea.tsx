@@ -42,14 +42,31 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const StyledTextarea = styled.textarea<{ $isFocused: boolean; $height: number }>`
+// textarea + counter를 감싸는 relative 컨테이너
+const InputWrap = styled.div<{ $height: number; $isFocused: boolean; $disabled: boolean }>`
+  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: ${({ $height }) => $height}px;
-  padding: ${spacing.md};
 
   border-radius: ${radius.lg};
-  border: 1px solid ${({ $isFocused }) => $isFocused ? gray[900] : gray[200]};
-  background-color: ${white};
+  border: 1px solid ${({ $isFocused, $disabled }) =>
+          $disabled ? gray[200] : $isFocused ? gray[900] : gray[200]};
+  background-color: ${({ $disabled }) => $disabled ? gray[100] : white};
+  box-sizing: border-box;
+  transition: border-color ${transition.fast};
+  overflow: hidden;
+`;
+
+const StyledTextarea = styled.textarea`
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  padding: ${spacing.md};
+
+  border: none;
+  background: transparent;
 
   font-size: ${fontSize.body02};
   line-height: ${lineHeight.body02};
@@ -59,22 +76,23 @@ const StyledTextarea = styled.textarea<{ $isFocused: boolean; $height: number }>
   resize: none;
   outline: none;
   box-sizing: border-box;
-  transition: border-color ${transition.fast};
+  overflow-y: auto;
 
   &::placeholder {
     color: ${gray[400]};
   }
 
   &:disabled {
-    background-color: ${gray[100]};
     color: ${gray[400]};
     cursor: not-allowed;
   }
 `;
 
-const Counter = styled.span`
-  margin-top: ${spacing.xs};
-  padding-right: ${spacing.xs};
+// 스크롤 영역 밖 하단 고정
+const Counter = styled.div`
+  flex-shrink: 0;
+  padding: ${spacing.xs} ${spacing.md};
+  background: ${white};
   text-align: right;
 
   font-size: ${fontSize.caption01};
@@ -99,7 +117,6 @@ export const Textarea = ({
     const [isFocused, setIsFocused] = useState(false);
     const [value, setValue] = useState('');
 
-    // shouldClear가 true로 바뀌면 내부 값 초기화
     useEffect(() => {
         if (shouldClear) {
             setValue('');
@@ -112,22 +129,24 @@ export const Textarea = ({
         onValueChange?.(e.target.value);
     };
 
+    const hasCounter = maxLength !== undefined;
+
     return (
         <Wrapper className={className}>
-            <StyledTextarea
-                $isFocused={isFocused}
-                $height={height}
-                placeholder={placeholder}
-                value={value}
-                maxLength={maxLength}
-                disabled={disabled}
-                onChange={handleChange}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-            />
-            {maxLength !== undefined && (
-                <Counter>{value.length}/{maxLength}</Counter>
-            )}
+            <InputWrap $height={height} $isFocused={isFocused} $disabled={disabled}>
+                <StyledTextarea
+                    placeholder={placeholder}
+                    value={value}
+                    maxLength={maxLength}
+                    disabled={disabled}
+                    onChange={handleChange}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                />
+                {hasCounter && (
+                    <Counter>{value.length}/{maxLength}</Counter>
+                )}
+            </InputWrap>
         </Wrapper>
     );
 };

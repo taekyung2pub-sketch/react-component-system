@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { spacing, radius, transition } from '@/styles/tokens/spacing';
-import { gray, black, white } from '@/styles/tokens/color';
-import { body02, body03 } from '@/styles/mixins/typography';
-import { Icon } from '@/components/common/icon/Icon';
+import { spacing, radius, transition } from '../../../styles/tokens/spacing';
+import { gray, black, white } from '../../../styles/tokens/color';
+import { body02, body03 } from '../../../styles/mixins/typography';
+import { Icon } from '../../common/icon/Icon';
 
 // =========================
 // Types
@@ -63,11 +63,10 @@ const LineWrapper = styled.div`
 `;
 
 const LineItem = styled.div<{ $disabled: boolean }>`
-  border-top: 1px solid ${gray[200]};
   opacity: ${({ $disabled }) => $disabled ? 0.4 : 1};
 
-  &:last-child {
-    border-bottom: 1px solid ${gray[200]};
+  & + & {
+    border-top: 1px solid ${gray[200]};
   }
 `;
 

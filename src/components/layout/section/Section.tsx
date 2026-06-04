@@ -17,6 +17,8 @@ export interface SectionProps {
     spacing?: SectionSpacing;
     /** 좌우 padding 제거 */
     noPadX?: boolean;
+    /** 상하 padding 제거 */
+    noPadY?: boolean;
     /** 콘텐츠 */
     children?: React.ReactNode;
     /** 추가 className */
@@ -32,8 +34,8 @@ const spacingMap: Record<SectionSpacing, string> = {
     lg: spacing.lg,
 };
 
-const Base = styled.div<{ $spacing: SectionSpacing; $noPadX: boolean }>`
-  padding: ${({ $spacing }) => spacingMap[$spacing]} ${({ $noPadX }) => $noPadX ? '0' : spacing.md};
+const Base = styled.div<{ $spacing: SectionSpacing; $noPadX: boolean; $noPadY: boolean }>`
+  padding: ${({ $spacing, $noPadY }) => $noPadY ? '0' : spacingMap[$spacing]} ${({ $noPadX }) => $noPadX ? '0' : spacing.md};
 `;
 
 const LineSection = styled(Base)`
@@ -52,12 +54,25 @@ export const Section = ({
                             variant = 'default',
                             spacing: spacingProp = 'md',
                             noPadX = false,
+                            noPadY = false,
                             children,
                             className,
                         }: SectionProps) => {
-    if (variant === 'line') return <LineSection $spacing={spacingProp} $noPadX={noPadX} className={className}>{children}</LineSection>;
-    if (variant === 'divider') return <DividerSection $spacing={spacingProp} $noPadX={noPadX} className={className}>{children}</DividerSection>;
-    return <Base $spacing={spacingProp} $noPadX={noPadX} className={className}>{children}</Base>;
+    if (variant === 'line') return (
+        <LineSection $spacing={spacingProp} $noPadX={noPadX} $noPadY={noPadY} className={className}>
+            {children}
+        </LineSection>
+    );
+    if (variant === 'divider') return (
+        <DividerSection $spacing={spacingProp} $noPadX={noPadX} $noPadY={noPadY} className={className}>
+            {children}
+        </DividerSection>
+    );
+    return (
+        <Base $spacing={spacingProp} $noPadX={noPadX} $noPadY={noPadY} className={className}>
+            {children}
+        </Base>
+    );
 };
 
 export default Section;
