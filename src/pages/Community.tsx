@@ -11,7 +11,7 @@ import { Title } from '@/components/common/title/Title';
 import { Button } from '@/components/common/button/Button';
 import { Icon } from '@/components/common/icon/Icon';
 import { allPosts, mdsPicks } from '@/data/mockPosts';
-import { spacing, radius } from '@/styles/tokens/spacing';
+import { spacing, radius, transition } from '@/styles/tokens/spacing';
 import { gray, white } from '@/styles/tokens/color';
 import { body03, body04, caption01 } from '@/styles/mixins/typography';
 
@@ -38,6 +38,7 @@ const Tag = styled.span`
   background: ${gray[100]};
   ${caption01('medium')}
   color: ${gray[600]};
+  align-self: flex-start;
 `;
 
 const AuthorRow = styled.div`
@@ -201,6 +202,7 @@ function Community() {
             headerProps={{
                 variant: 'default',
                 title: 'Community',
+                actions: [{ icon: 'edit', onClick: () => {} }],
             }}
             dockerProps={{
                 variant: 'nav',
@@ -218,29 +220,29 @@ function Community() {
             {/* ① MD's Pick — 풀 스와이퍼 */}
             <Section variant="default" spacing="md">
                 <Title variant="title03" weight="bold" as="p" mb="md">MD's Pick</Title>
-                <Swiper
-                    variant="dot"
-                    slides={mdsPicks.map(post => (
-                        <MdsSlide key={post.id} onClick={() => navigate(`/community/${post.id}`)}>
-                            <Ratio ratio="4/3">
-                                <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                            </Ratio>
-                            <MdsOverlay>
-                                <MdsTag>{post.category}</MdsTag>
-                                <Title variant="title02" weight="bold" as="span" color={white}>
-                                    {post.title}
-                                </Title>
-                                <MdsDesc>{post.desc}</MdsDesc>
-                                <AuthorRow style={{ marginTop: spacing.xs }}>
-                                    <Avatar src={post.avatar} alt={post.author} />
-                                    <AuthorName style={{ color: 'rgba(255,255,255,0.75)' }}>{post.author}</AuthorName>
-                                    <DateText style={{ color: 'rgba(255,255,255,0.5)' }}>· {post.date}</DateText>
-                                </AuthorRow>
-                            </MdsOverlay>
-                        </MdsSlide>
-                    ))}
-                />
             </Section>
+            <Swiper
+                variant="dot"
+                slides={mdsPicks.map(post => (
+                    <MdsSlide key={post.id} onClick={() => navigate(`/community/${post.id}`)}>
+                        <Ratio ratio="4/3">
+                            <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </Ratio>
+                        <MdsOverlay>
+                            <MdsTag>{post.category}</MdsTag>
+                            <Title variant="title02" weight="bold" as="span" color={white}>
+                                {post.title}
+                            </Title>
+                            <MdsDesc>{post.desc}</MdsDesc>
+                            <AuthorRow style={{ marginTop: spacing.xs }}>
+                                <Avatar src={post.avatar} alt={post.author} />
+                                <AuthorName style={{ color: 'rgba(255,255,255,0.75)' }}>{post.author}</AuthorName>
+                                <DateText style={{ color: 'rgba(255,255,255,0.5)' }}>· {post.date}</DateText>
+                            </AuthorRow>
+                        </MdsOverlay>
+                    </MdsSlide>
+                ))}
+            />
 
             {/* ② 이벤트 띠배너 */}
             <EventBanner href="/event" onClick={(e) => { e.preventDefault(); }}>
@@ -248,7 +250,7 @@ function Community() {
                     <EventLabel>Limited Event</EventLabel>
                     <EventTitle>여름 시즌 특별 기획전 진행중</EventTitle>
                 </EventLeft>
-                <Icon name="arrow" size="sm" color={white} rotate={-180} />
+                <Icon name="arrow" size="sm" color={white} style={{ transform: 'rotate(180deg)', flexShrink: 0 }} />
             </EventBanner>
 
             {/* ③ 일반 매거진 — 2열 그리드 */}

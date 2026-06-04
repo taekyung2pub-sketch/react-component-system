@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { spacing, radius, transition } from '@/styles/tokens/spacing';
 import { gray, white } from '@/styles/tokens/color';
@@ -18,6 +18,16 @@ export interface TextareaProps {
     maxLength?: number;
     /** 비활성화 */
     disabled?: boolean;
+    /**
+     * 입력값 변경 알림 콜백
+     * 값은 내부에서 관리하고, 변경 시 외부에 전달하는 용도
+     */
+    onValueChange?: (value: string) => void;
+    /**
+     * 외부에서 값 초기화 트리거
+     * true로 바뀌면 내부 value를 '' 으로 리셋
+     */
+    shouldClear?: boolean;
     /** 추가 className */
     className?: string;
 }
@@ -82,10 +92,25 @@ export const Textarea = ({
                              height = 120,
                              maxLength,
                              disabled = false,
+                             onValueChange,
+                             shouldClear,
                              className,
                          }: TextareaProps) => {
     const [isFocused, setIsFocused] = useState(false);
     const [value, setValue] = useState('');
+
+    // shouldClear가 true로 바뀌면 내부 값 초기화
+    useEffect(() => {
+        if (shouldClear) {
+            setValue('');
+            onValueChange?.('');
+        }
+    }, [shouldClear]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setValue(e.target.value);
+        onValueChange?.(e.target.value);
+    };
 
     return (
         <Wrapper className={className}>
@@ -96,7 +121,7 @@ export const Textarea = ({
                 value={value}
                 maxLength={maxLength}
                 disabled={disabled}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={handleChange}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
             />

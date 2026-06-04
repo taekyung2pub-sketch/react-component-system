@@ -9,11 +9,11 @@ import { Ratio } from '@/components/display/ratio/Ratio';
 import { Title } from '@/components/common/title/Title';
 import { Icon } from '@/components/common/icon/Icon';
 import { Button } from '@/components/common/button/Button';
-import { Textarea } from '@/components/form/textArea/Textarea';
+import { Textarea } from '@/components/form/textarea/Textarea';
 import { EmptyState } from '@/components/common/emptyState/EmptyState';
 import { getPostById } from '@/data/mockPosts';
 import { spacing, radius, transition } from '@/styles/tokens/spacing';
-import { gray } from '@/styles/tokens/color';
+import { gray, white } from '@/styles/tokens/color';
 import { body03, body04, caption01 } from '@/styles/mixins/typography';
 
 const NAV_ROUTES: Record<string, string> = {
@@ -23,6 +23,8 @@ const NAV_ROUTES: Record<string, string> = {
     community: '/community',
     my:        '/mypage',
 };
+
+const MY_AUTHOR = '나';
 
 // =========================
 // Styled
@@ -140,6 +142,13 @@ const CommentText = styled.p`
   line-height: 1.6;
 `;
 
+const CommentRight = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${spacing.sm};
+  flex-shrink: 0;
+`;
+
 const CommentLikeBtn = styled.button<{ $active?: boolean }>`
   display: inline-flex;
   align-items: center;
@@ -151,6 +160,17 @@ const CommentLikeBtn = styled.button<{ $active?: boolean }>`
   ${caption01('regular')}
   color: ${({ $active }) => $active ? '#c46b6b' : gray[400]};
   transition: color ${transition.fast};
+  flex-shrink: 0;
+`;
+
+const DeleteBtn = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
   flex-shrink: 0;
 `;
 
@@ -184,6 +204,7 @@ function CommunityDetail() {
     const [commentLikes, setCommentLikes] = useState<Record<number, boolean>>({});
     const [comments, setComments] = useState(post?.comments ?? []);
     const [commentInput, setCommentInput] = useState('');
+    const [shouldClear, setShouldClear] = useState(false);
 
     if (!post) {
         return (
@@ -220,17 +241,23 @@ function CommunityDetail() {
         setCommentLikes(prev => ({ ...prev, [commentId]: !prev[commentId] }));
     };
 
+    const handleDeleteComment = (commentId: number) => {
+        setComments(prev => prev.filter(c => c.id !== commentId));
+    };
+
     const handleSubmitComment = () => {
         if (!commentInput.trim()) return;
         setComments(prev => [...prev, {
             id: Date.now(),
-            author: '나',
+            author: MY_AUTHOR,
             avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80',
             text: commentInput.trim(),
-            date: new Date().toLocaleDateString('ko-KR').replace(/\. /g, '.').replace('.', ''),
+            date: new Date().toLocaleDateString('ko-KR').replace(/\. /g, '.').slice(0, -1),
             likes: 0,
         }]);
         setCommentInput('');
+        setShouldClear(true);
+        setTimeout(() => setShouldClear(false), 0);
     };
 
     return (
@@ -301,14 +328,24 @@ function CommunityDetail() {
                                     <CommentAuthor>{comment.author}</CommentAuthor>
                                     <DateText>{comment.date}</DateText>
                                 </CommentMeta>
-                                <CommentLikeBtn
-                                    type="button"
-                                    $active={commentLikes[comment.id]}
-                                    onClick={() => handleCommentLike(comment.id)}
-                                >
-                                    <Icon name="heart" size="sm" color={commentLikes[comment.id] ? '#c46b6b' : gray[300]} />
-                                    {comment.likes + (commentLikes[comment.id] ? 1 : 0)}
-                                </CommentLikeBtn>
+                                <CommentRight>
+                                    <CommentLikeBtn
+                                        type="button"
+                                        $active={commentLikes[comment.id]}
+                                        onClick={() => handleCommentLike(comment.id)}
+                                    >
+                                        <Icon name="heart" size="sm" color={commentLikes[comment.id] ? '#c46b6b' : gray[300]} />
+                                        {comment.likes + (commentLikes[comment.id] ? 1 : 0)}
+                                    </CommentLikeBtn>
+                                    {comment.author === MY_AUTHOR && (
+                                        <DeleteBtn
+                                            type="button"
+                                            onClick={() => handleDeleteComment(comment.id)}
+                                        >
+                                            <Icon name="trash" size="sm" color={gray[400]} />
+                                        </DeleteBtn>
+                                    )}
+                                </CommentRight>
                             </CommentHeader>
                             <CommentText>{comment.text}</CommentText>
                         </CommentBody>
@@ -320,11 +357,14 @@ function CommunityDetail() {
                     <Textarea
                         placeholder="댓글을 남겨보세요... (최대 100자)"
                         maxLength={100}
+                        onValueChange={setCommentInput}
+                        shouldClear={shouldClear}
                     />
                     <CommentInputRow style={{ justifyContent: 'flex-end' }}>
                         <Button
                             size="sm"
                             color="gray-dark"
+                            disabled={!commentInput.trim()}
                             onClick={handleSubmitComment}
                         >
                             댓글 달기
