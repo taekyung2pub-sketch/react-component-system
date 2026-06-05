@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { spacing, radius, shadow } from '@/styles/tokens/spacing';
 import { white } from '@/styles/tokens/color';
@@ -21,6 +22,10 @@ export interface AlertProps {
     children: React.ReactNode;
     /** 하단 액션 버튼 배열 (최대 2개, 위에서 아래 순서) */
     actions?: AlertAction[];
+    /** Overlay 클릭 시 닫기 (기본 false — Alert는 명시적 액션 유도) */
+    dimClose?: boolean;
+    /** dimClose 시 호출할 콜백 */
+    onClose?: () => void;
     className?: string;
 }
 
@@ -50,7 +55,7 @@ const Sheet = styled.div`
 `;
 
 const Body = styled.div`
-    
+
 `;
 
 const Footer = styled.div`
@@ -67,11 +72,24 @@ const Footer = styled.div`
 export const Alert = ({
                           children,
                           actions = [],
+                          dimClose = false,
+                          onClose,
                           className,
                       }: AlertProps) => {
+    // body 스크롤 방지
+    useEffect(() => {
+        const prev = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        return () => { document.body.style.overflow = prev; };
+    }, []);
+
+    const handleOverlayClick = () => {
+        if (dimClose) onClose?.();
+    };
+
     return (
-        <Overlay>
-            <Sheet className={className}>
+        <Overlay onClick={handleOverlayClick}>
+            <Sheet className={className} onClick={(e) => e.stopPropagation()}>
                 <Body>{children}</Body>
                 {actions.length > 0 && (
                     <Footer>

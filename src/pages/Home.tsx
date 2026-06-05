@@ -34,6 +34,7 @@ const categoryItems = [
     { label: 'Outer',   value: 'outer' },
     { label: 'Acc',     value: 'acc' },
     { label: 'Shoes',   value: 'shoes' },
+    { label: 'Etc.',    value: 'etc' },
 ];
 
 // 3. 탭 대신 섹션 3개로 분리

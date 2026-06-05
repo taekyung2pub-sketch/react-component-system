@@ -27,6 +27,7 @@ const categoryTabs = [
     { label: 'Outer',   value: 'outer' },
     { label: 'Acc',     value: 'acc' },
     { label: 'Shoes',   value: 'shoes' },
+    { label: 'Etc.',    value: 'etc' },
 ];
 
 const sortOptions = [
@@ -178,9 +179,9 @@ function ProductListPage() {
             <Section variant="default" spacing="md">
                 {sorted.length === 0 ? (
                     <EmptyState
-                        type="search"
-                        title="검색 결과가 없어요"
-                        description="다른 카테고리나 필터로 시도해보세요."
+                        type="empty"
+                        title="상품이 없어요"
+                        description="해당 카테고리에 등록된 상품이 없습니다."
                     />
                 ) : (
                     <Stack direction="vertical" gap="md">

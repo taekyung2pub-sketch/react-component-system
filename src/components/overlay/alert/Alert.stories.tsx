@@ -58,7 +58,19 @@ const docs: ComponentDocs = {
                 },
                 {
                     title: '오버레이',
-                    desc: 'position: fixed로 전체 화면을 덮습니다. 닫기 로직은 actions의 onClick으로 상위 컴포넌트에서 관리합니다.',
+                    desc: 'position: fixed로 전체 화면을 덮습니다. 기본적으로 닫기 로직은 actions의 onClick으로 상위 컴포넌트에서 관리합니다.',
+                },
+                {
+                    title: 'body 스크롤 방지',
+                    desc: 'Alert가 열려 있는 동안 document.body의 overflow를 hidden으로 설정해 배경 스크롤을 방지합니다. 언마운트 시 자동 복원됩니다.',
+                },
+                {
+                    title: 'dimClose',
+                    desc: '오버레이(dim) 영역 클릭 시 닫기 여부를 제어합니다. 기본값은 false로, Alert는 명시적인 버튼 액션을 유도하는 것을 권장합니다.',
+                    bulletList: [
+                        'dimClose={false} (기본) — 오버레이 클릭 시 닫히지 않음',
+                        'dimClose={true} + onClose 전달 — 오버레이 클릭 시 onClose 호출',
+                    ],
                 },
             ],
         },
@@ -76,6 +88,13 @@ const meta = {
         layout: 'centered',
         docs: {
             page: createDocsPage(docs),
+        },
+    },
+    argTypes: {
+        dimClose: {
+            control: 'boolean',
+            description: '오버레이 클릭 시 닫기',
+            table: { defaultValue: { summary: 'true' } },
         },
     },
     tags: ['autodocs'],
@@ -181,4 +200,34 @@ const CustomBodyStory = () => {
 export const CustomBody: Story = {
     name: 'custom body',
     render: () => <CustomBodyStory />,
+};
+
+// =========================
+// dimClose
+// =========================
+
+const DimCloseStory = () => {
+    const [open, setOpen] = useState(false);
+    return (
+        <div style={{ width: '500px', height: '500px'}}>
+            <Button size="md" color="gray-dark" variant="outline" onClick={() => setOpen(true)}>dimClose 열기</Button>
+            {open && (
+                <Alert
+                    dimClose
+                    onClose={() => setOpen(false)}
+                    actions={[{ label: '확인', onClick: () => setOpen(false) }]}
+                >
+                    <Title variant="title03" align="center">오버레이 클릭으로 닫기</Title>
+                    <p style={{ fontSize: '14px', color: '#52525b', textAlign: 'center', marginTop: '8px' }}>
+                        dim 영역을 클릭하면 닫힙니다.
+                    </p>
+                </Alert>
+            )}
+        </div>
+    );
+};
+
+export const DimClose: Story = {
+    name: 'dimClose — 오버레이 클릭 닫기',
+    render: () => <DimCloseStory />,
 };

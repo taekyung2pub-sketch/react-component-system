@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import {spacing, radius, shadow, size} from '@/styles/tokens/spacing';
 import { white, gray, black } from '@/styles/tokens/color';
@@ -15,6 +15,8 @@ export interface BottomSheetProps {
     title: string;
     /** 닫기 콜백 */
     onClose: () => void;
+    /** Overlay 클릭 시 닫기 (기본 true) */
+    dimClose?: boolean;
     /** 본문 슬롯 */
     body?: React.ReactNode;
     /** 하단 슬롯 */
@@ -115,6 +117,7 @@ const Footer = styled.div`
 export const BottomSheet = ({
                                 title,
                                 onClose,
+                                dimClose = true,
                                 body,
                                 footer,
                                 className,
@@ -122,6 +125,13 @@ export const BottomSheet = ({
     const startYRef = useRef<number>(0);
     const [dragY, setDragY] = useState(0);
     const CLOSE_THRESHOLD = 80;
+
+    // body 스크롤 방지
+    useEffect(() => {
+        const prev = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        return () => { document.body.style.overflow = prev; };
+    }, []);
 
     const handleTouchStart = (e: React.TouchEvent) => {
         startYRef.current = e.touches[0].clientY;
@@ -133,9 +143,7 @@ export const BottomSheet = ({
     };
 
     const handleTouchEnd = () => {
-        if (dragY >= CLOSE_THRESHOLD) {
-            onClose();
-        }
+        if (dragY >= CLOSE_THRESHOLD) onClose();
         setDragY(0);
     };
 
@@ -159,10 +167,13 @@ export const BottomSheet = ({
     };
 
     return (
-        <Overlay onClick={onClose}>
+        <Overlay onClick={dimClose ? onClose : undefined}>
             <Sheet
                 className={className}
-                style={{ transform: dragY > 0 ? `translateY(${dragY}px)` : undefined, transition: dragY > 0 ? 'none' : 'transform 0.3s ease' }}
+                style={{
+                    transform: dragY > 0 ? `translateY(${dragY}px)` : undefined,
+                    transition: dragY > 0 ? 'none' : 'transform 0.3s ease',
+                }}
                 onClick={(e) => e.stopPropagation()}
             >
                 <Handle

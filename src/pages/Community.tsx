@@ -11,7 +11,7 @@ import { Title } from '@/components/common/title/Title';
 import { Button } from '@/components/common/button/Button';
 import { Icon } from '@/components/common/icon/Icon';
 import { allPosts, mdsPicks } from '@/data/mockPosts';
-import { spacing, radius, transition } from '@/styles/tokens/spacing';
+import { spacing, radius } from '@/styles/tokens/spacing';
 import { gray, white } from '@/styles/tokens/color';
 import { body03, body04, caption01 } from '@/styles/mixins/typography';
 
@@ -202,7 +202,6 @@ function Community() {
             headerProps={{
                 variant: 'default',
                 title: 'Community',
-                actions: [{ icon: 'edit', onClick: () => {} }],
             }}
             dockerProps={{
                 variant: 'nav',
@@ -219,7 +218,7 @@ function Community() {
         >
             {/* ① MD's Pick — 풀 스와이퍼 */}
             <Section variant="default" spacing="md">
-                <Title variant="title03" weight="bold" as="p" mb="md">MD's Pick</Title>
+                <Title variant="title03" weight="bold" as="p">MD's Pick</Title>
             </Section>
             <Swiper
                 variant="dot"
@@ -245,55 +244,58 @@ function Community() {
             />
 
             {/* ② 이벤트 띠배너 */}
-            <EventBanner href="/event" onClick={(e) => { e.preventDefault(); }}>
-                <EventLeft>
-                    <EventLabel>Limited Event</EventLabel>
-                    <EventTitle>여름 시즌 특별 기획전 진행중</EventTitle>
-                </EventLeft>
-                <Icon name="arrow" size="sm" color={white} style={{ transform: 'rotate(180deg)', flexShrink: 0 }} />
-            </EventBanner>
+            <Section variant="divider" noPadX>
+                <EventBanner href="/event" onClick={(e) => { e.preventDefault(); }}>
+                    <EventLeft>
+                        <EventLabel>Limited Event</EventLabel>
+                        <EventTitle>여름 시즌 특별 기획전 진행중</EventTitle>
+                    </EventLeft>
+                    <Icon name="arrow" size="sm" color={white} rotate={-180} />
+                </EventBanner>
+            </Section>
 
             {/* ③ 일반 매거진 — 2열 그리드 */}
             <Section variant="default" spacing="md">
-                <Title variant="title03" weight="bold" as="p" mb="md">매거진</Title>
-                <Stack direction="horizontal" columns={2} gap="md">
-                    {paged.map(post => (
-                        <PostCard key={post.id} onClick={() => navigate(`/community/${post.id}`)}>
-                            <PostCardThumb>
-                                <Ratio ratio="4/3">
-                                    <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                </Ratio>
-                            </PostCardThumb>
-                            <PostCardBody>
-                                <Tag>{post.category}</Tag>
-                                <PostTitle>{post.title}</PostTitle>
-                                <ActionRow>
-                                    <ActionBtn type="button">
-                                        <Icon name="heart" size="sm" color={gray[400]} />
-                                        <ActionCount>{post.likes}</ActionCount>
-                                    </ActionBtn>
-                                    <ActionBtn type="button">
-                                        <Icon name="chat" size="sm" color={gray[400]} />
-                                        <ActionCount>{post.comments.length}</ActionCount>
-                                    </ActionBtn>
-                                </ActionRow>
-                            </PostCardBody>
-                        </PostCard>
-                    ))}
+                <Stack direction="vertical" gap="md">
+                    <Title variant="title03" weight="bold" as="p">매거진</Title>
+                    <Stack direction="horizontal" columns={2} gap="md">
+                        {paged.map(post => (
+                            <PostCard key={post.id} onClick={() => navigate(`/community/${post.id}`)}>
+                                <PostCardThumb>
+                                    <Ratio ratio="4/3">
+                                        <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    </Ratio>
+                                </PostCardThumb>
+                                <PostCardBody>
+                                    <Tag>{post.category}</Tag>
+                                    <PostTitle>{post.title}</PostTitle>
+                                    <ActionRow>
+                                        <ActionBtn type="button">
+                                            <Icon name="heart" size="sm" color={gray[400]} />
+                                            <ActionCount>{post.likes}</ActionCount>
+                                        </ActionBtn>
+                                        <ActionBtn type="button">
+                                            <Icon name="chat" size="sm" color={gray[400]} />
+                                            <ActionCount>{post.comments.length}</ActionCount>
+                                        </ActionBtn>
+                                    </ActionRow>
+                                </PostCardBody>
+                            </PostCard>
+                        ))}
+                    </Stack>
+                    {hasMore && (
+                        <Button
+                            size="md"
+                            variant="outline"
+                            color="gray-dark"
+                            fullWidth
+                            onClick={() => setPage(p => p + 1)}
+                            style={{ marginTop: spacing.lg }}
+                        >
+                            더보기
+                        </Button>
+                    )}
                 </Stack>
-
-                {hasMore && (
-                    <Button
-                        size="md"
-                        variant="outline"
-                        color="gray-dark"
-                        fullWidth
-                        onClick={() => setPage(p => p + 1)}
-                        style={{ marginTop: spacing.lg }}
-                    >
-                        더보기
-                    </Button>
-                )}
             </Section>
         </AppLayout>
     );

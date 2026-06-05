@@ -154,8 +154,38 @@ export const allPosts: PostData[] = [
             { id: 3, author: '노현준', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80', text: '세이지 그린 벌써 몇 벌 샀어요 ㅎㅎ', date: '2026.04.27', likes: 7 },
         ],
     },
+    {
+        id: 9,
+        category: '데님',
+        title: '데님 스타일링 완벽 가이드',
+        desc: '클래식하면서도 트렌디한 데님 코디법을 소개합니다.',
+        content: '데님은 시대를 초월한 패션 아이템입니다. 어떤 스타일에도 자연스럽게 녹아드는 데님의 매력을 제대로 활용하는 방법을 알아봅니다.\n\n데님 온 데님 룩은 올 시즌 가장 핫한 트렌드 중 하나입니다. 다른 워싱의 데님을 조합하면 단조롭지 않으면서도 세련된 룩을 완성할 수 있습니다.\n\n빈티지 워싱 데님 재킷에 슬림한 스트레이트 데님 팬츠를 매치하고, 화이트 티셔츠로 포인트를 주면 완성도 높은 데님 코디가 완성됩니다.',
+        image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80',
+        author: '에디터 박현우',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80',
+        date: '2026.04.22',
+        likes: 167,
+        comments: [
+            { id: 1, author: '강태양', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80', text: '데님 온 데님 도전해봐야겠어요!', date: '2026.04.23', likes: 14 },
+            { id: 2, author: '최아름', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80', text: '워싱 조합 팁이 너무 유용해요.', date: '2026.04.23', likes: 9 },
+        ],
+    },
+    {
+        id: 10,
+        category: '액세서리',
+        title: '주얼리로 완성하는 데일리 룩',
+        desc: '작은 포인트 하나로 전체 분위기를 바꾸는 주얼리 스타일링 팁.',
+        content: '주얼리는 어떤 아이템보다 강력하게 룩의 분위기를 바꿔줍니다. 오늘의 기분과 스타일에 맞는 주얼리 선택법을 소개합니다.\n\n미니멀한 골드 링과 체인 목걸이는 어떤 스타일과도 잘 어울리는 기본 아이템입니다. 레이어드로 여러 개를 함께 착용하면 트렌디한 무드가 완성됩니다.\n\n귀걸이는 헤어스타일에 따라 선택하세요. 업스타일에는 드롭 귀걸이, 내린 헤어에는 스터드 타입이 잘 어울립니다.',
+        image: 'https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800&q=80',
+        author: '에디터 이수빈',
+        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80',
+        date: '2026.04.18',
+        likes: 93,
+        comments: [],
+    },
 ];
 
+// MD's Pick — 상위 4개
 export const getPostById = (id: number) => allPosts.find(p => p.id === id);
 
 // MD's Pick — 상위 4개

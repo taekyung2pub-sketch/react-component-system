@@ -13,7 +13,7 @@ import { Textarea } from '@/components/form/textarea/Textarea';
 import { EmptyState } from '@/components/common/emptyState/EmptyState';
 import { getPostById } from '@/data/mockPosts';
 import { spacing, radius, transition } from '@/styles/tokens/spacing';
-import { gray, white } from '@/styles/tokens/color';
+import { gray } from '@/styles/tokens/color';
 import { body03, body04, caption01 } from '@/styles/mixins/typography';
 
 const NAV_ROUTES: Record<string, string> = {
@@ -102,7 +102,6 @@ const ContentText = styled.p`
   white-space: pre-line;
 `;
 
-// 댓글
 const CommentItem = styled.div`
   display: flex;
   gap: ${spacing.sm};
@@ -174,7 +173,6 @@ const DeleteBtn = styled.button`
   flex-shrink: 0;
 `;
 
-// 댓글 입력
 const CommentInputWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -199,6 +197,7 @@ function CommunityDetail() {
     const { id } = useParams<{ id: string }>();
     const post = getPostById(Number(id));
 
+    // hooks는 early return 전에 모두 선언
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(post?.likes ?? 0);
     const [commentLikes, setCommentLikes] = useState<Record<number, boolean>>({});
@@ -319,38 +318,46 @@ function CommunityDetail() {
                     댓글 {comments.length}
                 </Title>
 
-                {comments.map(comment => (
-                    <CommentItem key={comment.id}>
-                        <Avatar src={comment.avatar} alt={comment.author} $size={36} />
-                        <CommentBody>
-                            <CommentHeader>
-                                <CommentMeta>
-                                    <CommentAuthor>{comment.author}</CommentAuthor>
-                                    <DateText>{comment.date}</DateText>
-                                </CommentMeta>
-                                <CommentRight>
-                                    <CommentLikeBtn
-                                        type="button"
-                                        $active={commentLikes[comment.id]}
-                                        onClick={() => handleCommentLike(comment.id)}
-                                    >
-                                        <Icon name="heart" size="sm" color={commentLikes[comment.id] ? '#c46b6b' : gray[300]} />
-                                        {comment.likes + (commentLikes[comment.id] ? 1 : 0)}
-                                    </CommentLikeBtn>
-                                    {comment.author === MY_AUTHOR && (
-                                        <DeleteBtn
+                {comments.length === 0 ? (
+                    <EmptyState
+                        type="empty"
+                        title="아직 댓글이 없어요"
+                        description="첫 번째 댓글을 남겨보세요!"
+                    />
+                ) : (
+                    comments.map(comment => (
+                        <CommentItem key={comment.id}>
+                            <Avatar src={comment.avatar} alt={comment.author} $size={36} />
+                            <CommentBody>
+                                <CommentHeader>
+                                    <CommentMeta>
+                                        <CommentAuthor>{comment.author}</CommentAuthor>
+                                        <DateText>{comment.date}</DateText>
+                                    </CommentMeta>
+                                    <CommentRight>
+                                        <CommentLikeBtn
                                             type="button"
-                                            onClick={() => handleDeleteComment(comment.id)}
+                                            $active={commentLikes[comment.id]}
+                                            onClick={() => handleCommentLike(comment.id)}
                                         >
-                                            <Icon name="trash" size="sm" color={gray[400]} />
-                                        </DeleteBtn>
-                                    )}
-                                </CommentRight>
-                            </CommentHeader>
-                            <CommentText>{comment.text}</CommentText>
-                        </CommentBody>
-                    </CommentItem>
-                ))}
+                                            <Icon name="heart" size="sm" color={commentLikes[comment.id] ? '#c46b6b' : gray[300]} />
+                                            {comment.likes + (commentLikes[comment.id] ? 1 : 0)}
+                                        </CommentLikeBtn>
+                                        {comment.author === MY_AUTHOR && (
+                                            <DeleteBtn
+                                                type="button"
+                                                onClick={() => handleDeleteComment(comment.id)}
+                                            >
+                                                <Icon name="trash" size="sm" color={gray[400]} />
+                                            </DeleteBtn>
+                                        )}
+                                    </CommentRight>
+                                </CommentHeader>
+                                <CommentText>{comment.text}</CommentText>
+                            </CommentBody>
+                        </CommentItem>
+                    ))
+                )}
 
                 {/* 댓글 입력 */}
                 <CommentInputWrap style={{ marginTop: spacing.md }}>

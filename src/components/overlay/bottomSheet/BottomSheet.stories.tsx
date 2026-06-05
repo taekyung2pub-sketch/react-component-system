@@ -56,8 +56,16 @@ const docs: ComponentDocs = {
                     desc: 'Handle을 아래로 80px 이상 드래그하면 onClose가 호출됩니다. 터치와 마우스 드래그 모두 지원합니다.',
                 },
                 {
-                    title: '오버레이 클릭 닫기',
-                    desc: '시트 외부 오버레이 영역 클릭 시에도 onClose가 호출됩니다.',
+                    title: 'body 스크롤 방지',
+                    desc: 'BottomSheet가 열려 있는 동안 document.body의 overflow를 hidden으로 설정해 배경 스크롤을 방지합니다. 언마운트 시 자동 복원됩니다.',
+                },
+                {
+                    title: 'dimClose',
+                    desc: '오버레이(dim) 영역 클릭 시 닫기 여부를 제어합니다. 기본값은 true입니다.',
+                    bulletList: [
+                        'dimClose={true} (기본) — 오버레이 클릭 시 onClose 호출',
+                        'dimClose={false} — 오버레이 클릭으로 닫히지 않음, 명시적 액션 유도 시 사용',
+                    ],
                 },
                 {
                     title: 'footer 슬롯',
@@ -86,6 +94,11 @@ const meta = {
         title: {
             control: 'text',
             description: '헤더 타이틀',
+        },
+        dimClose: {
+            control: 'boolean',
+            description: '오버레이 클릭 시 닫기',
+            table: { defaultValue: { summary: 'true' } },
         },
     },
 } satisfies Meta<typeof BottomSheet>;
@@ -181,4 +194,39 @@ const BodyOnlyStory = () => {
 export const BodyOnly: Story = {
     name: 'body only',
     render: () => <BodyOnlyStory />,
+};
+
+// =========================
+// dimClose={false}
+// =========================
+
+const DimCloseStory = () => {
+    const [open, setOpen] = useState(false);
+    return (
+        <div style={{ width: '500px', height: '500px'}}>
+            <Button size="md" color="gray-dark" variant="outline" onClick={() => setOpen(true)}>dimClose=false</Button>
+            {open && (
+                <BottomSheet
+                    title="dimClose 비활성"
+                    onClose={() => setOpen(false)}
+                    dimClose={false}
+                    body={
+                        <p style={{ fontSize: '14px', color: '#52525b' }}>
+                            오버레이를 클릭해도 닫히지 않습니다. X 버튼 또는 드래그로 닫아주세요.
+                        </p>
+                    }
+                    footer={
+                        <Button size="lg" color="gray-dark" fullWidth onClick={() => setOpen(false)}>
+                            확인
+                        </Button>
+                    }
+                />
+            )}
+        </div>
+    );
+};
+
+export const DimClose: Story = {
+    name: 'dimClose={false} — 오버레이 클릭 닫기 비활성',
+    render: () => <DimCloseStory />,
 };

@@ -315,7 +315,10 @@ function MyPage() {
             content: (
                 <Contents>
                     {mockOrders.length === 0 ? (
-                        <EmptyState type="empty" title="주문 내역이 없어요" description="아직 주문한 상품이 없습니다." />
+                        <Stack direction="vertical" gap="lg">
+                            <EmptyState type="empty" icon="cart" title="주문 내역이 없어요" description="아직 주문한 상품이 없습니다." />
+                            <Button size="md" onClick={() => navigate('/products')}>상품 보러가기</Button>
+                        </Stack>
                     ) : (
                         mockOrders.map(order => (
                             <OrderItem key={order.id}>
@@ -351,63 +354,59 @@ function MyPage() {
             id: 'address',
             title: '주소록',
             content: (
-                <>
-                    <Contents>
-                        {addresses.length === 0 ? (
-                            <EmptyState type="empty" title="등록된 주소가 없어요" description="배송지 주소를 추가해보세요." />
-                        ) : (
-                            addresses.map(addr => (
-                                <AddressItem key={addr.id}>
-                                    <AddressInfo>
-                                        <AddressHeader>
-                                            <AddressLabel>{addr.label}</AddressLabel>
-                                            {addr.isDefault && (
-                                                <Badge variant="soft" color="primary" size="sm">기본</Badge>
-                                            )}
-                                        </AddressHeader>
-                                        <AddressText>{addr.name} · {addr.phone}</AddressText>
-                                        <AddressText>{addr.address}</AddressText>
-                                        <AddressText>{addr.detail}</AddressText>
-                                    </AddressInfo>
-                                    <AddressActions>
-                                        <DeleteBtn type="button" onClick={() => handleDeleteAddress(addr.id)}>
-                                            <Icon name="trash" size="sm" color={gray[400]} />
-                                        </DeleteBtn>
-                                    </AddressActions>
-                                </AddressItem>
-                            ))
-                        )}
-                    </Contents>
-                    <Button size="md" variant="outline" color="gray-dark" fullWidth
+                <Stack direction="vertical" gap="lg">
+                    {addresses.length === 0 ? (
+                        <EmptyState type="empty" icon="location" title="등록된 주소가 없어요" description="배송지 주소를 추가해보세요." />
+                    ) : (
+                        addresses.map(addr => (
+                            <AddressItem key={addr.id}>
+                                <AddressInfo>
+                                    <AddressHeader>
+                                        <AddressLabel>{addr.label}</AddressLabel>
+                                        {addr.isDefault && (
+                                            <Badge variant="soft" color="primary" size="sm">기본</Badge>
+                                        )}
+                                    </AddressHeader>
+                                    <AddressText>{addr.name} · {addr.phone}</AddressText>
+                                    <AddressText>{addr.address}</AddressText>
+                                    <AddressText>{addr.detail}</AddressText>
+                                </AddressInfo>
+                                <AddressActions>
+                                    <DeleteBtn type="button" onClick={() => handleDeleteAddress(addr.id)}>
+                                        <Icon name="trash" size="sm" color={gray[400]} />
+                                    </DeleteBtn>
+                                </AddressActions>
+                            </AddressItem>
+                        ))
+                    )}
+                    <Button size="md" variant="outline" color="gray-dark"
                             onClick={() => setAddAddressOpen(true)}>
                         + 주소 추가
                     </Button>
-                </>
+                </Stack>
             ),
         },
         {
             id: 'notifications',
             title: '알림 설정',
             content: (
-                <>
-                    <Contents>
-                        {notifItems.map(item => (
-                            <NotifItem key={item.key}>
-                                <NotifLabel>
-                                    <NotifTitle>{item.title}</NotifTitle>
-                                    <NotifDesc>{item.desc}</NotifDesc>
-                                </NotifLabel>
-                                <Toggle size="xs"
-                                        defaultChecked={notifSettings[item.key]}
-                                        onChange={() => toggleNotif(item.key)} />
-                            </NotifItem>
-                        ))}
-                    </Contents>
+                <Stack direction="vertical" gap="lg">
+                    {notifItems.map(item => (
+                        <NotifItem key={item.key}>
+                            <NotifLabel>
+                                <NotifTitle>{item.title}</NotifTitle>
+                                <NotifDesc>{item.desc}</NotifDesc>
+                            </NotifLabel>
+                            <Toggle size="xs"
+                                    defaultChecked={notifSettings[item.key]}
+                                    onChange={() => toggleNotif(item.key)} />
+                        </NotifItem>
+                    ))}
                     <Button size="md" color="gray-dark" fullWidth
                             onClick={() => alert('알림 설정이 저장됐어요.')}>
                         저장
                     </Button>
-                </>
+                </Stack>
             ),
         },
     ];
