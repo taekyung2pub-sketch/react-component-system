@@ -354,36 +354,38 @@ function MyPage() {
             id: 'address',
             title: '주소록',
             content: (
-                <Stack direction="vertical" gap="lg">
-                    {addresses.length === 0 ? (
-                        <EmptyState type="empty" icon="location" title="등록된 주소가 없어요" description="배송지 주소를 추가해보세요." />
-                    ) : (
-                        addresses.map(addr => (
-                            <AddressItem key={addr.id}>
-                                <AddressInfo>
-                                    <AddressHeader>
-                                        <AddressLabel>{addr.label}</AddressLabel>
-                                        {addr.isDefault && (
-                                            <Badge variant="soft" color="primary" size="sm">기본</Badge>
-                                        )}
-                                    </AddressHeader>
-                                    <AddressText>{addr.name} · {addr.phone}</AddressText>
-                                    <AddressText>{addr.address}</AddressText>
-                                    <AddressText>{addr.detail}</AddressText>
-                                </AddressInfo>
-                                <AddressActions>
-                                    <DeleteBtn type="button" onClick={() => handleDeleteAddress(addr.id)}>
-                                        <Icon name="trash" size="sm" color={gray[400]} />
-                                    </DeleteBtn>
-                                </AddressActions>
-                            </AddressItem>
-                        ))
-                    )}
-                    <Button size="md" variant="outline" color="gray-dark"
+                <>
+                    <Contents>
+                        {addresses.length === 0 ? (
+                            <EmptyState type="empty" icon="location" title="등록된 주소가 없어요" description="배송지 주소를 추가해보세요." />
+                        ) : (
+                            addresses.map(addr => (
+                                <AddressItem key={addr.id}>
+                                    <AddressInfo>
+                                        <AddressHeader>
+                                            <AddressLabel>{addr.label}</AddressLabel>
+                                            {addr.isDefault && (
+                                                <Badge variant="soft" color="primary" size="sm">기본</Badge>
+                                            )}
+                                        </AddressHeader>
+                                        <AddressText>{addr.name} · {addr.phone}</AddressText>
+                                        <AddressText>{addr.address}</AddressText>
+                                        <AddressText>{addr.detail}</AddressText>
+                                    </AddressInfo>
+                                    <AddressActions>
+                                        <DeleteBtn type="button" onClick={() => handleDeleteAddress(addr.id)}>
+                                            <Icon name="trash" size="sm" color={gray[400]} />
+                                        </DeleteBtn>
+                                    </AddressActions>
+                                </AddressItem>
+                            ))
+                        )}
+                    </Contents>
+                    <Button size="md" variant="outline" color="gray-dark" fullWidth
                             onClick={() => setAddAddressOpen(true)}>
                         + 주소 추가
                     </Button>
-                </Stack>
+                </>
             ),
         },
         {
