@@ -390,23 +390,25 @@ function MyPage() {
             id: 'notifications',
             title: '알림 설정',
             content: (
-                <Stack direction="vertical" gap="lg">
-                    {notifItems.map(item => (
-                        <NotifItem key={item.key}>
-                            <NotifLabel>
-                                <NotifTitle>{item.title}</NotifTitle>
-                                <NotifDesc>{item.desc}</NotifDesc>
-                            </NotifLabel>
-                            <Toggle size="xs"
-                                    defaultChecked={notifSettings[item.key]}
-                                    onChange={() => toggleNotif(item.key)} />
-                        </NotifItem>
-                    ))}
+                <>
+                    <Contents>
+                        {notifItems.map(item => (
+                            <NotifItem key={item.key}>
+                                <NotifLabel>
+                                    <NotifTitle>{item.title}</NotifTitle>
+                                    <NotifDesc>{item.desc}</NotifDesc>
+                                </NotifLabel>
+                                <Toggle size="xs"
+                                        defaultChecked={notifSettings[item.key]}
+                                        onChange={() => toggleNotif(item.key)} />
+                            </NotifItem>
+                        ))}
+                    </Contents>
                     <Button size="md" color="gray-dark" fullWidth
                             onClick={() => alert('알림 설정이 저장됐어요.')}>
                         저장
                     </Button>
-                </Stack>
+                </>
             ),
         },
     ];
