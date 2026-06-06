@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { AppLayout } from '@/layouts/AppLayout';
 import { Section } from '@/components/layout/section/Section';
-import { TextField } from '@/components/form/textfield/TextField';
+import { TextField } from '@/components/form/textField/TextField';
 import { Title } from '@/components/common/title/Title';
 import { TextButton } from '@/components/common/button/TextButton';
 import { Icon } from '@/components/common/icon/Icon';
