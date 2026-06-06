@@ -22,9 +22,9 @@ import { allProducts } from '@/data/mockProducts';
 // =========================
 
 const heroBanners = [
-    { id: 1, image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80', label: 'New Collection', sub: '2026 S/S',        href: '/event/new-collection' },
-    { id: 2, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80', label: 'Summer Sale',    sub: 'Up to 50% off',   href: '/event/summer-sale' },
-    { id: 3, image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80', label: 'Best Picks',    sub: "Editor's choice", href: '/event/best-picks' },
+    { id: 1, image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80', label: 'New Collection', sub: '2026 S/S' },
+    { id: 2, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80', label: 'Summer Sale',    sub: 'Up to 50% off' },
+    { id: 3, image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80', label: 'Best Picks',    sub: "Editor's choice" },
 ];
 
 const categoryItems = [
@@ -85,7 +85,7 @@ const HeroOverlay = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: ${spacing.lg};
+  padding: ${spacing.xxl} ${spacing.lg};
   gap: ${spacing.xs};
 `;
 
@@ -219,7 +219,7 @@ function Home() {
                 autoPlay
                 loop
                 slides={heroBanners.map((banner) => (
-                    <HeroBanner key={banner.id} href={banner.href} onClick={(e) => { e.preventDefault(); navigate(banner.href); }}>
+                    <HeroBanner key={banner.id} href="javascript:">
                         <Ratio ratio="3/4">
                             <img src={banner.image} alt={banner.label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         </Ratio>

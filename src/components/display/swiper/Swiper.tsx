@@ -215,9 +215,21 @@ export const Swiper = ({
         if (Math.abs(diff) > 40) diff < 0 ? goNext() : goPrev();
     };
 
+    const onClickCapture = (e: React.MouseEvent) => {
+        if (dragMoved.current) {
+            e.stopPropagation();
+            e.preventDefault();
+            dragMoved.current = false;
+        }
+    };
+
     const onTouchStart = (e: React.TouchEvent) => {
         startX.current = e.touches[0].clientX;
         dragMoved.current = false;
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => {
+        if (Math.abs(e.touches[0].clientX - startX.current) > 4) dragMoved.current = true;
     };
 
     const onTouchEnd = (e: React.TouchEvent) => {
@@ -333,7 +345,9 @@ export const Swiper = ({
         if (!autoIsDragging.current || !autoTrackRef.current) return;
         e.preventDefault();
         const x = e.pageX - autoTrackRef.current.offsetLeft;
-        autoTrackRef.current.scrollLeft = autoScrollLeft.current - (x - autoStartX.current);
+        const moved = x - autoStartX.current;
+        if (Math.abs(moved) > 4) dragMoved.current = true;
+        autoTrackRef.current.scrollLeft = autoScrollLeft.current - moved;
     };
 
     const onAutoMouseUp = () => { autoIsDragging.current = false; };
@@ -348,6 +362,7 @@ export const Swiper = ({
                     onMouseMove={onAutoMouseMove}
                     onMouseUp={onAutoMouseUp}
                     onMouseLeave={onAutoMouseUp}
+                    onClickCapture={onClickCapture}
                 >
                     {slides.map((slide, i) => (
                         <AutoSlide key={i} $slideWidth={slideWidth}>
@@ -370,7 +385,9 @@ export const Swiper = ({
                     onMouseUp={onMouseUp}
                     onMouseLeave={onMouseUp}
                     onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
                     onTouchEnd={onTouchEnd}
+                    onClickCapture={onClickCapture}
                 >
                     {slides.map((slide, i) => (
                         <Slide key={i} $slideWidth={computedSlideWidth}>
