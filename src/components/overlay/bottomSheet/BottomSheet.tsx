@@ -54,11 +54,13 @@ const Overlay = styled.div`
 
 const Sheet = styled.div`
   width: 100%;
+  max-height: 90dvh;
+  display: flex;
+  flex-direction: column;
   background: ${white};
   border-radius: ${radius.lg} ${radius.lg} 0 0;
   box-shadow: ${shadow.lg};
   animation: ${slideUp} 0.3s ease;
-  padding: ${spacing.lg};
   padding-top: ${spacing.md};
 `;
 
@@ -76,8 +78,9 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: ${spacing.md};
+  padding: 0 ${spacing.lg} ${spacing.md};
   border-bottom: 1px solid ${gray[300]};
+  flex-shrink: 0;
 `;
 
 const TitleText = styled.h2`
@@ -100,11 +103,16 @@ const CloseBtn = styled.button`
 `;
 
 const Body = styled.div`
-  margin-top: ${spacing.md};
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: ${spacing.md} ${spacing.lg} 0;
 `;
 
 const Footer = styled.div`
-  margin-top: ${spacing.lg};
+  flex-shrink: 0;
+  padding: ${spacing.lg};
+  padding-top: ${spacing.md};
   display: flex;
   flex-direction: column;
   gap: ${spacing.sm};
