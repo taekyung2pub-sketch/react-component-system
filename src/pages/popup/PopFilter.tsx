@@ -36,6 +36,7 @@ const categoryOptions = [
     { label: 'Outer',   value: 'outer' },
     { label: 'Acc',     value: 'acc' },
     { label: 'Shoes',   value: 'shoes' },
+    { label: 'Etc.',   value: 'etc' },
 ];
 
 const priceOptions = [
